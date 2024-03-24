@@ -1,7 +1,7 @@
 // Navbar
 
 export const unknownDropdown = [
-  { name: 'nav button', href: '/' },
+  { name: 'Trending', href: '/' },
   { name: 'nav button1', href: '/' },
   { name: 'nav button2', href: '/' },
   { name: 'nav button3', href: '/' },
@@ -468,5 +468,132 @@ export const shopCollections = [
     image: '/Summer Collections.jpeg',
     title: 'Summer Collection',
     subtitle: 'Unique Rings',
+  },
+]
+
+// List Of Countries
+
+export const countries = [
+  'Select Country',
+  'United States',
+  'United Kingdom',
+  'Canada',
+  'Australia',
+  'Nigeria',
+  'Ghana',
+]
+
+// Cart Items
+export const checkouts = [
+  {
+    img: '/Details Earring.jpg',
+    title: 'midnight enchantment',
+    desc: 'a twinkling starlight',
+    grade: 'platinum',
+    size: '23.4',
+    price: '67.4',
+    slug: 'juhwkdsdcsdcjc',
+    quantity: '2',
+  },
+  {
+    img: '/Details Earring.jpg',
+    title: 'midnight enchantment',
+    desc: 'a twinkling starlight',
+    grade: 'platinum',
+    size: '23.4',
+    price: '67.4',
+    slug: 'juhcdjkjdcjc',
+    quantity: '4',
+  },
+  {
+    img: '/Details Earring.jpg',
+    title: 'midnight enchantment',
+    desc: 'a twinkling starlight',
+    grade: 'platinum',
+    size: '23.4',
+    price: '67.4',
+    slug: 'juhwejcjc',
+    quantity: '1',
+  },
+  {
+    img: '/Details Earring.jpg',
+    title: 'midnight enchantment',
+    desc: 'a twinkling starlight',
+    grade: 'platinum',
+    size: '23.4',
+    price: '67.4',
+    slug: 'juhwkdsdcsdcjc',
+    quantity: '2',
+  },
+  {
+    img: '/Details Earring.jpg',
+    title: 'midnight enchantment',
+    desc: 'a twinkling starlight',
+    grade: 'platinum',
+    size: '23.4',
+    price: '67.4',
+    slug: 'juhcdjkjdcjc',
+    quantity: '4',
+  },
+  {
+    img: '/Details Earring.jpg',
+    title: 'midnight enchantment',
+    desc: 'a twinkling starlight',
+    grade: 'platinum',
+    size: '23.4',
+    price: '67.4',
+    slug: 'juhwejcjc',
+    quantity: '1',
+  },
+]
+
+export const historyDetails = [
+  {
+    img: '/Details Earring.jpg',
+    title: 'midnight enchantment',
+    desc: 'a twinkling starlight',
+    id: '21345679AD',
+    date: '06/10/2024',
+    status: 'pending...',
+  },
+  {
+    img: '/Details Earring.jpg',
+    title: 'midnight enchantment',
+    desc: 'a twinkling starlight',
+    id: '21345679AD',
+    date: '06/10/2024',
+    status: 'delivered',
+  },
+  {
+    img: '/Details Earring.jpg',
+    title: 'midnight enchantment',
+    desc: 'a twinkling starlight',
+    id: '21345679AD',
+    date: '06/10/2024',
+    status: 'delivered',
+  },
+  {
+    img: '/Details Earring.jpg',
+    title: 'midnight enchantment',
+    desc: 'a twinkling starlight',
+    id: '21345679AD',
+    date: '06/10/2024',
+    status: 'delivered',
+  },
+  {
+    img: '/Details Earring.jpg',
+    title: 'midnight enchantment',
+    desc: 'a twinkling starlight',
+    id: '21345679AD',
+    date: '06/10/2024',
+    status: 'delivered',
+  },
+  {
+    img: '/Details Earring.jpg',
+    title: 'midnight enchantment',
+    desc: 'a twinkling starlight',
+    id: '21345679AD',
+    date: '06/10/2024',
+    status: 'delivered',
   },
 ]

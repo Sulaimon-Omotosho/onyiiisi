@@ -41,7 +41,7 @@ export default function DropdownShop() {
               <ul className='text-center uppercase flex flex-col gap-2'>
                 {categoryData?.map((category, idx) => (
                   <li key={idx}>
-                    <Link href={category?.title} className=''>
+                    <Link href={`/shop/${category?.title}`} className=''>
                       {category?.title}
                     </Link>
                   </li>

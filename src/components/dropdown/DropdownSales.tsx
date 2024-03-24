@@ -11,8 +11,8 @@ export default function DropdownSales() {
             <Image
               src='/sales.png'
               fill
-              // objectFit='cover'
               alt='sales image'
+              className='object-cover'
             />
           </div>
           <div className='flex-4 flex gap-[60px] lg:gap-[120px]'>
@@ -23,7 +23,7 @@ export default function DropdownSales() {
               <ul className='text-center uppercase flex flex-col gap-2'>
                 {unknownDropdown.map((drop, idx) => (
                   <li key={idx}>
-                    <Link href={drop.href}>{drop.name}</Link>
+                    <Link href={`sales/${drop.name}`}>{drop.name}</Link>
                   </li>
                 ))}
               </ul>

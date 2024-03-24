@@ -1,16 +1,27 @@
 'use client'
 
-import { ShoppingCart, Heart, UserRound, Menu, X } from 'lucide-react'
+import {
+  ShoppingCart,
+  Heart,
+  UserRound,
+  Menu,
+  X,
+  LogOut,
+  NotebookText,
+} from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 import { Noto_Sans_Georgian } from 'next/font/google'
 import DropdownSales from './dropdown/DropdownSales'
 import DropdownShop from './dropdown/DropdownShop'
 import Sidebar from './Sidebar'
+import { signOut, useSession } from 'next-auth/react'
+import { Button } from './ui/button'
 
 const georgia = Noto_Sans_Georgian({ subsets: ['latin'] })
 
 export default function Navbar() {
+  const { data: session } = useSession()
   const [shopDropDown, setShopDropDown] = useState(false)
   const [salesDropDown, setSalesDropDown] = useState(false)
 
@@ -67,6 +78,9 @@ export default function Navbar() {
           >
             sales
           </Link>
+          {session && (
+            <p className='hidden lg:inline'>Hi, {session?.user?.name}</p>
+          )}
         </div>
 
         {/* Side Bar  */}
@@ -91,16 +105,44 @@ export default function Navbar() {
         </div>
 
         {/* Navbar Icons  */}
-        <div className='flex-1 flex gap-5 lg:scale-100 justify-end'>
-          <Link href='/cart'>
-            <ShoppingCart className='cursor-pointer hidden md:block' />
+        <div className='flex-1 flex gap-5 lg:scale-100 justify-end items-center'>
+          <Link href={'/studio'} target='_blank' className='hidden md:inline'>
+            Studio
           </Link>
-          <Link href='/wish-list'>
-            <Heart className='cursor-pointer hidden md:block' />
-          </Link>
-          <Link href='/login'>
-            <UserRound className='cursor-pointer' />
-          </Link>
+
+          {session && (
+            <Link href={'/history'} className='relative'>
+              <NotebookText className='cursor-pointer hidden md:inline ' />
+              <p className='hidden absolute top-[-4px] right-[-6px] bg-[rgb(56,22,10)] text-white text-xs w-4 h-4 rounded-full md:flex items-center justify-center font-semibold'>
+                {1}
+              </p>
+            </Link>
+          )}
+          <div className='relative'>
+            <Link href='/cart'>
+              <ShoppingCart className='cursor-pointer hidden md:block' />
+            </Link>
+            <p className='hidden absolute top-[-4px] right-[-6px] bg-[rgb(56,22,10)] text-white text-xs w-4 h-4 rounded-full md:flex items-center justify-center font-semibold'>
+              {2}
+            </p>
+          </div>
+          <div className='relative'>
+            <Link href='/wish-list'>
+              <Heart className='cursor-pointer hidden md:block' />
+            </Link>
+            <p className='hidden absolute top-[-4px] right-[-6px] bg-[rgb(56,22,10)] text-white text-xs w-4 h-4 rounded-full md:flex items-center justify-center font-semibold'>
+              {9}
+            </p>
+          </div>
+          {session ? (
+            <Button onClick={() => signOut()} variant={'ghost'}>
+              <LogOut className='cursor-pointer' />
+            </Button>
+          ) : (
+            <Link href='/login'>
+              <UserRound className='cursor-pointer' />
+            </Link>
+          )}
         </div>
       </div>
       {/* Dropdown */}

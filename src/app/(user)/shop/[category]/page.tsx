@@ -1,4 +1,5 @@
 import { earringsPage } from '@/constants'
+import { Heart, Plus } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -8,11 +9,12 @@ const CategoryPage = () => {
     <div className='py-0 lg:py-20'>
       <div className=''>
         {/* Main Img */}
-        <div className='relative w-full h-[350px] lg:h-[550px]'>
+        <div className='relative w-full h-[400px] lg:h-[580px] xl:h-[790px]'>
           <Image
             src='/Earrings Page.jpg'
             alt='Earrings'
             fill
+            className='object-cover'
           />
           <h2 className=' absolute top-10 left-10 uppercase text-3xl font-thin text-white'>
             earrings
@@ -21,7 +23,7 @@ const CategoryPage = () => {
 
         <div className='px-5 lg:px-20 py-10'>
           {/* Navigation */}
-          <div className='flex px-10 justify-between items-center'>
+          <div className='flex md:px-10 justify-between items-center'>
             <div className='flex gap-1'>
               <Link className='text-gray-400 hover:text-gray-800' href='/'>
                 Home |{' '}
@@ -31,14 +33,20 @@ const CategoryPage = () => {
               </Link>
               <p className='font-semibold'> Earrings</p>
             </div>
-            <div className=''>
+            <div className='hidden md:flex'>
               <p className='text-gray-400'>
                 View:{' '}
-                <span className='text-gray-800 underline cursor-pointer'>
+                <span className='text-gray-800 underline hover:underline cursor-pointer'>
                   16
                 </span>{' '}
-                / <span className='text-gray-800 cursor-pointer'>32</span> /{' '}
-                <span className='text-gray-800 cursor-pointer'>ALL</span>{' '}
+                /{' '}
+                <span className='text-gray-400 cursor-pointer hover:text-gray-800 hover:underline'>
+                  32
+                </span>{' '}
+                /{' '}
+                <span className='text-gray-400 cursor-pointer hover:underline hover:text-gray-800'>
+                  ALL
+                </span>{' '}
               </p>
             </div>
             <div className='flex gap-5'>
@@ -48,20 +56,30 @@ const CategoryPage = () => {
           </div>
 
           {/* Products  */}
-          <div className='flex flex-wrap flex-grow gap-10 lg:gap-14 my-10 justify-center'>
+          <div className='flex flex-wrap flex-grow gap-10 lg:gap-14 my-10 mx-5 justify-center'>
             {earringsPage.map((item) => (
               <div
                 key={item.index}
-                className=' bg-[rgb(230,230,230)] rounded-md text-center h-[220px] lg:h-[280px] 2xl:h-[300px] w-[190px] lg:w-[250px] 2xl:w-[280px]'
+                className=' bg-[rgb(230,230,230)] rounded-md text-center h-[350px] md:h-[220px] lg:h-[280px] 2xl:h-[300px] w-[320px] md:w-[190px] lg:w-[250px] 2xl:w-[280px] flex-grow'
               >
                 <Link href={item.slug}>
-                  <div className='h-[80%] border-b-[1px] flex items-center justify-center border-gray-400'>
+                  <div className='h-[80%] border-b-[1px] flex items-center justify-center border-gray-400 relative'>
                     <Image
                       src={item.image}
                       alt={item.name}
                       height={150}
                       width={150}
                     />
+                    <div className='absolute w-full h-full flex justify-between p-4 opacity-0 hover:opacity-100 transition-all duration-300'>
+                      <div className='w-10 h-10 bg-[rgb(95,40,74)] rounded-md text-white flex justify-center items-center hover:scale-125 transition-all duration-300'>
+                        {' '}
+                        <Heart />{' '}
+                      </div>
+                      <div className='w-10 h-10 bg-[rgb(95,40,74)] rounded-md text-white flex justify-center items-center hover:scale-125 transition-all duration-300'>
+                        {' '}
+                        <Plus />{' '}
+                      </div>
+                    </div>
                   </div>
                 </Link>
                 <div className='pt-1'>

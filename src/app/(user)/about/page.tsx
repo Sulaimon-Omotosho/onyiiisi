@@ -14,7 +14,7 @@ const AboutPage = () => {
           src='/About Hero.jpeg'
           alt='about'
           fill
-          className='brightness-75'
+          className='brightness-75 object-cover'
         />
         <div className='absolute text-white flex flex-col justify-center items-center gap-2 w-[98%] md:w-[80%] lg:w-[70%] text-center '>
           <h1 className='text-2xl md:text-3xl lg:text-4xl font-extrabold'>
@@ -26,7 +26,7 @@ const AboutPage = () => {
             and every piece tells a story. Learn more about our journey, our
             passion for luxury, and our commitment to personalized elegance.
           </p>
-          <button className='text-white bg-orange-800 py-2 px-5 rounded-full uppercase font-thin text-xs flex items-center justify-center gap-1 lg:gap-2 '>
+          <button className='text-white bg-[rgb(95,40,74)] py-2 px-5 rounded-full uppercase font-thin text-xs flex items-center justify-center gap-1 lg:gap-2 '>
             learn more
             <span>
               <MoveDownRight className='w-4 lg:w-5 h-4 lg:h-5 pt-1' />
@@ -61,7 +61,7 @@ const AboutPage = () => {
             src='/Sparkling Brilliance.jpeg'
             alt='Sparkling Brilliance'
             fill
-            className='brightness-75'
+            className='brightness-75 object-cover'
           />
           <div className='absolute text-center w-[80%]'>
             <h1 className='uppercase text-2xl text-white font-semibold pb-1'>
@@ -78,7 +78,7 @@ const AboutPage = () => {
             src='/Customized elegance.jpeg'
             alt='Customized Elegance'
             fill
-            className='brightness-75'
+            className='brightness-75 object-cover'
           />
           <div className='absolute text-center w-[80%]'>
             <h1 className='uppercase text-2xl text-white font-semibold pb-1'>
@@ -95,7 +95,7 @@ const AboutPage = () => {
       {/* Gift Someone  */}
 
       <div className='flex flex-col md:flex-row h-[700px] md:h-[420px] lg:h-[492px] my-20'>
-        <div className='h-[40%] md:h-full md:w-[50%] bg-[rgb(224,224,224)] flex flex-col justify-center items-center'>
+        <div className='h-[40%] md:h-full md:w-[50%] bg-[rgb(217,199,211)] flex flex-col justify-center items-center'>
           <div className='w-[75%] lg:w-[40%] text-center '>
             <h1 className='text-2xl font-semibold'>Send a Gift to Someone</h1>
             <p className='text-sm'>
@@ -109,13 +109,14 @@ const AboutPage = () => {
             src='/Gift Someone.jpeg'
             alt='Gift Someone'
             fill
+            className='object-cover'
           />
         </div>
       </div>
 
       {/* Product Catalogue  */}
 
-      <div className=' mx-5 lg:mx-10 xl:mx-20'>
+      <div className='bg-[rgb(56,22,10)] text-white p-5 lg:px-10 xl:px-20 '>
         <h1 className='text-lg md:text-xl lg:text-2xl font-bold uppercase my-3 lg:my-5'>
           {' '}
           product catalogue
@@ -128,7 +129,7 @@ const AboutPage = () => {
                   src={product.image}
                   alt={product.title}
                   fill
-                  className='hover:scale-110 transition-all duration-300'
+                  className='hover:scale-110 transition-all duration-300 object-cover'
                 />
               </div>
               <p className='text-md font-medium'>{product.title}</p>
@@ -142,8 +143,13 @@ const AboutPage = () => {
 
       {/* FAQ  */}
 
-      <div className='relative h-[750px] w-full mt-20'>
-        <Image src='/FAQ bg.jpeg' alt='faq bg' fill />
+      <div className='relative flex justify-center items-center h-[750px] w-full my-20'>
+        <Image src='/FAQ bg.jpeg' alt='faq bg' fill className='object-cover' />
+        <div className='absolute rounded-lg p-16 bg-white'>
+          <h1 className='text-4xl font-bold uppercase text-center'>
+            frequently asked questions
+          </h1>
+        </div>
       </div>
 
       {/* Blog  */}
@@ -151,26 +157,42 @@ const AboutPage = () => {
 
       {/* Social Media  */}
 
-      <div className='mx-5 lg:mx-10 xl:mx-20'>
+      <div className='mx-5 lg:mx-10 xl:mx-20 my-5'>
         <h1 className='text-2xl text-center md:text-left font-bold uppercase my-5'>
           our social media
         </h1>
         <div className='flex flex-col md:flex-row items-center md:justify-between gap-3 '>
           <div className='relative h-[308px] md:h-[250px] xl:h-[318px] w-[290px] xl:w-[300px] rounded-md overflow-hidden'>
-            <Image src='/socials.jpeg' alt='socials' fill objectFit='cover' />
+            <Image
+              src='/socials.jpeg'
+              alt='socials'
+              fill
+              className='object-cover'
+            />
           </div>
           <div className='relative h-[308px] md:h-[250px] xl:h-[318px] w-[290px] xl:w-[300px] rounded-md overflow-hidden'>
             <Image
               src='/socials.jpeg'
               alt='socials'
               fill
+              className='object-cover'
             />
           </div>
           <div className='relative h-[308px] md:h-[250px] xl:h-[318px] w-[290px] xl:w-[300px] rounded-md overflow-hidden'>
-            <Image src='/socials.jpeg' alt='socials' fill />
+            <Image
+              src='/socials.jpeg'
+              alt='socials'
+              fill
+              className='object-cover'
+            />
           </div>
           <div className='relative h-[308px] md:h-[250px] xl:h-[318px] w-[290px] xl:w-[300px] rounded-md overflow-hidden'>
-            <Image src='/socials.jpeg' alt='socials' fill  />
+            <Image
+              src='/socials.jpeg'
+              alt='socials'
+              fill
+              className='object-cover'
+            />
           </div>
         </div>
       </div>

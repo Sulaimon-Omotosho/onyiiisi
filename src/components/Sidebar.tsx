@@ -1,8 +1,10 @@
-import { Heart, Minus, Plus, ShoppingCart } from 'lucide-react'
+import { Heart, Minus, NotebookText, Plus, ShoppingCart } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
+import { signOut, useSession } from 'next-auth/react'
 
 const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
+  const { data: session } = useSession()
   const [shop, setShop] = useState(false)
   const [sales, setSales] = useState(false)
 
@@ -119,15 +121,47 @@ const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
             </Link>
           </div>
         </div>
-        <Link href='/cart' className='flex gap-2'>
+        <Link
+          href='/cart'
+          onClick={closeSidebar}
+          className='relative flex gap-2'
+        >
           <ShoppingCart className='h-8 w-8' />
           cart
+          <p className='absolute left-5 top-[-5px] bg-[rgb(95,40,74)] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold'>
+            {2}
+          </p>
         </Link>
-        <Link onClick={closeSidebar} href='/wish-list' className='flex gap-2'>
+        <Link
+          onClick={closeSidebar}
+          href='/wish-list'
+          className='relative flex gap-2'
+        >
           <Heart className='h-8 w-8' />
           wishlist
+          <p className='absolute left-5 top-[-5px] bg-[rgb(95,40,74)] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold'>
+            {9}
+          </p>
         </Link>
+        {session && (
+          <Link
+            href={'/history'}
+            onClick={closeSidebar}
+            className='relative flex gap-2 items-center'
+          >
+            <NotebookText className='cursor-pointer' />
+            orders
+            <p className='absolute left-5 top-[-5px] bg-[rgb(95,40,74)] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold'>
+              {1}
+            </p>
+          </Link>
+        )}
       </div>
+      {session && (
+        <Link href='/profile' className='absolute bottom-6 text-lg capitalize'>
+          Hi, {session?.user?.name}
+        </Link>
+      )}
     </div>
   )
 }
