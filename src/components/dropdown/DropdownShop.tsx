@@ -23,17 +23,15 @@ export default function DropdownShop() {
 
   return (
     <div className=''>
-      <div
-        // className={`${
-        //   shopDropDown
-        //     ? 'transition-all transform origin-top duration-500 z-10'
-        //     : 'top-[-100%] transition-all transform origin-top duration-500'
-        // } py-[50px] px-9 top-[80px] absolute w-full backdrop-blur-sm`}
-        className='py-[50px] px-9 absolute lg:fixed z-20 w-full bg-white'
-      >
+      <div className='py-[50px] px-9 absolute lg:fixed z-20 w-full bg-[rgb(71,28,13)]'>
         <div className='flex-1 flex items-center gap-6 lg:gap-10 '>
-          <div className='w-[150px] lg:w-[202px] h-[108px] lg:h-[144px] relative rounded-md mr-14'>
-            <Image src='/shop.png' width={350} height={350} alt='shop image' />
+          <div className='w-[150px] lg:w-[202px] h-[108px] lg:h-[144px] relative rounded-md mr-14 overflow-hidden object-cover'>
+            <Image
+              src='/shop.png'
+              fill
+              // objectFit='cover'
+              alt='shop image'
+            />
           </div>
           <div className='flex-4 flex gap-[60px] lg:gap-[120px]'>
             <div className=''>

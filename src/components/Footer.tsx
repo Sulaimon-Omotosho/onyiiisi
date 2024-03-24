@@ -35,11 +35,11 @@ const socials = [
 
 export default function Footer() {
   return (
-    <div className='m-5 px-20'>
+    <div className='py-10 px-20 bg-[rgb(56,22,10)] text-white'>
       <div className='flex flex-col md:flex-row content-center gap-20 justify-center mb-8'>
         <div className='flex flex-col gap-3'>
           <h1 className='font-bold text-xl mb-5'>Onyiisi</h1>
-          <div className='flex items-center gap-1 text-gray-500'>
+          <div className='flex items-center gap-1 text-gray-400'>
             <MapPin className='' />
             <div className=''>
               <h3 className='font-semibold '>Location</h3>
@@ -48,14 +48,14 @@ export default function Footer() {
               </p>
             </div>
           </div>
-          <div className='flex items-center gap-1 text-gray-500'>
+          <div className='flex items-center gap-1 text-gray-400'>
             <Phone className='' />
             <div className=''>
               <h3 className='font-semibold '>Phone</h3>
               <p className='text-sm'>+234 901 234 5678</p>
             </div>
           </div>
-          <div className='flex items-center gap-1 text-gray-500'>
+          <div className='flex items-center gap-1 text-gray-400'>
             <Mail className='' />
             <div className=''>
               <h3 className='font-semibold '>E-Mail</h3>
@@ -67,7 +67,7 @@ export default function Footer() {
           <h1 className='font-bold text-xl mb-5 capitalize'>Company</h1>
           {company.map((com, idx) => (
             <Link
-              className='text-sm capitalize text-gray-500'
+              className='text-sm capitalize text-gray-400'
               key={idx}
               href={com.link}
             >
@@ -79,7 +79,7 @@ export default function Footer() {
           <h1 className='font-bold text-xl mb-5 capitalize'>information</h1>
           {information.map((info, idx) => (
             <Link
-              className='text-sm capitalize text-gray-500'
+              className='text-sm capitalize text-gray-400'
               key={idx}
               href={info.link}
             >
@@ -91,7 +91,7 @@ export default function Footer() {
           <h1 className='font-bold text-xl mb-5 capitalize'>Stay In Touch</h1>
           {socials.map((social, idx) => (
             <Link
-              className='text-sm capitalize text-gray-500'
+              className='text-sm capitalize text-gray-400'
               key={idx}
               href={social.link}
             >

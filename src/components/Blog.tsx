@@ -4,7 +4,7 @@ import { blogs } from '@/constants'
 
 export default function Blog() {
   return (
-    <div className='p-10 lg:p-20'>
+    <div className='p-10 lg:p-20 bg-[rgb(56,22,10)] text-white'>
       <div className=''>
         {/* Header  */}
         <div className='flex justify-between'>
@@ -17,7 +17,7 @@ export default function Blog() {
               Molestiae, impedit.
             </p>
           </div>
-          <button className='text-black py-2 lg:py-3 w-[120px] lg:w-[150px] rounded-full uppercase font-thin text-xs hidden md:flex items-center justify-center gap-1 lg:gap-2 border-2 border-black '>
+          <button className=' py-2 lg:py-3 w-[120px] lg:w-[150px] rounded-full uppercase font-thin text-xs hidden md:flex items-center justify-center gap-1 lg:gap-2 border-2 border-white '>
             learn more
             <span>
               <MoveDownRight className='w-4 lg:w-5 h-4 lg:h-5 pt-1' />
@@ -34,7 +34,7 @@ export default function Blog() {
             >
               <div className='relative w-[360px] md:w-[220px] lg:w-[250px] xl:w-[400px] h-[290px] md:h-[170px] lg:h-[200px] xl:h-[330px]'>
                 <Image
-                  className=' rounded-md pb-5  '
+                  className='object-cover rounded-md pb-5  '
                   src={blog.img}
                   alt={blog.title}
                   fill

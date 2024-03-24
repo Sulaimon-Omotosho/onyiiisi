@@ -25,14 +25,14 @@ const Newsletter = () => {
             />
             <button
               type='submit'
-              className=' hidden md:flex items-center right-6 text-white bg-orange-800 px-2 w-[100px] rounded-full uppercase font-thin text-xs'
+              className=' hidden md:flex items-center right-6 text-white bg-[rgb(95,40,74)] px-2 w-[100px] rounded-full uppercase font-thin text-xs'
             >
               Subscribe
             </button>
           </div>
           <button
             type='submit'
-            className='md:hidden right-6 text-white bg-orange-800 py-3 w-[200px] rounded-full uppercase font-semibold text-lg mt-5'
+            className='md:hidden right-6 text-white bg-[rgb(95,40,74)] py-3 w-[200px] rounded-full uppercase font-semibold text-lg mt-5'
           >
             Subscribe
           </button>

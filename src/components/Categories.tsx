@@ -19,12 +19,12 @@ export default function Categories() {
               key={idx}
               className='w-[352px] lg:w-[470px] xl:w-[628px] h-[267px] lg:h-[356px] xl:h-[475px] relative flex justify-center items-center overflow-hidden flex-grow'
             >
-              <Link href='/sales/trending'>
+              <Link href={category.slug}>
                 <Image
                   src={category.image}
                   alt={category.title}
                   fill
-                  className=' transform hover:scale-110 transition-transform ease-in-out duration-500'
+                  className='object-cover transform hover:scale-110 transition-transform ease-in-out duration-500'
                 />
               </Link>
               <div className='absolute text-center'>
@@ -32,7 +32,7 @@ export default function Categories() {
                   {category.title}
                 </h3>
                 <Link href='/sales/trending' className='hidden md:block'>
-                  <button className='text-white bg-orange-800 py-2 lg:py-3 w-[150px] rounded-full uppercase font-thin text-xs flex items-center justify-center gap-1 lg:gap-2 '>
+                  <button className='text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[150px] rounded-full uppercase font-thin text-xs flex items-center justify-center gap-1 lg:gap-2 '>
                     learn more
                     <span>
                       <MoveDownRight className='w-4 lg:w-5 h-4 lg:h-5 pt-1' />
@@ -46,8 +46,8 @@ export default function Categories() {
 
         {/* Carousel */}
         <SalesCarousel />
-        <PopularItems />
       </div>
+      <PopularItems />
     </div>
   )
 }

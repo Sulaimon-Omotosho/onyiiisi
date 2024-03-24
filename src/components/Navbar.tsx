@@ -1,23 +1,18 @@
 'use client'
 
-import { ShoppingCart, Heart, UserRound, Menu, X, LogOut } from 'lucide-react'
+import { ShoppingCart, Heart, UserRound, Menu, X } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 import { Noto_Sans_Georgian } from 'next/font/google'
 import DropdownSales from './dropdown/DropdownSales'
 import DropdownShop from './dropdown/DropdownShop'
 import Sidebar from './Sidebar'
-import { signOut, useSession } from 'next-auth/react'
-import { Button } from './ui/button'
 
 const georgia = Noto_Sans_Georgian({ subsets: ['latin'] })
 
 export default function Navbar() {
-  const { data: session } = useSession()
   const [shopDropDown, setShopDropDown] = useState(false)
   const [salesDropDown, setSalesDropDown] = useState(false)
-
-  // console.log(session)
 
   const toggleShopDropdown = () => {
     setShopDropDown(!shopDropDown)
@@ -35,9 +30,21 @@ export default function Navbar() {
     setSidebar(!sidebar)
   }
 
+  const closeSidebar = () => {
+    setSidebar(false)
+  }
+
   return (
-    <header className='relative z-10'>
-      <div className='px-[40px] lg:px-[60px] h-20 border-b-[1px] border-black flex justify-between items-center z-20 lg:fixed w-full bg-white'>
+    <header className='relative z-10 bg-[rgb(56,22,10)] text-slate-300'>
+      {' '}
+      <div
+        className={`absolute w-full shadow-lg shadow-slate-300 transition-all duration-500 h-[100vh] z-10 ${
+          sidebar ? 'top-0 left-0' : 'top-0 left-[-500px] shadow-none'
+        }`}
+      >
+        <Sidebar closeSidebar={closeSidebar} />
+      </div>
+      <div className='px-[40px] lg:px-[60px] h-20 border-b-[1px] border-slate-500 flex justify-between items-center z-20 lg:fixed w-full bg-[rgb(56,22,10)]'>
         {/* Links  */}
         <div className='hidden md:flex gap-5 lg:gap-10 flex-1 capitalize'>
           <div onMouseEnter={toggleShopDropdown} className=''>
@@ -60,13 +67,12 @@ export default function Navbar() {
           >
             sales
           </Link>
-          {session && <p className=''>Hi {session?.user?.name}</p>}
         </div>
 
         {/* Side Bar  */}
-        <div onClick={handleSidebar} className='md:hidden flex-1'>
+        <div onClick={handleSidebar} className='md:hidden flex-1 z-20'>
           {sidebar ? (
-            <X className='w-10 h-10' />
+            <X className='w-10 h-10 text-white' />
           ) : (
             <Menu className='w-10 h-10' />
           )}
@@ -77,7 +83,7 @@ export default function Navbar() {
           <Link href='/'>
             <h1
               style={{ fontStyle: 'italic' }}
-              className={`font-bold text-2xl italic text-center ${georgia.className}`}
+              className={`font-bold text-2xl italic text-white text-center ${georgia.className}`}
             >
               Onyiisi
             </h1>
@@ -85,44 +91,18 @@ export default function Navbar() {
         </div>
 
         {/* Navbar Icons  */}
-        <div className='flex-1 flex gap-5 lg:scale-100 justify-end items-center'>
-          <Link href={'/studio'} target='_blank'>
-            Studio
+        <div className='flex-1 flex gap-5 lg:scale-100 justify-end'>
+          <Link href='/cart'>
+            <ShoppingCart className='cursor-pointer hidden md:block' />
           </Link>
-
-          {session && (
-            <Link href={'/orders'} target='_blank'>
-              Orders
-            </Link>
-          )}
-          <div className='relative'>
-            <Link href='/cart'>
-              <ShoppingCart className='cursor-pointer hidden md:block' />
-            </Link>
-            <p className='absolute top-[-4px] right-[-6px] bg-gray-800 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center font-semibold'>
-              {2}
-            </p>
-          </div>
-          <div className='relative'>
-            <Link href='/wish-list'>
-              <Heart className='cursor-pointer hidden md:block' />
-            </Link>
-            <p className='absolute top-[-4px] right-[-6px] bg-gray-800 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center font-semibold'>
-              {2}
-            </p>
-          </div>
-          {session ? (
-            <Button onClick={() => signOut()} variant={'ghost'}>
-              <LogOut className='cursor-pointer' />
-            </Button>
-          ) : (
-            <Link href='/login'>
-              <UserRound className='cursor-pointer' />
-            </Link>
-          )}
+          <Link href='/wish-list'>
+            <Heart className='cursor-pointer hidden md:block' />
+          </Link>
+          <Link href='/login'>
+            <UserRound className='cursor-pointer' />
+          </Link>
         </div>
       </div>
-
       {/* Dropdown */}
       {/* {shopDropDown ? <DropdownShop /> : ''}
       {salesDropDown ? <DropdownSales /> : ''} */}
@@ -145,13 +125,6 @@ export default function Navbar() {
         } transition-top ease-in-out duration-300   `}
       >
         <DropdownSales />
-      </div>
-      <div
-        className={`absolute w-full shadow-lg shadow-slate-300 transition-all duration-500 z-10 ${
-          sidebar ? 'top-20' : 'top-[-80px] shadow-none'
-        }`}
-      >
-        <Sidebar />
       </div>
     </header>
   )

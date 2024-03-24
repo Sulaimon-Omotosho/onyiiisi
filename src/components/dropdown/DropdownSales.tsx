@@ -5,19 +5,13 @@ import { unknownDropdown } from '@/constants'
 export default function DropdownSales() {
   return (
     <div className=''>
-      <div
-        // className={`${
-        //   salesDropDown
-        //     ? ' transition-all transform origin-top duration-500 z-10'
-        //     : 'top-[-100%] transition-all transform origin-top duration-500'
-        // } py-[50px] px-9 top-[80px] absolute w-full backdrop-blur-sm`}
-        className='py-[50px] px-9 absolute lg:fixed z-20 w-full bg-white'
-      >
+      <div className='py-[50px] px-9 absolute lg:fixed z-20 w-full bg-[rgb(71,28,13)]'>
         <div className='flex-1 flex items-center gap-6 lg:gap-10 '>
-          <div className='w-[150px] lg:w-[202px] h-[108px] lg:h-[144px] relative rounded-md mr-16'>
+          <div className='w-[150px] lg:w-[202px] h-[108px] lg:h-[144px] relative rounded-md mr-16 overflow-hidden object-cover'>
             <Image
               src='/sales.png'
               fill
+              // objectFit='cover'
               alt='sales image'
             />
           </div>

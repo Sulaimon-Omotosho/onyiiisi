@@ -21,7 +21,7 @@ export default function SalesCarousel() {
   }
 
   return (
-    <div className='flex flex-col md:flex-row justify-around content-center items-center relative '>
+    <div className='my-5 flex flex-col md:flex-row justify-around content-center items-center relative '>
       {salesCarousel.map((sale, idx) => (
         <div key={idx} className='hidden md:flex flex-col items-center'>
           <div className='relative h-[225px] lg:h-[300px] xl:h-[400px] w-[213px] lg:w-[284px] xl:w-[379px] overflow-hidden rounded-xl '>
@@ -29,10 +29,10 @@ export default function SalesCarousel() {
               src={sale.image}
               alt={sale.title}
               fill
-              className='transform hover:scale-110 transition-transform ease-in-out duration-500'
+              className='object-cover transform hover:scale-110 transition-transform ease-in-out duration-500'
             />
             <div className='bg-white absolute left-3 top-6 '>
-              <p className='px-3 py-[2px]'>{sale.title}</p>
+              <p className='px-3 capitalize py-[2px]'>{sale.title}</p>
             </div>
           </div>
           <div className='flex flex-col gap-1 mt-2 w-[213px] lg:w-[284px] xl:w-[379px]'>
@@ -58,10 +58,10 @@ export default function SalesCarousel() {
               src={sale.image}
               alt={sale.title}
               fill
-              className='transform hover:scale-110 transition-transform ease-in-out duration-500 flex-grow'
+              className='object-cover transform hover:scale-110 transition-transform ease-in-out duration-500 flex-grow'
             />
             <div className='bg-white absolute left-3 top-6'>
-              <p className='px-3 py-[2px]'>{sale.title}</p>
+              <p className='px-3 capitalize py-[2px]'>{sale.title}</p>
             </div>
           </div>
           <div className='flex flex-col gap-1 w-[359px] mt-2'>

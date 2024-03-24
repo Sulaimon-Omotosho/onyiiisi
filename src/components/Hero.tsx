@@ -8,7 +8,7 @@ export default function Hero({ banners }: { banners: BannerProps[] }) {
     <div className='py-0 lg:py-16 xl:py-20'>
       {/* Hero Header  */}
       <div className='px-5 md:px-10 lg:px-16 xl:px-20 uppercase text-2xl md:text-3xl lg:text-5xl xl:text-7xl mt-8'>
-        <h1 className='font-thin text-orange-800'>radiating Luxury</h1>
+        <h1 className='font-thin text-[rgb(95,40,74)]'>radiating Luxury</h1>
         <h1 className='font-extrabold'>one gleam at a time.</h1>
       </div>
 
@@ -16,7 +16,7 @@ export default function Hero({ banners }: { banners: BannerProps[] }) {
       <HeroCarousel banners={banners} />
 
       {/* Guarantees  */}
-      <div className='flex flex-col md:flex-row items-center content-center gap-10 lg:gap-16 px-[35px] py-6 lg:px-[50px] xl:px-[100px] 2xl:px-[150px]'>
+      <div className='bg-[rgb(217,199,211)] my-12 flex flex-col md:flex-row items-center content-center gap-10 lg:gap-16 px-[35px] py-6 lg:px-[50px] xl:px-[100px] 2xl:px-[150px]'>
         {guarantees.map((guarantee, idx) => (
           <div
             key={idx}

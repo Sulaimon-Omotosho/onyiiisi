@@ -28,7 +28,7 @@ export default function HeroCarousel({ banners }: { banners: BannerProps[] }) {
       <div className='w-full h-[300px] md:h-[480px] lg:h-[680px] xl:h-[729px] relative my-5 lg:my-10 z-0 duration-1000 '>
         {banners.map((item, idx) => (
           <div
-            className={`  transition-opacity duration-1000 ${
+            className={`absolute h-full w-full transition-opacity duration-1000 ${
               idx === currentIndex ? 'opacity-100' : 'opacity-0'
             } `}
             key={idx}
@@ -37,6 +37,7 @@ export default function HeroCarousel({ banners }: { banners: BannerProps[] }) {
               src={urlFor(item.image).url()}
               alt='Hero Onyiisi'
               fill
+              className='object-cover brightness-90'
             />
           </div>
         ))}
@@ -52,7 +53,7 @@ export default function HeroCarousel({ banners }: { banners: BannerProps[] }) {
               {hero.desc}
             </p>
           ))}
-          <button className='text-white bg-orange-800 py-2 lg:py-3 w-[100px] lg:w-[150px] rounded-full uppercase font-thin text-xs flex items-center justify-center gap-1 lg:gap-2 '>
+          <button className='text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[100px] lg:w-[150px] rounded-full uppercase font-thin text-xs flex items-center justify-center gap-1 lg:gap-2 '>
             shop now
             <span>
               <MoveDownRight className='w-4 lg:w-5 h-4 lg:h-5 pt-1' />
@@ -65,8 +66,8 @@ export default function HeroCarousel({ banners }: { banners: BannerProps[] }) {
                 onClick={() => goToHero(idx)}
                 className={`${
                   idx === currentIndex
-                    ? 'bg-orange-800 border-none'
-                    : 'bg-transparent border-[1px] border-orange-800'
+                    ? 'bg-[rgb(95,40,74)] border-none'
+                    : 'bg-transparent border-[1px] border-[rgb(95,40,74)]'
                 }  py-[2px] w-[30px] lg:w-[50px] rounded-full`}
               ></button>
             ))}
