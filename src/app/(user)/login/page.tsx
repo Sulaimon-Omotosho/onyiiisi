@@ -41,7 +41,7 @@ const LoginPage = async () => {
           </Button>
         </div>
         <p className='text-sm text-center'>
-          Don't Have an account?{' '}
+          Don&apos;t Have an account?{' '}
           <span className='text-orange-800 underline'>
             <Link href='/sign-up'>Sign Up</Link>
           </span>
