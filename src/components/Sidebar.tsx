@@ -158,7 +158,11 @@ const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
         )}
       </div>
       {session && (
-        <Link href='/profile' className='absolute bottom-6 text-lg capitalize'>
+        <Link
+          href='/profile'
+          onClick={closeSidebar}
+          className='absolute bottom-6 text-lg capitalize'
+        >
           Hi, {session?.user?.name}
         </Link>
       )}

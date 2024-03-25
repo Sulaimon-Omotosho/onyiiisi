@@ -33,7 +33,6 @@ export default function LoginForm() {
         toast.error('Invalid email or password.')
         return
       }
- 
 
       toast.success('Successfully Signed In')
       push('/')
@@ -61,13 +60,16 @@ export default function LoginForm() {
               Remember me
             </label>
           </div>
-          <Link href='/login' className='text-sm text-blue-500 capitalize'>
+          <Link
+            href='/login/forgot-password'
+            className='text-sm text-blue-500 capitalize'
+          >
             forgot password?
           </Link>
         </div>
         <div className='flex justify-center'>
           <Button
-            className='text-white bg-orange-800 py-1 lg:py-2 w-[50%] rounded-full uppercase font-thin justify-center gap-1 lg:gap-2 '
+            className='text-white bg-[rgb(95,40,74)] py-1 lg:py-2 w-[50%] rounded-full uppercase font-thin justify-center gap-1 lg:gap-2 '
             disabled={form.formState.isSubmitting}
           >
             {form.formState.isSubmitting && (

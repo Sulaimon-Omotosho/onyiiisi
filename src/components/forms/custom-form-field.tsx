@@ -18,12 +18,14 @@ export const CustomFormFields = ({
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem>
-          <FormLabel className='capitalize'>{name}</FormLabel>
+        <FormItem className='w-full relative'>
+          <FormLabel className='capitalize font-semibold text-sm absolute bg-white left-6 top-0 px-2 rounded-full'>
+            {name}
+          </FormLabel>
           <FormControl>
             <Input
               {...field}
-              className='border-[1px] border-gray-300 rounded-sm p-3 w-[500px]'
+              className='border-[1px] border-gray-300 rounded-sm p-3'
               type={type}
             />
           </FormControl>

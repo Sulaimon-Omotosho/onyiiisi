@@ -23,8 +23,10 @@ const LoginPage = async () => {
         height: '100%',
       }}
     >
-      <div className='bg-white m-[100px] rounded-lg p-16'>
-        <h1 className='text-2xl font-bold text-center'>Log In</h1>
+      <div className='bg-white md:m-[50px] xl:m-[100px] w-full md:w-[80%] lg:w-[60%] rounded-lg p-5 md:p-16'>
+        <h1 className='text-2xl font-bold text-center'>
+          Log into your Onyiisi Account
+        </h1>
         <p className='text-lg text-center'>OR</p>
         <div className='text-md flex text-center justify-center items-center'>
           <h2 className=''>Continue with google </h2>
@@ -42,8 +44,8 @@ const LoginPage = async () => {
         </div>
         <p className='text-sm text-center'>
           Don&apos;t Have an account?{' '}
-          <span className='text-orange-800 underline'>
-            <Link href='/sign-up'>Sign Up</Link>
+          <span className='text-[rgb(95,40,74)] underline'>
+            <Link href='/sign-up'>Create Account</Link>
           </span>
         </p>
 
