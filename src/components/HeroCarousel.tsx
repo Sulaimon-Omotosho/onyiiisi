@@ -42,7 +42,7 @@ export default function HeroCarousel({ banners }: { banners: BannerProps[] }) {
           </div>
         ))}
         <div className='absolute bottom-6 md:bottom-11 lg:bottom-20 left-6 md:left-11 lg:left-20 w-[250px] md:w-[350px] lg:w-[500px] flex flex-col gap-5'>
-          {heroes.map((hero, idx) => (
+          {banners.map((hero, idx) => (
             <p
               key={idx}
               className={`text-xl lg:text-2xl ${
@@ -50,7 +50,7 @@ export default function HeroCarousel({ banners }: { banners: BannerProps[] }) {
               }`}
               style={{ color: hero.color }}
             >
-              {hero.desc}
+              {hero.description}
             </p>
           ))}
           <button className='text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[100px] lg:w-[150px] rounded-full uppercase font-thin text-xs flex items-center justify-center gap-1 lg:gap-2 '>

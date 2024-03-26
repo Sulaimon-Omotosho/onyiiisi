@@ -31,12 +31,20 @@ export type ProductProps = {
   quantity: number
 }
 
-
-
 export type BannerProps = {
   _id: string
   image: ImageAsset
+  description: string
+  color: string
 }
+
+export type GuaranteesProps = {
+  _id: string
+  image: ImageAsset
+  title: string
+  description: string
+}
+
 export type CategoriesProps = {
   _id: string
   title: string

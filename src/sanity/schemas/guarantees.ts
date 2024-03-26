@@ -2,8 +2,8 @@ import { defineField, defineType } from 'sanity'
 
 export default defineType({
   type: 'document',
-  name: 'banner',
-  title: 'Banner',
+  name: 'guarantees',
+  title: 'Guarantees',
   fields: [
     defineField({
       name: 'title',
@@ -14,7 +14,7 @@ export default defineType({
       name: 'image',
       title: 'Image',
       type: 'image',
-      description: 'Banner Image',
+      description: 'Guarantees Image',
       validation: (rule) => rule.required(),
       options: {
         hotspot: true,
@@ -31,18 +31,12 @@ export default defineType({
       title: 'Description',
       type: 'string',
     }),
-    defineField({
-      name: 'color',
-      title: 'Color',
-      type: 'string',
-    }),
   ],
   preview: {
     select: {
       title: 'title',
       media: 'image',
       description: 'description',
-      color: 'color',
     },
   },
 })
