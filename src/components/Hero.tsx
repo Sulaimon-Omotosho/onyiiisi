@@ -26,7 +26,7 @@ export default function Hero({
       <div className='bg-[rgb(217,199,211)] my-12 flex flex-col md:flex-row items-center content-center gap-10 lg:gap-16 px-[35px] py-6 lg:px-[50px] xl:px-[100px] 2xl:px-[150px]'>
         {guarantees.map((guarantee, idx) => (
           <div
-            key={idx}
+            key={guarantee._id}
             className=' flex-1 text-center flex flex-col gap-5 content-center items-center flex-grow'
           >
             <div className='h-20 w-20 relative'>
