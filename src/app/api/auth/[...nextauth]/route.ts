@@ -56,7 +56,7 @@ export const authOptions: NextAuthOptions = {
           name: isUserExist?.name,
           email: isUserExist?.email,
           role: isUserExist?.role,
-          is_admin: isUserExist?.is_admin,
+          // is_admin: isUserExist?.is_admin,
         }
       },
     }),
