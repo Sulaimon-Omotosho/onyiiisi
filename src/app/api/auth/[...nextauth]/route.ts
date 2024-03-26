@@ -56,7 +56,7 @@ const authOptions: NextAuthOptions = {
           name: isUserExist?.name,
           email: isUserExist?.email,
           role: isUserExist?.role,
-          // is_admin: isUserExist?.is_admin,
+          is_admin: isUserExist?.is_admin,
         }
       },
     }),
@@ -64,18 +64,18 @@ const authOptions: NextAuthOptions = {
   debug: process.env.NODE_ENV === 'development',
 }
 
-// export async function isAdmin() {
-//   const session = await getServerSession()
-//   const userEmail = session?.user?.email
-//   if (!userEmail) {
-//     return false
-//   }
-//   const userInfo = await User.findOne({ email: userEmail })
-//   if (!userInfo) {
-//     return false
-//   }
-//   return userInfo?.is_admin
-// }
+export async function isAdmin() {
+  const session = await getServerSession()
+  const userEmail = session?.user?.email
+  if (!userEmail) {
+    return false
+  }
+  const userInfo = await User.findOne({ email: userEmail })
+  if (!userInfo) {
+    return false
+  }
+  return userInfo?.is_admin
+}
 
 const handler = NextAuth(authOptions)
 export { handler as GET, handler as POST }

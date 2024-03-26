@@ -6,18 +6,18 @@ import { signOut, useSession } from 'next-auth/react'
 const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
   const { data: session } = useSession()
   const [shop, setShop] = useState(false)
-  const [sales, setSales] = useState(false)
+  // const [sales, setSales] = useState(false)
 
   const handleShop = () => {
     setShop(!shop)
   }
 
-  const handlesSales = () => {
-    setSales(!sales)
-  }
+  // const handlesSales = () => {
+  //   setSales(!sales)
+  // }
 
   return (
-    <div className='fixed md:hidden h-[100vh] flex flex-col items-center w-full bg-[rgb(95,40,74)] text-2xl text-white uppercase font-semibold  '>
+    <div className='fixed md:hidden h-[100vh] flex flex-col items-center w-full bg-[rgb(145,65,17)] text-2xl text-white uppercase font-semibold  '>
       <div className='flex flex-col mt-20 items-left gap-10 w-fit items-left '>
         <div className=''>
           <div
@@ -77,19 +77,15 @@ const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
           about
         </Link>
         <div className=''>
-          <div
-            onClick={handlesSales}
+          <Link
+            href='/blog'
+            onClick={closeSidebar}
             // href='/sales'
-            className='flex gap-2 items-center text-2xl'
+            className='flex gap-2 items-center hover:underline underline-offset-2 text-2xl pl-10'
           >
-            {sales ? (
-              <Minus className='h-8 w-8' />
-            ) : (
-              <Plus className='h-8 w-8' />
-            )}
-            sales
-          </div>
-          <div
+            blog
+          </Link>
+          {/* <div
             className={`${sales ? 'capitalize pl-10 flex flex-col' : 'hidden'}`}
           >
             <Link
@@ -119,7 +115,7 @@ const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
             >
               Header
             </Link>
-          </div>
+          </div> */}
         </div>
         <Link
           href='/cart'
@@ -128,7 +124,7 @@ const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
         >
           <ShoppingCart className='h-8 w-8' />
           cart
-          <p className='absolute left-5 top-[-5px] bg-[rgb(95,40,74)] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold'>
+          <p className='absolute left-5 top-[-5px] bg-[rgb(145,65,17)] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold'>
             {2}
           </p>
         </Link>
@@ -139,7 +135,7 @@ const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
         >
           <Heart className='h-8 w-8' />
           wishlist
-          <p className='absolute left-5 top-[-5px] bg-[rgb(95,40,74)] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold'>
+          <p className='absolute left-5 top-[-5px] bg-[rgb(145,65,17)] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold'>
             {9}
           </p>
         </Link>
@@ -151,7 +147,7 @@ const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
           >
             <NotebookText className='cursor-pointer' />
             orders
-            <p className='absolute left-5 top-[-5px] bg-[rgb(95,40,74)] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold'>
+            <p className='absolute left-5 top-[-5px] bg-[rgb(145,65,17)] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold'>
               {1}
             </p>
           </Link>

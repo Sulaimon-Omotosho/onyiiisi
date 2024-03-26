@@ -23,16 +23,16 @@ const georgia = Noto_Sans_Georgian({ subsets: ['latin'] })
 export default function Navbar() {
   const { data: session } = useSession()
   const [shopDropDown, setShopDropDown] = useState(false)
-  const [salesDropDown, setSalesDropDown] = useState(false)
+  // const [salesDropDown, setSalesDropDown] = useState(false)
 
   const toggleShopDropdown = () => {
     setShopDropDown(!shopDropDown)
-    setSalesDropDown(false)
+    // setSalesDropDown(false)
   }
-  const toggleSalesDropdown = () => {
-    setSalesDropDown(!salesDropDown)
-    setShopDropDown(false)
-  }
+  // const toggleSalesDropdown = () => {
+  //   setSalesDropDown(!salesDropDown)
+  //   setShopDropDown(false)
+  // }
 
   // Sidebar function
   const [sidebar, setSidebar] = useState(false)
@@ -57,26 +57,29 @@ export default function Navbar() {
       </div>
       <div className='px-[40px] lg:px-[60px] h-20 border-b-[1px] border-slate-500 flex justify-between items-center z-20 lg:fixed w-full bg-[rgb(56,22,10)]'>
         {/* Links  */}
-        <div className='hidden md:flex gap-5 lg:gap-10 flex-1 capitalize'>
+        <div className='hidden md:flex gap-5 lg:gap-10 flex-1 uppercase'>
           <div onMouseEnter={toggleShopDropdown} className=''>
             <Link
               href={'/shop'}
               // onClick={toggleShopDropdown}
-              className='cursor-pointer'
+              className='cursor-pointer hover:text-[rgb(113,73,59)] hover:underline underline-offset-[12px] ease-in-out duration-200'
             >
               shop
             </Link>
           </div>
-          <Link href={'/about'} className='cursor-pointer'>
+          <Link
+            href={'/about'}
+            className='cursor-pointer hover:text-[rgb(113,73,59)] hover:underline underline-offset-[12px] ease-in-out duration-200'
+          >
             About Us
           </Link>
           <Link
-            href={'/sales'}
-            className='cursor-pointer'
-            onMouseEnter={toggleSalesDropdown}
+            href={'/blog'}
+            className='cursor-pointer hover:text-[rgb(113,73,59)] hover:underline underline-offset-[12px] ease-in-out duration-200'
+            // onMouseEnter={toggleSalesDropdown}
             // onClick={toggleSalesDropdown}
           >
-            sales
+            blog
           </Link>
           {session && (
             <p className='hidden lg:inline'>Hi, {session?.user?.name}</p>
@@ -158,7 +161,7 @@ export default function Navbar() {
       >
         <DropdownShop />
       </div>
-      <div
+      {/* <div
         onMouseLeave={toggleSalesDropdown}
         className={`${
           salesDropDown
@@ -167,7 +170,7 @@ export default function Navbar() {
         } transition-top ease-in-out duration-300   `}
       >
         <DropdownSales />
-      </div>
+      </div> */}
     </header>
   )
 }

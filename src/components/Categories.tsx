@@ -31,7 +31,7 @@ export default function Categories() {
                 <h3 className='capitalize text-white text-2xl font-thin pb-2'>
                   {category.title}
                 </h3>
-                <Link href='/sales/trending' className='hidden md:block'>
+                <Link href='/shop/trending' className='hidden md:block'>
                   <button className='text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[150px] rounded-full uppercase font-thin text-xs flex items-center justify-center gap-1 lg:gap-2 '>
                     learn more
                     <span>

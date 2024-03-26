@@ -48,14 +48,14 @@ export default function Footer() {
               </p>
             </div>
           </div>
-          <div className='flex items-center gap-1 text-gray-400'>
+          <div className='flex items-center gap-1'>
             <Phone className='' />
             <div className=''>
               <h3 className='font-semibold '>Phone</h3>
               <p className='text-sm'>+234 901 234 5678</p>
             </div>
           </div>
-          <div className='flex items-center gap-1 text-gray-400'>
+          <div className='flex items-center gap-1'>
             <Mail className='' />
             <div className=''>
               <h3 className='font-semibold '>E-Mail</h3>
@@ -66,11 +66,7 @@ export default function Footer() {
         <div className='flex flex-col gap-3'>
           <h1 className='font-bold text-xl mb-5 capitalize'>Company</h1>
           {company.map((com, idx) => (
-            <Link
-              className='text-sm capitalize text-gray-400'
-              key={idx}
-              href={com.link}
-            >
+            <Link className='text-sm capitalize' key={idx} href={com.link}>
               {com.title}
             </Link>
           ))}
@@ -78,11 +74,7 @@ export default function Footer() {
         <div className='flex flex-col gap-3'>
           <h1 className='font-bold text-xl mb-5 capitalize'>information</h1>
           {information.map((info, idx) => (
-            <Link
-              className='text-sm capitalize text-gray-400'
-              key={idx}
-              href={info.link}
-            >
+            <Link className='text-sm capitalize' key={idx} href={info.link}>
               {info.title}
             </Link>
           ))}
@@ -90,18 +82,14 @@ export default function Footer() {
         <div className='flex flex-col gap-3'>
           <h1 className='font-bold text-xl mb-5 capitalize'>Stay In Touch</h1>
           {socials.map((social, idx) => (
-            <Link
-              className='text-sm capitalize text-gray-400'
-              key={idx}
-              href={social.link}
-            >
+            <Link className='text-sm capitalize' key={idx} href={social.link}>
               {social.title}
             </Link>
           ))}
         </div>
       </div>
       <div className=''>
-        <p className='font-thin text-sm text-gray-400 text-center'>
+        <p className='font-thin text-sm text-center'>
           &copy; All rights reserved 2024. Onyiisi
         </p>
       </div>
