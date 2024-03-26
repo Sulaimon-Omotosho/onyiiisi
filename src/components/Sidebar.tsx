@@ -17,7 +17,7 @@ const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
   }
 
   return (
-    <div className=' md:hidden h-[100vh] flex flex-col items-center w-full bg-[rgb(95,40,74)] text-2xl text-white uppercase font-semibold  '>
+    <div className='fixed md:hidden h-[100vh] flex flex-col items-center w-full bg-[rgb(95,40,74)] text-2xl text-white uppercase font-semibold  '>
       <div className='flex flex-col mt-20 items-left gap-10 w-fit items-left '>
         <div className=''>
           <div

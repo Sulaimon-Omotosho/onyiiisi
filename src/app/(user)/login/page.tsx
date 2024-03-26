@@ -44,7 +44,7 @@ const LoginPage = async () => {
         </div>
         <p className='text-sm text-center'>
           Don&apos;t Have an account?{' '}
-          <span className='text-[rgb(95,40,74)] underline'>
+          <span className='text-[rgb(95,40,74)] underline cursor-pointer'>
             <Link href='/sign-up'>Create Account</Link>
           </span>
         </p>

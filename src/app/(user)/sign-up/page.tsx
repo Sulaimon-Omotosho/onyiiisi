@@ -75,8 +75,8 @@ const SignUpPage = () => {
         </div>
         <p className='text-sm text-center'>
           Already have an account?{' '}
-          <span className='text-[rgb(95,40,74)] underline'>
-            <Link href='/login'>Login</Link>
+          <span className='text-orange-800 underline'>
+            <Link href='/sign-up'>Log In</Link>
           </span>
         </p>
 
@@ -85,9 +85,18 @@ const SignUpPage = () => {
             className='flex flex-col justify-center pt-8 gap-6'
             onSubmit={form.handleSubmit(onSubmit)}
           >
+            <CustomFormFields name='name' control={form.control} />
             <div className='flex gap-4 w-full'>
-              <CustomFormFields name='first name' control={form.control} />
-              <CustomFormFields name='last name' control={form.control} />
+              <CustomFormFields
+                type='text'
+                name='first name'
+                control={form.control}
+              />
+              <CustomFormFields
+                type='text'
+                name='last name'
+                control={form.control}
+              />
             </div>
             <CustomFormFields name='email' control={form.control} />
             <CustomFormFields
@@ -108,8 +117,9 @@ const SignUpPage = () => {
                 <div className='flex gap-2 items-center'>
                   <input
                     type='radio'
-                    name='male'
+                    name='gender'
                     id='male'
+                    value='male'
                     className='h-5 w-5'
                   />
                   <label htmlFor='male' className='text-sm'>
@@ -119,8 +129,9 @@ const SignUpPage = () => {
                 <div className='flex gap-2 items-center'>
                   <input
                     type='radio'
-                    name='female'
+                    name='gender'
                     id='female'
+                    value='female'
                     className='h-5 w-5'
                   />
                   <label htmlFor='female' className='text-sm'>
@@ -136,15 +147,15 @@ const SignUpPage = () => {
               <div className='flex gap-3 pt-3'>
                 <div className='relative py-[10px] w-1/3'>
                   <label
-                    htmlFor='month'
+                    htmlFor='dob.month'
                     className='font-semibold text-sm absolute bg-white left-6 top-0 capitalize px-2 rounded-full'
                   >
                     month
                   </label>
                   <input
                     type='number'
-                    name='month'
-                    id='month'
+                    name='dob.month'
+                    id='dob.month'
                     min={1}
                     max={12}
                     className='border-[1px] w-full border-gray-300 rounded-sm p-3'
@@ -152,7 +163,7 @@ const SignUpPage = () => {
                 </div>
                 <div className='relative py-[10px] w-1/3'>
                   <label
-                    htmlFor='day'
+                    htmlFor='dob.day'
                     className='font-semibold text-sm absolute bg-white left-6 top-0 capitalize px-2 rounded-full'
                   >
                     day
@@ -160,7 +171,7 @@ const SignUpPage = () => {
                   <input
                     type='number'
                     name='day'
-                    id='day'
+                    id='dob.day'
                     min={1}
                     max={31}
                     className='border-[1px] w-full border-gray-300 rounded-sm p-3'
@@ -168,7 +179,7 @@ const SignUpPage = () => {
                 </div>
                 <div className='relative py-[10px] w-1/3'>
                   <label
-                    htmlFor='year'
+                    htmlFor='dob.year'
                     className='font-semibold text-sm absolute bg-white left-6 capitalize top-0 px-2 rounded-full'
                   >
                     year
@@ -176,7 +187,7 @@ const SignUpPage = () => {
                   <input
                     type='number'
                     name='year'
-                    id='year'
+                    id='dob.year'
                     min={minYear}
                     max={maxYear}
                     className='border-[1px] w-full border-gray-300 rounded-sm p-3'
@@ -212,7 +223,7 @@ const SignUpPage = () => {
             </div>
             <div className='flex justify-center'>
               <Button
-                className='text-white bg-[rgb(95,40,74)] py-1 lg:py-2 w-[50%] rounded-full uppercase font-thin justify-center gap-1 lg:gap-2 '
+                className='text-white bg-orange-800 py-1 lg:py-2 w-[50%] rounded-full uppercase font-thin justify-center gap-1 lg:gap-2 '
                 disabled={form.formState.isSubmitting}
               >
                 {form.formState.isSubmitting && (
