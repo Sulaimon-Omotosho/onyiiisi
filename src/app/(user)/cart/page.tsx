@@ -94,7 +94,7 @@ const CartPage = () => {
           <p className="text-xl">$674</p>
         </div>
         <button className="text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[50%] lg:w-[30%] rounded-full uppercase font-bold text-md flex items-center justify-center gap-1 lg:gap-2 ">
-          <Link href="/payment">proceed to checkout</Link>
+          <Link href="/checkout">proceed to checkout</Link>
         </button>
         <Link
           href="/shop"
