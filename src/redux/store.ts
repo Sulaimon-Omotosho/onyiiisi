@@ -1,5 +1,6 @@
-import { configureStore, combineReducers } from '@reduxjs/toolkit'
-// import cartReducer from './cartSlice'
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import cartReducer from "./cart-slice";
+import wishlistReducer from "./wishlist-slice";
 import {
   persistStore,
   persistReducer,
@@ -10,44 +11,66 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-} from 'redux-persist'
-import createWebStorage from 'redux-persist/es/storage/createWebStorage'
+} from "redux-persist";
+import createWebStorage from "redux-persist/es/storage/createWebStorage";
 
-const rootReducer = combineReducers({ cartState: 'hello' })
+// Wrap cartReducer with persistReducer
+// const persistedCartReducer = persistReducer(
+//   {
+//     key: "cart",
+//     version: 1,
+//     storage: createWebStorage("local"),
+//   },
+//   cartReducer
+// );
+
+// Wrap wishlistReducer with persistReducer
+// const persistedWishlistReducer = persistReducer(
+//   {
+//     key: "wishlist",
+//     version: 1,
+//     storage: createWebStorage("local"),
+//   },
+//   wishlistReducer
+// );
+
+const rootReducer = combineReducers({
+  cartState: cartReducer,
+  wishlistState: wishlistReducer,
+});
 
 // create a dummy server for the local storage
-
 export function createPersistStore(): WebStorage {
-  const isServer = typeof window === 'undefined'
+  const isServer = typeof window === "undefined";
   //   return dummy server
   if (isServer) {
     return {
       getItem() {
-        return Promise.resolve(null)
+        return Promise.resolve(null);
       },
       setItem() {
-        return Promise.resolve()
+        return Promise.resolve();
       },
       removeItem() {
-        return Promise.resolve()
+        return Promise.resolve();
       },
-    }
+    };
   }
-  return createWebStorage('local')
+  return createWebStorage("local");
 }
 
 const storage =
-  typeof window !== 'undefined'
-    ? createWebStorage('local')
-    : createPersistStore()
+  typeof window !== "undefined"
+    ? createWebStorage("local")
+    : createPersistStore();
 
 const persistConfig = {
-  key: 'root',
+  key: "root",
   version: 1,
   storage,
-}
+};
 
-const persistedReducer = persistReducer(persistConfig, rootReducer)
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
@@ -56,6 +79,6 @@ export const store = configureStore({
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
     }),
-})
+});
 
-export let persistor = persistStore(store)
+export let persistor = persistStore(store);
