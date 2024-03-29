@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema(
   {
@@ -17,8 +17,8 @@ const UserSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ['user', 'admin'],
-      default: 'user',
+      enum: ["user", "admin"],
+      default: "user",
     },
     is_admin: {
       type: Boolean,
@@ -53,8 +53,8 @@ const UserSchema = new mongoose.Schema(
     verifyTokenExpiry: Date,
   },
   { timestamps: true }
-)
+);
 
-const User = mongoose.models.User || mongoose.model('User', UserSchema)
+const User = mongoose.models.User || mongoose.model("User", UserSchema);
 // const User = mongoose.models.User || mongoose.model("User", UserSchema);
-export default User
+export default User;
