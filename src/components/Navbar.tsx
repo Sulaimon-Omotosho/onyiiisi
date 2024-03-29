@@ -114,7 +114,7 @@ export default function Navbar() {
           </Link>
 
           {session && (
-            <Link href={'/history'} className='relative'>
+            <Link href='/history' className='relative'>
               <NotebookText className='cursor-pointer hidden md:inline ' />
               <p className='hidden absolute top-[-4px] right-[-6px] bg-[rgb(56,22,10)] text-white text-xs w-4 h-4 rounded-full md:flex items-center justify-center font-semibold'>
                 {1}
@@ -131,7 +131,10 @@ export default function Navbar() {
           </div>
           <div className='relative'>
             <Link href='/wish-list'>
-              <Heart className='cursor-pointer hidden md:block' />
+              <Heart
+                className='cursor-pointer hidden md:block'
+                // style={{ fill: 'red' }}
+              />
             </Link>
             <p className='hidden absolute top-[-4px] right-[-6px] bg-[rgb(56,22,10)] text-white text-xs w-4 h-4 rounded-full md:flex items-center justify-center font-semibold'>
               {9}

@@ -17,7 +17,19 @@ const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
   // }
 
   return (
-    <div className='fixed md:hidden h-[100vh] flex flex-col items-center w-full bg-[rgb(145,65,17)] text-2xl text-white uppercase font-semibold  '>
+    <div
+      // onClick={closeSidebar}
+      className='fixed md:hidden h-[100vh] flex flex-col items-center w-full bg-[rgb(145,65,17)] text-2xl text-white uppercase font-semibold  '
+    >
+      {session && (
+        <Link
+          href='/profile'
+          onClick={closeSidebar}
+          className='absolute top-6 text-lg capitalize'
+        >
+          Hi, {session?.user?.name}
+        </Link>
+      )}
       <div className='flex flex-col mt-20 items-left gap-10 w-fit items-left '>
         <div className=''>
           <div
@@ -141,7 +153,7 @@ const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
         </Link>
         {session && (
           <Link
-            href={'/history'}
+            href='/history'
             onClick={closeSidebar}
             className='relative flex gap-2 items-center'
           >
@@ -153,15 +165,6 @@ const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
           </Link>
         )}
       </div>
-      {session && (
-        <Link
-          href='/profile'
-          onClick={closeSidebar}
-          className='absolute bottom-6 text-lg capitalize'
-        >
-          Hi, {session?.user?.name}
-        </Link>
-      )}
     </div>
   )
 }
