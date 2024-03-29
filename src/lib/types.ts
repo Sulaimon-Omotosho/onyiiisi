@@ -51,6 +51,18 @@ export type CategoriesProps = {
   description: string
 }
 
+export type SpecialsProps = {
+  _id: string
+  title: string
+  description: string
+}
+
+export type CollectionsProps = {
+  _id: string
+  title: string
+  description: string
+}
+
 export type CustomFormFieldsType = {
   name: string
   control: Control<any>

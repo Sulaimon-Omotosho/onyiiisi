@@ -36,9 +36,23 @@ export default defineType({
     defineField({
       name: 'category',
       title: 'Product Category',
-      type: 'reference',
-      to: [{ type: 'category' }],
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'category' }] }],
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'specials',
+      title: 'Product Specials',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'specials' }] }],
+      // validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'collection',
+      title: 'Product Collection',
+      type: 'array',
+      of: [{ type: 'reference', to: [{ type: 'collection' }] }],
+      // validation: (rule) => rule.required(),
     }),
 
     defineField({
