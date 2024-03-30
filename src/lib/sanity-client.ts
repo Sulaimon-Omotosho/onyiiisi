@@ -1,6 +1,6 @@
 import { createClient, groq } from 'next-sanity'
 import imageUrlBuilder from '@sanity/image-url'
-import { CategoriesProps } from './types'
+import { CategoriesProps, ProductProps } from './types'
 
 const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID
