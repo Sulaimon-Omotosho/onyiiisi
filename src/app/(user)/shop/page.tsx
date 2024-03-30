@@ -26,7 +26,7 @@ const ShopPage = () => {
           >
             <Image
               src={shop.image}
-              alt='ombre collections'
+              alt={shop.title}
               fill
               className='brightness-75 object-cover'
             />

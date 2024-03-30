@@ -2,7 +2,6 @@ import { earringsPage } from '@/constants'
 import { Heart, Plus } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
 
 const CategoryPage = () => {
   return (
@@ -17,7 +16,7 @@ const CategoryPage = () => {
             className='object-cover'
           />
           <h2 className=' absolute top-10 left-10 uppercase text-3xl font-thin text-white'>
-            earrings
+            Earrings
           </h2>
         </div>
 
