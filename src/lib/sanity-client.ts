@@ -80,18 +80,18 @@ export const productsByCollection = async (collectionName: string) => {
   return products
 }
 
-// export const getProductById = async (productId: string) => {
-//   const query = groq`
-//     *[_type == 'product' && _id == $productId][0] {
-//       // Define the fields you want to retrieve for the product
-//       _id,
-//       title,
-//       description,
-//       // Add other fields as needed
-//     }
-//   `
+export const getProductById = async (productId: string) => {
+  const query = groq`
+    *[_type == 'product' && _id == $productId][0] {
+      // Define the fields you want to retrieve for the product
+      _id,
+      title,
+      description,
+      // Add other fields as needed
+    }
+  `
 
-//   const params = { productId }
-//   const productData = await getCliClient().fetch(query, params)
-//   return productData
-// }
+  const params = { productId }
+  const productData = await getCliClient().fetch(query, params)
+  return productData
+}
