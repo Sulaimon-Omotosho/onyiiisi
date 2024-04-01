@@ -18,6 +18,7 @@ export type ProductProps = {
     current: string
     _type: string
   }
+  placeholder: ImageAsset
   image: {
     _type: string
     asset: {
@@ -29,6 +30,7 @@ export type ProductProps = {
   isnew: boolean
   body: any
   quantity: number
+  gram: number
 }
 
 export type BannerProps = {

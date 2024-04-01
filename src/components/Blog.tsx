@@ -12,7 +12,7 @@ export default function Blog() {
             <h3 className='uppercase text-2xl md:text-xl font-semibold'>
               our blog
             </h3>
-            <p className='text-sm font-thin text-gray-500'>
+            <p className='text-sm font-thin'>
               Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Molestiae, impedit.
             </p>
@@ -41,11 +41,9 @@ export default function Blog() {
                 />
               </div>
               <div className=''>
-                <p className='font-thin text-sm text-gray-500'>{blog.date}</p>
+                <p className='font-thin text-sm'>{blog.date}</p>
                 <h3 className='font-bold capitalize '>{blog.title}</h3>
-                <p className='text-xs font-thin text-gray-500'>
-                  {blog.details}
-                </p>
+                <p className='text-xs font-thin'>{blog.details}</p>
               </div>
             </div>
           ))}

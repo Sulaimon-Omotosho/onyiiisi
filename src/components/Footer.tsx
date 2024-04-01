@@ -39,7 +39,7 @@ export default function Footer() {
       <div className='flex flex-col md:flex-row content-center gap-20 justify-center mb-8'>
         <div className='flex flex-col gap-3'>
           <h1 className='font-bold text-xl mb-5'>Onyiisi</h1>
-          <div className='flex items-center gap-1 text-gray-400'>
+          <div className='flex items-center gap-1'>
             <MapPin className='' />
             <div className=''>
               <h3 className='font-semibold '>Location</h3>
