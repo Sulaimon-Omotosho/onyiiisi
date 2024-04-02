@@ -19,7 +19,7 @@ const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
   return (
     <div
       // onClick={closeSidebar}
-      className='fixed md:hidden h-[100vh] flex flex-col items-center w-full bg-[rgb(145,65,17)] text-2xl text-white uppercase font-semibold  '
+      className='fixed md:hidden h-[100vh] flex flex-col items-center w-full bg-[rgb(95,40,74)] text-2xl text-white uppercase font-semibold  '
     >
       {session && (
         <Link
@@ -30,7 +30,7 @@ const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
           Hi, {session?.user?.name}
         </Link>
       )}
-      <div className='flex flex-col mt-20 items-left gap-10 w-fit items-left '>
+      <div className='flex flex-col mt-20 items-left gap-10 w-fit '>
         <div className=''>
           <div
             onClick={handleShop}
@@ -45,7 +45,7 @@ const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
             shop
           </div>
           <div
-            className={`${
+            className={` ${
               shop
                 ? 'capitalize pl-10 flex flex-col text-md font-thin'
                 : 'hidden'
@@ -136,7 +136,7 @@ const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
         >
           <ShoppingCart className='h-8 w-8' />
           cart
-          <p className='absolute left-5 top-[-5px] bg-[rgb(145,65,17)] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold'>
+          <p className='absolute left-5 top-[-5px] bg-[rgb(95,40,74)] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold'>
             {2}
           </p>
         </Link>
@@ -147,7 +147,7 @@ const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
         >
           <Heart className='h-8 w-8' />
           wishlist
-          <p className='absolute left-5 top-[-5px] bg-[rgb(145,65,17)] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold'>
+          <p className='absolute left-5 top-[-5px] bg-[rgb(95,40,74)] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold'>
             {9}
           </p>
         </Link>
@@ -159,7 +159,7 @@ const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
           >
             <NotebookText className='cursor-pointer' />
             orders
-            <p className='absolute left-5 top-[-5px] bg-[rgb(145,65,17)] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold'>
+            <p className='absolute left-5 top-[-5px] bg-[rgb(95,40,74)] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold'>
               {1}
             </p>
           </Link>

@@ -1,4 +1,11 @@
-import { defineField, defineType } from 'sanity'
+import { SlugifierFn, defineField, defineType } from 'sanity'
+
+const slugify: SlugifierFn = (input: string | { title: string }) => {
+  const title = typeof input === 'string' ? input : input.title
+  const timestamp = new Date().getTime().toString()
+  const slug = `${title}-${timestamp}`
+  return slug.replace(/ \s+/g, '-')
+}
 
 export default defineType({
   name: 'product',
@@ -19,6 +26,7 @@ export default defineType({
       options: {
         source: 'title',
         maxLength: 96,
+        slugify: slugify,
       },
       validation: (rule) => rule.required(),
     }),
@@ -26,6 +34,22 @@ export default defineType({
       name: 'description',
       title: 'Description',
       type: 'string',
+    }),
+    defineField({
+      name: 'placeholder',
+      title: 'Placeholder',
+      type: 'image',
+      description: 'Placeholder Image',
+      validation: (rule) => rule.required(),
+      options: {
+        hotspot: true,
+      },
+      preview: {
+        select: {
+          imageUrl: 'asset.url',
+          title: 'caption',
+        },
+      },
     }),
     defineField({
       name: 'images',

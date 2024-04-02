@@ -55,7 +55,7 @@ const ShopPage = () => {
               Bracelet
             </h1>
             <Link href='/shop/bracelets'>
-              <button className='text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[100px] lg:w-[150px] rounded-full uppercase font-thin text-xs flex items-center justify-center gap-1 lg:gap-2 '>
+              <button className='text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[120px] lg:w-[150px] rounded-full uppercase font-thin text-xs flex items-center justify-center gap-1 lg:gap-2 '>
                 learn more
                 <span>
                   <MoveDownRight className='w-4 lg:w-5 h-4 lg:h-5 pt-1' />
@@ -78,7 +78,7 @@ const ShopPage = () => {
                 Rings
               </h1>
               <Link href='/shop/rings'>
-                <button className='text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[100px] lg:w-[150px] rounded-full uppercase font-thin text-xs flex items-center justify-center gap-1 lg:gap-2 '>
+                <button className='text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[120px] lg:w-[150px] rounded-full uppercase font-thin text-xs flex items-center justify-center gap-1 lg:gap-2 '>
                   learn more
                   <span>
                     <MoveDownRight className='w-4 lg:w-5 h-4 lg:h-5 pt-1' />
@@ -100,7 +100,7 @@ const ShopPage = () => {
                 Earrings
               </h1>
               <Link href='/shop/earrings'>
-                <button className='text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[100px] lg:w-[150px] rounded-full uppercase font-thin text-xs flex items-center justify-center gap-1 lg:gap-2 '>
+                <button className='text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[120px] lg:w-[150px] rounded-full uppercase font-thin text-xs flex items-center justify-center gap-1 lg:gap-2 '>
                   learn more
                   <span>
                     <MoveDownRight className='w-4 lg:w-5 h-4 lg:h-5 pt-1' />
@@ -124,7 +124,7 @@ const ShopPage = () => {
                 chains
               </h1>
               <Link href='/shop/chains'>
-                <button className='text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[100px] lg:w-[150px] rounded-full uppercase font-thin text-xs flex items-center justify-center gap-1 lg:gap-2 '>
+                <button className='text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[120px] lg:w-[150px] rounded-full uppercase font-thin text-xs flex items-center justify-center gap-1 lg:gap-2 '>
                   learn more
                   <span>
                     <MoveDownRight className='w-4 lg:w-5 h-4 lg:h-5 pt-1' />
@@ -146,7 +146,7 @@ const ShopPage = () => {
                 charms
               </h1>
               <Link href='/shop/charms'>
-                <button className='text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[100px] lg:w-[150px] rounded-full uppercase font-thin text-xs flex items-center justify-center gap-1 lg:gap-2 '>
+                <button className='text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[120px] lg:w-[150px] rounded-full uppercase font-thin text-xs flex items-center justify-center gap-1 lg:gap-2 '>
                   learn more
                   <span>
                     <MoveDownRight className='w-4 lg:w-5 h-4 lg:h-5 pt-1' />
