@@ -23,6 +23,10 @@ export const cartSlice = createSlice({
         state.productData.push(action.payload);
       }
     },
+    addToCartFromWishlist: (state, action) => {
+      state.productData.push(action.payload);
+      toast.success("Product added to cart from wishlist");
+    },
     increaseQuantity: (state, action) => {
       const existingProduct = state.productData.find(
         (item) => item?._id === action.payload?._id
