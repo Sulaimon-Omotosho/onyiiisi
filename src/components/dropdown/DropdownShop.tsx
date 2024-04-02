@@ -1,15 +1,21 @@
 'use client'
 import Image from 'next/image'
 import Link from 'next/link'
-import { specials, collections } from '@/constants'
-import { type CategoriesProps } from '@/lib/types'
+// import { collections } from '@/constants'
+import {
+  SpecialsProps,
+  type CategoriesProps,
+  CollectionsProps,
+} from '@/lib/types'
 import { useEffect, useState } from 'react'
-import { categories } from '@/lib/sanity-client'
+import { categories, collection, specials } from '@/lib/sanity-client'
 
 export default function DropdownShop() {
+  // Categories
   const [categoryData, setCategoryData] = useState<CategoriesProps[]>([])
 
   useEffect(() => {
+    // fetch Categories
     const fetchCategories = async () => {
       try {
         const categoryData = await categories()
@@ -19,6 +25,36 @@ export default function DropdownShop() {
       }
     }
     fetchCategories()
+  }, [])
+
+  // fetch Specials
+  const [specialData, setSpecialData] = useState<SpecialsProps[]>([])
+
+  useEffect(() => {
+    const fetchSpecials = async () => {
+      try {
+        const specialData = await specials()
+        setSpecialData(specialData)
+      } catch (error) {
+        console.log(console.error('error fetching specials data:', error))
+      }
+    }
+    fetchSpecials()
+  }, [])
+
+  // fetch Collections
+  const [collectionData, setCollectionData] = useState<CollectionsProps[]>([])
+
+  useEffect(() => {
+    const fetchCollections = async () => {
+      try {
+        const collectionData = await collection()
+        setCollectionData(collectionData)
+      } catch (err) {
+        console.log(console.error('error fetching collection data:', err))
+      }
+    }
+    fetchCollections()
   }, [])
 
   return (
@@ -41,7 +77,10 @@ export default function DropdownShop() {
               <ul className='text-center uppercase flex flex-col gap-2'>
                 {categoryData?.map((category, idx) => (
                   <li key={idx}>
-                    <Link href={`/shop/${category?.title}`} className=''>
+                    <Link
+                      href={`/shop/categories/${category?.title}`}
+                      className=''
+                    >
                       {category?.title}
                     </Link>
                   </li>
@@ -53,9 +92,11 @@ export default function DropdownShop() {
                 specials
               </h1>
               <ul className='text-center uppercase flex flex-col gap-2'>
-                {specials.map((special, idx) => (
+                {specialData?.map((special, idx) => (
                   <li key={idx}>
-                    <Link href={special.href}>{special.name}</Link>
+                    <Link href={`/shop/specials/${special?.title}`}>
+                      {special?.title}
+                    </Link>
                   </li>
                 ))}
               </ul>
@@ -65,9 +106,11 @@ export default function DropdownShop() {
                 collections
               </h1>
               <ul className='text-center uppercase flex flex-col gap-2'>
-                {collections.map((collection, idx) => (
+                {collectionData?.map((collection, idx) => (
                   <li key={idx}>
-                    <Link href={collection.href}>{collection.name}</Link>
+                    <Link href={`/shop/collections/${collection?.title}`}>
+                      {collection?.title}
+                    </Link>
                   </li>
                 ))}
               </ul>

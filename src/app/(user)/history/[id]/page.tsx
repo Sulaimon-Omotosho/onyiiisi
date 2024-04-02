@@ -1,7 +1,17 @@
+'use client'
+
 import Image from 'next/image'
-import React from 'react'
+import Link from 'next/link'
+import React, { useState } from 'react'
+import { CheckCircle } from 'lucide-react'
 
 const OrderDetailsPage = () => {
+  const [showPopup, setShowPopUp] = useState(false)
+
+  const handlePopUp = () => {
+    setShowPopUp(true)
+  }
+
   return (
     <div className='lg:py-20'>
       <div className='py-10 md:py-16 px-5 md:px-16'>
@@ -34,6 +44,79 @@ const OrderDetailsPage = () => {
               fill
               objectFit='cover'
             />
+          </div>
+        </div>
+        <div className='flex flex-col justify-center items-center gap-5'>
+          <button
+            onClick={handlePopUp}
+            className='uppercase py-3 w-[50%] rounded-full bg-[rgb(95,40,74)] text-white font-bold'
+          >
+            see status
+          </button>
+          <Link
+            href='/'
+            className='uppercase font-semibold hover:underline underline-offset-8'
+          >
+            Continue Shopping
+          </Link>
+          <div
+            // onClick={() => setShowPopUp(false)}
+            className={`${
+              showPopup ? 'block' : 'hidden'
+            } absolute top-0 left-0 `}
+          >
+            <div className='fixed bg-gray-700 bg-opacity-50 flex justify-center items-center w-full h-full'>
+              <div className='bg-white p-6 rounded-md flex flex-col justify-center items-center gap-8 w-full md:w-[85%] lg:w-[50%]'>
+                <p className='font-bold capitalize text-xl text-center '>
+                  Order Status Details
+                </p>
+                <div className='w-full pl-10'>
+                  <div className='flex items-center gap-2'>
+                    <CheckCircle className=' h-10 w-10 text-[rgb(95,40,74)]' />
+                    <div className=''>
+                      <p className='font-semibold uppercase text-sm'>
+                        order placed
+                      </p>
+                      <p className='text-xs'>24-04-2024</p>
+                    </div>
+                  </div>
+                  <div className=' border-2 border-[rgb(95,40,74)] h-10 w-0 rounded-full ml-5 my-1'></div>
+                  <div className='flex items-center gap-2'>
+                    <CheckCircle className=' h-10 w-10 text-[rgb(95,40,74)]' />
+                    <div className=''>
+                      <p className='font-semibold uppercase text-sm'>
+                        confirmed
+                      </p>
+                      <p className='text-xs'>24-04-2024</p>
+                    </div>
+                  </div>
+                  <div className=' border-2 border-[rgb(95,40,74)] h-10 w-0 rounded-full ml-5 my-1'></div>
+                  <div className='flex items-center gap-2'>
+                    <CheckCircle className=' h-10 w-10 text-[rgb(95,40,74)]' />
+                    <div className=''>
+                      <p className='font-semibold uppercase text-sm'>shipped</p>
+                      <p className='text-xs'>24-04-2024</p>
+                    </div>
+                  </div>
+                  <div className=' border-2 border-[rgb(95,40,74)] h-10 w-0 rounded-full ml-5 my-1'></div>
+                  <div className='flex items-center gap-2'>
+                    <CheckCircle className=' h-10 w-10 text-[rgb(95,40,74)]' />
+                    <div className=''>
+                      <p className='font-semibold uppercase text-sm'>
+                        delivered
+                      </p>
+                      <p className='text-xs'>24-04-2024</p>
+                    </div>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setShowPopUp(false)}
+                  className='py-2 px-5 capitalize rounded-full bg-[rgb(95,40,74)] text-white font-semibold text-center w-[75%]'
+                >
+                  close
+                </button>
+              </div>
+            </div>
           </div>
         </div>
         <div className='py-10 lg:w-1/2'>

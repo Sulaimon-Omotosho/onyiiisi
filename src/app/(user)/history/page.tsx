@@ -39,9 +39,12 @@ const HistoryPage = () => {
                   <span className='text-black font-thin'>{detail.id}</span>
                 </p>
                 <p className='md:text-lg font-bold'>{detail.date}</p>
-                <p className=' text-purple-950 font-semibold capitalize'>
+                <Link
+                  href='status'
+                  className=' text-purple-950 font-semibold capitalize'
+                >
                   {detail.status}
-                </p>
+                </Link>
               </div>
             </div>
           ))}
