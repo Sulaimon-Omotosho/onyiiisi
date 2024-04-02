@@ -13,11 +13,12 @@ import { string } from 'zod'
 
 const SpecialsPage = () => {
   const params = useParams()
-  // console.log(params)
   const specialsName = params.special
-  // console.log(specialsName)
+
   const [loading, setLoading] = useState(true)
   const [products, setProducts] = useState<ProductProps[]>([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const [productsPerPage, setProductsPerPage] = useState(16)
 
   useEffect(() => {
     if (typeof specialsName === 'string') {
@@ -34,6 +35,18 @@ const SpecialsPage = () => {
       fetchProducts()
     }
   }, [specialsName])
+
+  const handleProductsPerPage = (value: number) => {
+    setProductsPerPage(value)
+    setCurrentPage(1)
+  }
+
+  const indexOfLastProduct = currentPage * productsPerPage
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage
+  const currentProducts = products.slice(
+    indexOfFirstProduct,
+    indexOfLastProduct
+  )
 
   return (
     <div className='py-0 lg:py-20'>
@@ -61,27 +74,48 @@ const SpecialsPage = () => {
               <Link className='text-gray-400 hover:text-gray-800' href='/shop'>
                 Shop |{' '}
               </Link>
-              <p className='font-semibold'> Earrings</p>
+              <p className='font-semibold'> {specialsName}</p>
             </div>
             <div className='hidden md:flex'>
               <p className='text-gray-400'>
                 View:{' '}
-                <span className='text-gray-800 underline hover:underline cursor-pointer'>
+                <span
+                  onClick={() => setProductsPerPage(16)}
+                  className={`hover:underline underline-offset-2 hover:text-gray-800 cursor-pointer ${
+                    productsPerPage === 16
+                      ? 'text-gray-800 underline underline-offset-2'
+                      : ' text-gray-500'
+                  }`}
+                >
                   16
                 </span>{' '}
                 /{' '}
-                <span className='text-gray-400 cursor-pointer hover:text-gray-800 hover:underline'>
+                <span
+                  onClick={() => setProductsPerPage(32)}
+                  className={`hover:underline hover:text-gray-800 underline-offset-2 cursor-pointer ${
+                    productsPerPage === 32
+                      ? 'text-gray-800 underline underline-offset-2'
+                      : ' text-gray-500'
+                  }`}
+                >
                   32
                 </span>{' '}
                 /{' '}
-                <span className='text-gray-400 cursor-pointer hover:underline hover:text-gray-800'>
+                <span
+                  onClick={() => setProductsPerPage(products.length)}
+                  className={`hover:underline hover:text-gray-800 underline-offset-2 cursor-pointer ${
+                    productsPerPage === products.length
+                      ? 'text-gray-800 underline underline-offset-2'
+                      : ' text-gray-500'
+                  }`}
+                >
                   ALL
                 </span>{' '}
               </p>
             </div>
             <div className='flex gap-5 items-center justify-end'>
               <div className='flex gap-1'>
-                <Search />
+                <Search placeholder={`Search ${specialsName}...`} />
               </div>
               <div className=''>Popularity</div>
             </div>
@@ -92,7 +126,7 @@ const SpecialsPage = () => {
             {loading ? (
               <p>Loading...</p>
             ) : (
-              products?.map((product) => (
+              currentProducts?.map((product) => (
                 <div
                   key={product?._id}
                   className=' bg-[rgb(230,230,230)] rounded-md text-center h-[350px] md:h-[220px] lg:h-[280px] 2xl:h-[300px] w-[320px] md:w-[190px] lg:w-[250px] 2xl:w-[280px] flex-grow'
@@ -133,8 +167,13 @@ const SpecialsPage = () => {
           </div>
 
           <div className='uppercase text-gray-500 text-lg text-center'>
-            showing <span className='text-gray-800'> 1-16</span> of{' '}
-            <span className='text-gray-800'> 80</span> products
+            showing{' '}
+            <span className='text-gray-800'>
+              {' '}
+              {indexOfFirstProduct + 1}-{indexOfLastProduct}
+            </span>{' '}
+            of <span className='text-gray-800'> {products.length}</span>{' '}
+            products
           </div>
         </div>
       </div>

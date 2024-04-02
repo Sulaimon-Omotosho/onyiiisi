@@ -18,7 +18,7 @@ const CategoryPage = () => {
   const [loading, setLoading] = useState(true)
   const [products, setProducts] = useState<ProductProps[]>([])
   const [currentPage, setCurrentPage] = useState(1)
-  const [productsPerPage, setProductsPerPage] = useState(4)
+  const [productsPerPage, setProductsPerPage] = useState(16)
 
   useEffect(() => {
     if (typeof categoryName === 'string') {
