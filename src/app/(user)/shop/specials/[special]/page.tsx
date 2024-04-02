@@ -1,5 +1,6 @@
 'use client'
 
+import Search from '@/components/Search'
 // import { earringsPage } from '@/constants'
 import { productsBySpecial, urlFor } from '@/lib/sanity-client'
 import { ProductProps } from '@/lib/types'
@@ -78,8 +79,10 @@ const SpecialsPage = () => {
                 </span>{' '}
               </p>
             </div>
-            <div className='flex gap-5'>
-              <div className=''>search</div>
+            <div className='flex gap-5 items-center justify-end'>
+              <div className='flex gap-1'>
+                <Search />
+              </div>
               <div className=''>Popularity</div>
             </div>
           </div>

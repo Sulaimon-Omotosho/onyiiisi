@@ -458,16 +458,19 @@ export const shopCollections = [
     image: '/Ombre Collections.jpeg',
     title: 'Ombre Collection',
     subtitle: 'Unique Chains',
+    slug: 'Ombre',
   },
   {
     image: '/Wedding Collections.jpeg',
     title: 'Wedding Collection',
     subtitle: 'Unique Bracelets',
+    slug: 'Weddings',
   },
   {
     image: '/Summer Collections.jpeg',
     title: 'Summer Collection',
     subtitle: 'Unique Rings',
+    slug: 'Summers',
   },
 ]
 
