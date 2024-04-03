@@ -17,8 +17,8 @@ const BlogPage = () => {
         />
         <div className='flex flex-col items-center gap-3 md:gap-5 absolute xl:w-[70%]'>
           <h1 className='text-xl md:text-3xl xl:text-6xl  text-white font-bold text-center'>
-            The Art of Timeless Elegance: Exploring Onnyiisi's Luxury Jewelry
-            Collection
+            The Art of Timeless Elegance: Exploring Onnyiisi&apos;s Luxury
+            Jewelry Collection
           </h1>
           <button className='text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[120px] lg:w-[150px] rounded-full uppercase font-thin text-xs flex items-center justify-center gap-1 lg:gap-2 '>
             read article
@@ -34,15 +34,16 @@ const BlogPage = () => {
         <div className='text-white flex items-center justify-center w-[90%] md:w-1/2'>
           <div className='md:w-[85%] lg:w-[70%] py-4'>
             <h2 className='text-xl md:text-2xl lg:text-3xl font-bold '>
-              The Essence of Luxury: Unveiling Onnyiisi's Signature Collections
+              The Essence of Luxury: Unveiling Onnyiisi&apos;s Signature
+              Collections
             </h2>
             <p className='text-xs py-2 md:py-4'>
-              Step into the world of luxury and sophistication with Onnyiisi's
-              signature collections. In this blog, we invite you to explore the
-              epitome of elegance through our meticulously curated selection of
-              jewelry pieces. From exquisite diamonds to vibrant gemstones, each
-              collection embodies the essence of luxury craftsmanship and
-              timeless beauty.
+              Step into the world of luxury and sophistication with
+              Onnyiisi&apos;s signature collections. In this blog, we invite you
+              to explore the epitome of elegance through our meticulously
+              curated selection of jewelry pieces. From exquisite diamonds to
+              vibrant gemstones, each collection embodies the essence of luxury
+              craftsmanship and timeless beauty.
             </p>
             <p className='text-xs pt-4 md:pt-10'>
               From rich sapphires to radiant emeralds, each gemstone tells a
@@ -192,7 +193,7 @@ const BlogPage = () => {
               <h2 className='capitalize text-2xl font-bold pb-3 lg:pb-5'>
                 contact us
               </h2>
-              <p className=' font-semibold capitalize'>onyiisi info</p>
+              <p className=' font-semibold capitalize'>onyiisi&apos;s info</p>
               <hr className='border-[1px] border-black w-[70%] my-2 lg:my-3' />
               <p className='font-semibold pb-1'>Email :- info@oyiinsi.com</p>
               <p className='font-semibold pb-1'>Phone :- +1 (555) 123-4567</p>
