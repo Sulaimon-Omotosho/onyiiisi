@@ -1,52 +1,71 @@
 'use client'
 
-import Image from 'next/image'
-import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
-import { detailsImg } from '@/constants'
-import { ChevronLeft, ChevronRight, Heart, Share2, Star } from 'lucide-react'
-import { ProductProps } from '@/lib/types'
-import { productById, urlFor } from '@/lib/sanity-client'
-import DetailsDescription from '@/components/DetailsDescription'
-import RelatedProducts from '@/components/RelatedProducts'
-import { useParams } from 'next/navigation'
-import Loading from '@/components/Loading'
+import Image from "next/image";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import { addToCart } from "@/redux/cart-slice";
+import { useDispatch } from "react-redux";
+import { detailsImg } from "@/constants";
+import { ChevronLeft, ChevronRight, Heart, Share2, Star } from "lucide-react";
+import { ProductProps } from "@/lib/types";
+import { productById, urlFor } from "@/lib/sanity-client";
+import DetailsDescription from "@/components/DetailsDescription";
+import RelatedProducts from "@/components/RelatedProducts";
+import { useParams } from "next/navigation";
+import Loading from "@/components/Loading";
 
 const SingleProductPage = () => {
-  const params = useParams()
-  const id = params.id
+  const params = useParams();
+  const id = params.id;
+  const dispatch = useDispatch();
 
   const [product, setProduct] = useState<ProductProps>()
   const [loading, setLoading] = useState(true)
 
+  const handleAddToCart = () => {
+    if (products.length > 0) {
+      const selectedProduct = products[0];
+      const cartItem = {
+        _id: selectedProduct._id,
+        title: selectedProduct.title,
+        price: selectedProduct.price,
+        categoryName: selectedProduct.categoryName,
+        brand: selectedProduct.brand,
+        quantity: quantity,
+      };
+      console.log(cartItem);
+      dispatch(addToCart(cartItem));
+    }
+  };
+
   useEffect(() => {
-    if (typeof id === 'string') {
+    if (typeof id === "string") {
       const fetchProduct = async () => {
         try {
-          const product = await productById(id)
-          setProduct(product)
-          setLoading(false)
+          const product = await productById(id);
+          setProduct(product);
+          setLoading(false);
         } catch (err) {
-          console.error('Error fetching product:', err)
-          setLoading(false)
+          console.error("Error fetching product:", err);
+          setLoading(false);
         }
-      }
-      fetchProduct()
+      };
+      fetchProduct();
     }
-  }, [id])
+  }, [id]);
 
   // console.log(product)
 
   // Carousel
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState(0);
 
   const goToImg = (idx: number) => {
-    setCurrentIndex(idx)
-  }
+    setCurrentIndex(idx);
+  };
 
   // Price
-  const [total, setTotal] = useState(73.4)
-  const [quantity, setQuantity] = useState(1)
+  const [total, setTotal] = useState(73.4);
+  const [quantity, setQuantity] = useState(1);
 
   // useEffect(() => {
   //   setTotal(quantity * 73.4)
@@ -93,6 +112,7 @@ const SingleProductPage = () => {
                 >
                   <Image
                     src={urlFor(img).url()}
+
                     alt='Earring'
                     fill
                     className={`absolute object-cover rounded-md ${img.trans}`}
@@ -199,10 +219,14 @@ const SingleProductPage = () => {
                     </button>
                   </div>
                 </div>
-                <button className='text-white bg-[rgb(95,40,74)] py-2 lg:py-5 mx-5 rounded-full uppercase font-thin flex items-center justify-center gap-1 lg:gap-2 '>
+                <button
+                  onClick={handleAddToCart}
+                  className="text-white bg-[rgb(95,40,74)] py-2 lg:py-5 mx-5 rounded-full uppercase font-thin flex items-center justify-center gap-1 lg:gap-2 "
+                >
                   add to cart
                 </button>
-                <p className='capitalize cursor-pointer underline underline-offset-2 md:text-2xl font-semibold text-center'>
+                <p className="capitalize cursor-pointer underline underline-offset-2 md:text-2xl font-semibold text-center">
+
                   write a review
                 </p>
               </div>
@@ -215,7 +239,7 @@ const SingleProductPage = () => {
       {/* Related Products  */}
       <RelatedProducts />
     </div>
-  )
-}
+  );
+};
 
-export default SingleProductPage
+export default SingleProductPage;
