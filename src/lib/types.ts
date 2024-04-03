@@ -16,9 +16,12 @@ export type ProductProps = {
   brand: string;
   size: number;
   slug: {
-    current: string;
-    _type: string;
-  };
+
+    current: string
+    _type: string
+  }
+  placeholder: ImageAsset
+  images: ImageAsset[]
   image: {
     _type: string;
     asset: {

@@ -8,6 +8,7 @@ import {
 } from "./types";
 import { getCliClient } from "sanity/cli";
 
+
 const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION;
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
@@ -79,6 +80,15 @@ export const productsByCollection = async (collectionName: string) => {
   );
   return products;
 };
+
+const productByIdQuery = groq`*[_type == 'product' && _id == $productId][0]{...}`
+
+export const productById = async (_id: string) => {
+  const product: ProductProps = await client.fetch(productByIdQuery, {
+    productId: _id,
+  })
+  return product
+}
 
 // export const getProductById = async (productId: string) => {
 //   const query = groq`

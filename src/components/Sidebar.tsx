@@ -6,21 +6,13 @@ import { signOut, useSession } from 'next-auth/react'
 const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
   const { data: session } = useSession()
   const [shop, setShop] = useState(false)
-  // const [sales, setSales] = useState(false)
 
   const handleShop = () => {
     setShop(!shop)
   }
 
-  // const handlesSales = () => {
-  //   setSales(!sales)
-  // }
-
   return (
-    <div
-      // onClick={closeSidebar}
-      className='fixed md:hidden h-[100vh] flex flex-col items-center w-full bg-[rgb(95,40,74)] text-2xl text-white uppercase font-semibold  '
-    >
+    <div className='fixed md:hidden h-[100vh] flex flex-col items-center w-full bg-[rgb(95,40,74)] text-2xl text-white uppercase font-semibold  '>
       {session && (
         <Link
           href='/profile'
@@ -47,7 +39,7 @@ const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
           <div
             className={` ${
               shop
-                ? 'capitalize pl-10 flex flex-col text-md font-thin'
+                ? 'capitalize pt-2  pl-5 flex flex-col gap-3 font-thin'
                 : 'hidden'
             }`}
           >
@@ -92,42 +84,10 @@ const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
           <Link
             href='/blog'
             onClick={closeSidebar}
-            // href='/sales'
             className='flex gap-2 items-center hover:underline underline-offset-2 text-2xl pl-10'
           >
             blog
           </Link>
-          {/* <div
-            className={`${sales ? 'capitalize pl-10 flex flex-col' : 'hidden'}`}
-          >
-            <Link
-              href='/sales'
-              onClick={() => {
-                closeSidebar()
-                handlesSales()
-              }}
-            >
-              Header
-            </Link>
-            <Link
-              href='/sales'
-              onClick={() => {
-                closeSidebar()
-                handlesSales()
-              }}
-            >
-              Header
-            </Link>
-            <Link
-              href='/sales'
-              onClick={() => {
-                closeSidebar()
-                handlesSales()
-              }}
-            >
-              Header
-            </Link>
-          </div> */}
         </div>
         <Link
           href='/cart'

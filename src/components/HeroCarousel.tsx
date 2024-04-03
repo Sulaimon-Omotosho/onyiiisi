@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import { heroes } from '@/constants'
 import { BannerProps } from '@/lib/types'
 import { urlFor } from '@/lib/sanity-client'
+import Link from 'next/link'
 
 export default function HeroCarousel({ banners }: { banners: BannerProps[] }) {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -53,12 +54,14 @@ export default function HeroCarousel({ banners }: { banners: BannerProps[] }) {
               {hero?.description}
             </p>
           ))}
-          <button className='text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[100px] lg:w-[150px] rounded-full uppercase font-thin text-xs flex items-center justify-center gap-1 lg:gap-2 '>
-            shop now
-            <span>
-              <MoveDownRight className='w-4 lg:w-5 h-4 lg:h-5 pt-1' />
-            </span>
-          </button>
+          <Link href='/shop'>
+            <button className='text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[100px] lg:w-[150px] rounded-full uppercase font-thin text-xs flex items-center justify-center gap-1 lg:gap-2 '>
+              shop now
+              <span>
+                <MoveDownRight className='w-4 lg:w-5 h-4 lg:h-5 pt-1' />
+              </span>
+            </button>
+          </Link>
           <div className='flex gap-1 '>
             {heroes?.map((hero, idx) => (
               <button

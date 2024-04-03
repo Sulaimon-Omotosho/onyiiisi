@@ -1,3 +1,5 @@
+'use client'
+
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -17,8 +19,8 @@ const SingleProductPage = () => {
   const id = params.id;
   const dispatch = useDispatch();
 
-  const [product, setProduct] = useState<ProductProps>();
-  const [loading, setLoading] = useState(true);
+  const [product, setProduct] = useState<ProductProps>()
+  const [loading, setLoading] = useState(true)
 
   const handleAddToCart = () => {
     if (products.length > 0) {
@@ -72,104 +74,105 @@ const SingleProductPage = () => {
   // Descriptions
 
   return (
-    <div className="py-5 lg:py-20">
+    <div className='py-5 lg:py-20'>
       {loading ? (
         <Loading />
       ) : (
-        <div className=" px-5 lg:px-16 xl:px-28">
+        <div className=' px-5 lg:px-16 xl:px-28'>
           {/* Navigation */}
-          <div className="flex py-10 justify-between items-center">
-            <div className="flex gap-1">
-              <Link className="text-gray-400 hover:text-gray-800" href="/">
-                Home |{" "}
+          <div className='flex py-10 justify-between items-center'>
+            <div className='flex gap-1'>
+              <Link className='text-gray-400 hover:text-gray-800' href='/'>
+                Home |{' '}
               </Link>
-              <Link className="text-gray-400 hover:text-gray-800" href="/shop">
-                Shop |{" "}
+              <Link className='text-gray-400 hover:text-gray-800' href='/shop'>
+                Shop |{' '}
               </Link>
               <Link
-                className="text-gray-400 hover:text-gray-800"
-                href="/shop/earrings"
+                className='text-gray-400 hover:text-gray-800'
+                href='/shop/earrings'
               >
-                Earrings |{" "}
+                Earrings |{' '}
               </Link>
-              <p className="font-semibold"> Details</p>
+              <p className='font-semibold'> Details</p>
             </div>
           </div>
 
           {/* Image and details  */}
 
-          <div className="flex flex-col md:flex-row gap-10 flex-grow">
+          <div className='flex flex-col md:flex-row gap-10 flex-grow'>
             {/* Image Carousel  */}
-            <div className="flex-1">
+            <div className='flex-1'>
               {product?.images.map((img, idx) => (
                 <div
                   key={idx}
                   className={`relative h-[350px] lg:h-[450px] xl:h-[550px] w-[350px] lg:w-[450px] xl:w-[550px] transition duration-500 ${
-                    idx === currentIndex ? "opacity-100" : "opacity-0 hidden"
+                    idx === currentIndex ? 'opacity-100' : 'opacity-0 hidden'
                   }`}
                 >
                   <Image
                     src={urlFor(img).url()}
-                    alt="Earring"
+
+                    alt='Earring'
                     fill
                     className={`absolute object-cover rounded-md ${img.trans}`}
                   />
                 </div>
               ))}
-              <div className="relative py-6 flex gap-4 justify-center w-[350px] lg:w-[450px] xl:w-[550px]">
+              <div className='relative py-6 flex gap-4 justify-center w-[350px] lg:w-[450px] xl:w-[550px]'>
                 {product?.images.map((img, idx) => (
                   <div
                     key={idx}
                     onClick={() => goToImg(idx)}
-                    className="relative h-20 w-20 hover:scale-110 hover:shadow-md ease-in-out transition duration-500 cursor-pointer "
+                    className='relative h-20 w-20 hover:scale-110 hover:shadow-md ease-in-out transition duration-500 cursor-pointer '
                   >
                     <Image
                       src={urlFor(img).url()}
-                      alt="Earrings"
+                      alt='Earrings'
                       fill
                       className={`rounded-md object-cover ${img.trans}`}
                     />
                   </div>
                 ))}
-                <div className="hidden lg:flex justify-center items-center">
-                  <ChevronLeft className="absolute left-0 text-gray-600 hover:scale-150 transition-all duration-500 cursor-pointer" />
-                  <ChevronRight className="absolute right-0 text-gray-600 hover:scale-150 transition-all duration-500 cursor-pointer" />
+                <div className='hidden lg:flex justify-center items-center'>
+                  <ChevronLeft className='absolute left-0 text-gray-600 hover:scale-150 transition-all duration-500 cursor-pointer' />
+                  <ChevronRight className='absolute right-0 text-gray-600 hover:scale-150 transition-all duration-500 cursor-pointer' />
                 </div>
               </div>
             </div>
 
             {/* Details  */}
-            <div className="flex-1 flex flex-col gap-8 justify-center">
-              <div className="flex flex-col gap-2">
-                <h2 className="text-xl md:text-4xl font-semibold capitalize">
+            <div className='flex-1 flex flex-col gap-8 justify-center'>
+              <div className='flex flex-col gap-2'>
+                <h2 className='text-xl md:text-4xl font-semibold capitalize'>
                   {product?.title}
                 </h2>
 
-                <p className="text-orange-800 text-xl md:text-2xl font-semibold">
+                <p className='text-orange-800 text-xl md:text-2xl font-semibold'>
                   {/* ${total.toFixed(2)} */}${product?.price}
                 </p>
-                <p className="text-gray-500 font-thin text-sm md:text-md capitalize">
+                <p className='text-gray-500 font-thin text-sm md:text-md capitalize'>
                   {product?.gram} grams
                 </p>
               </div>
-              <div className="flex flex-col gap-2">
-                <p className="text-gray-500 text-xs md:text-sm">
+              <div className='flex flex-col gap-2'>
+                <p className='text-gray-500 text-xs md:text-sm'>
                   {product?.description}
                 </p>
-                <div className="flex gap-4 py-2">
-                  <div className="flex gap-1">
+                <div className='flex gap-4 py-2'>
+                  <div className='flex gap-1'>
                     {(() => {
-                      const stars = [];
+                      const stars = []
                       for (let i = 0; i < (product?.ratings || 0); i++) {
                         stars.push(
                           <Star
                             key={`star_${i}`}
-                            style={{ fill: "rgb(244,206,80)" }}
-                            color="rgb(244,206,80)"
+                            style={{ fill: 'rgb(244,206,80)' }}
+                            color='rgb(244,206,80)'
                           />
-                        );
+                        )
                       }
-                      return stars;
+                      return stars
                     })()}
 
                     {/* <Star
@@ -189,24 +192,24 @@ const SingleProductPage = () => {
                       color='rgb(244,206,80)'
                     /> */}
                   </div>
-                  <p className="text-gray-800">(356 Reviews)</p>
-                  <Heart className="cursor-pointer" />
-                  <Share2 className="cursor-pointer" />
+                  <p className='text-gray-800'>(356 Reviews)</p>
+                  <Heart className='cursor-pointer' />
+                  <Share2 className='cursor-pointer' />
                 </div>
-                <hr className="border-b-2 border-gray-600" />
+                <hr className='border-b-2 border-gray-600' />
               </div>
-              <div className="flex flex-col gap-7">
-                <div className="flex justify-between">
-                  <p className="text-lg md:text-2xl capitalize">Quantity</p>
-                  <div className="text-2xl flex">
+              <div className='flex flex-col gap-7'>
+                <div className='flex justify-between'>
+                  <p className='text-lg md:text-2xl capitalize'>Quantity</p>
+                  <div className='text-2xl flex'>
                     <button
                       onClick={() =>
                         setQuantity((prev) => (prev > 1 ? prev - 1 : 1))
                       }
                     >
                       -
-                    </button>{" "}
-                    <p className="w-10 text-center">{quantity}</p>{" "}
+                    </button>{' '}
+                    <p className='w-10 text-center'>{quantity}</p>{' '}
                     <button
                       onClick={() =>
                         setQuantity((next) => (next < 10 ? next + 1 : 10))
@@ -223,6 +226,7 @@ const SingleProductPage = () => {
                   add to cart
                 </button>
                 <p className="capitalize cursor-pointer underline underline-offset-2 md:text-2xl font-semibold text-center">
+
                   write a review
                 </p>
               </div>
