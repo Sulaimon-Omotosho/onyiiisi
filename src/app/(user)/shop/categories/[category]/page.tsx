@@ -132,7 +132,7 @@ const CategoryPage = () => {
                   className=' bg-[rgb(230,230,230)] rounded-md text-center h-[350px] md:h-[220px] lg:h-[280px] 2xl:h-[300px] w-[320px] md:w-[190px] lg:w-[250px] 2xl:w-[280px] flex-grow'
                 >
                   <Link href={`/product/${product._id}`}>
-                    <div className='h-[80%] border-b-[1px] flex items-center justify-center border-gray-400 overflow-hidden relative'>
+                    <div className='h-[80%] w-full border-b-[1px] flex items-center justify-center border-gray-400 overflow-hidden relative'>
                       {product.placeholder && (
                         <Image
                           src={urlFor(product.placeholder).url()}

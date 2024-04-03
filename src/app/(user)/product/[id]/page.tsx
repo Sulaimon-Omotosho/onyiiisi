@@ -5,7 +5,6 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { addToCart } from '@/redux/cart-slice'
 import { useDispatch } from 'react-redux'
-import { detailsImg } from '@/constants'
 import { ChevronLeft, ChevronRight, Heart, Share2, Star } from 'lucide-react'
 import { ProductProps } from '@/lib/types'
 import { productById, urlFor } from '@/lib/sanity-client'
@@ -22,21 +21,21 @@ const SingleProductPage = () => {
   const [product, setProduct] = useState<ProductProps>()
   const [loading, setLoading] = useState(true)
 
-  // const handleAddToCart = () => {
-  //   if (products.length > 0) {
-  //     const selectedProduct = products[0];
-  //     const cartItem = {
-  //       _id: selectedProduct._id,
-  //       title: selectedProduct.title,
-  //       price: selectedProduct.price,
-  //       categoryName: selectedProduct.categoryName,
-  //       brand: selectedProduct.brand,
-  //       quantity: quantity,
-  //     };
-  //     console.log(cartItem);
-  //     dispatch(addToCart(cartItem));
-  //   }
-  // };
+  const handleAddToCart = () => {
+    if (product) {
+      // const selectedProduct = products[0];
+      const cartItem = {
+        _id: product._id,
+        title: product.title,
+        price: product.price,
+        categoryName: product.categoryName,
+        brand: product.brand,
+        quantity: quantity,
+      }
+      console.log(cartItem)
+      dispatch(addToCart(cartItem))
+    }
+  }
 
   useEffect(() => {
     if (typeof id === 'string') {
@@ -219,7 +218,7 @@ const SingleProductPage = () => {
                   </div>
                 </div>
                 <button
-                  // onClick={handleAddToCart}
+                  onClick={handleAddToCart}
                   className='text-white bg-[rgb(95,40,74)] py-2 lg:py-5 mx-5 rounded-full uppercase font-thin flex items-center justify-center gap-1 lg:gap-2 '
                 >
                   add to cart
