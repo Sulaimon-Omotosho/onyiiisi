@@ -13,7 +13,6 @@ import {
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { Noto_Sans_Georgian } from 'next/font/google'
-import DropdownSales from './dropdown/DropdownSales'
 import DropdownShop from './dropdown/DropdownShop'
 import Sidebar from './Sidebar'
 import { signOut, useSession } from 'next-auth/react'
@@ -127,7 +126,9 @@ export default function Navbar() {
             />
           </Link>
           {session && (
-            <p className='hidden lg:inline'>Hi, {session?.user?.name}</p>
+            <Link href='/profile' className='hidden lg:inline'>
+              Hi, {session?.user?.name}
+            </Link>
           )}
         </div>
 

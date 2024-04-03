@@ -66,7 +66,7 @@ const SpecialsPage = () => {
 
         <div className='px-5 lg:px-20 py-10'>
           {/* Navigation */}
-          <div className='flex md:px-10 justify-between items-center'>
+          <div className='flex flex-col gap-5 md:flex-row md:gap-0 md:px-10 justify-between items-center'>
             <div className='flex gap-1'>
               <Link className='text-gray-400 hover:text-gray-800' href='/'>
                 Home |{' '}
@@ -131,7 +131,7 @@ const SpecialsPage = () => {
                   key={product?._id}
                   className=' bg-[rgb(230,230,230)] rounded-md text-center h-[350px] md:h-[220px] lg:h-[280px] 2xl:h-[300px] w-[320px] md:w-[190px] lg:w-[250px] 2xl:w-[280px] flex-grow'
                 >
-                  <Link href={`/product/${product.slug.current}`}>
+                  <Link href={`/product/${product._id}`}>
                     <div className='h-[80%] border-b-[1px] flex items-center justify-center border-gray-400 relative'>
                       {product?.placeholder && (
                         <Image

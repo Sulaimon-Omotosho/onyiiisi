@@ -19,6 +19,7 @@ export type ProductProps = {
     _type: string
   }
   placeholder: ImageAsset
+  images: ImageAsset[]
   image: {
     _type: string
     asset: {
