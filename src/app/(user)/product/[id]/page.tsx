@@ -23,8 +23,8 @@ const SingleProductPage = () => {
   const [loading, setLoading] = useState(true)
 
   // const handleAddToCart = () => {
-  //   if (product.length > 0) {
-  //     const selectedProduct = product[0];
+  //   if (products.length > 0) {
+  //     const selectedProduct = products[0];
   //     const cartItem = {
   //       _id: selectedProduct._id,
   //       title: selectedProduct.title,
