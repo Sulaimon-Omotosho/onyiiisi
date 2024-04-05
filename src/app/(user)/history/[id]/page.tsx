@@ -59,65 +59,6 @@ const OrderDetailsPage = () => {
           >
             Continue Shopping
           </Link>
-          <div
-            // onClick={() => setShowPopUp(false)}
-            className={`${
-              showPopup ? 'block' : 'hidden'
-            } absolute top-0 left-0 `}
-          >
-            <div className='fixed bg-gray-700 bg-opacity-50 flex justify-center items-center w-full h-full'>
-              <div className='bg-white p-6 rounded-md flex flex-col justify-center items-center gap-8 w-full md:w-[85%] lg:w-[50%]'>
-                <p className='font-bold capitalize text-xl text-center '>
-                  Order Status Details
-                </p>
-                <div className='w-full pl-10'>
-                  <div className='flex items-center gap-2'>
-                    <CheckCircle className=' h-10 w-10 text-[rgb(95,40,74)]' />
-                    <div className=''>
-                      <p className='font-semibold uppercase text-sm'>
-                        order placed
-                      </p>
-                      <p className='text-xs'>24-04-2024</p>
-                    </div>
-                  </div>
-                  <div className=' border-2 border-[rgb(95,40,74)] h-10 w-0 rounded-full ml-5 my-1'></div>
-                  <div className='flex items-center gap-2'>
-                    <CheckCircle className=' h-10 w-10 text-[rgb(95,40,74)]' />
-                    <div className=''>
-                      <p className='font-semibold uppercase text-sm'>
-                        confirmed
-                      </p>
-                      <p className='text-xs'>24-04-2024</p>
-                    </div>
-                  </div>
-                  <div className=' border-2 border-[rgb(95,40,74)] h-10 w-0 rounded-full ml-5 my-1'></div>
-                  <div className='flex items-center gap-2'>
-                    <CheckCircle className=' h-10 w-10 text-[rgb(95,40,74)]' />
-                    <div className=''>
-                      <p className='font-semibold uppercase text-sm'>shipped</p>
-                      <p className='text-xs'>24-04-2024</p>
-                    </div>
-                  </div>
-                  <div className=' border-2 border-[rgb(95,40,74)] h-10 w-0 rounded-full ml-5 my-1'></div>
-                  <div className='flex items-center gap-2'>
-                    <CheckCircle className=' h-10 w-10 text-[rgb(95,40,74)]' />
-                    <div className=''>
-                      <p className='font-semibold uppercase text-sm'>
-                        delivered
-                      </p>
-                      <p className='text-xs'>24-04-2024</p>
-                    </div>
-                  </div>
-                </div>
-                <button
-                  onClick={() => setShowPopUp(false)}
-                  className='py-2 px-5 capitalize rounded-full bg-[rgb(95,40,74)] text-white font-semibold text-center w-[75%]'
-                >
-                  close
-                </button>
-              </div>
-            </div>
-          </div>
         </div>
         <div className='py-10 lg:w-1/2'>
           <h1 className='text-2xl font-bold uppercase'>payment information</h1>
@@ -165,6 +106,59 @@ const OrderDetailsPage = () => {
               </p>
               <p className='text-slate-800 capitalize font-medium'>nigeria</p>
             </div>
+          </div>
+        </div>
+      </div>
+      <div
+        // onClick={() => setShowPopUp(false)}
+        className={`${showPopup ? 'block' : 'hidden'} absolute top-0 left-0 `}
+      >
+        <div className='fixed bg-gray-700 bg-opacity-50 flex justify-center items-center w-full h-full'>
+          <div className='bg-white p-6 rounded-md flex flex-col justify-center items-center gap-8 w-full md:w-[85%] lg:w-[50%]'>
+            <p className='font-bold capitalize text-xl text-center '>
+              Order Status Details
+            </p>
+            <div className='w-full pl-10'>
+              <div className='flex items-center gap-2'>
+                <CheckCircle className=' h-10 w-10 text-[rgb(95,40,74)]' />
+                <div className=''>
+                  <p className='font-semibold uppercase text-sm'>
+                    order placed
+                  </p>
+                  <p className='text-xs'>24-04-2024</p>
+                </div>
+              </div>
+              <div className=' border-2 border-[rgb(95,40,74)] h-10 w-0 rounded-full ml-5 my-1'></div>
+              <div className='flex items-center gap-2'>
+                <CheckCircle className=' h-10 w-10 text-[rgb(95,40,74)]' />
+                <div className=''>
+                  <p className='font-semibold uppercase text-sm'>confirmed</p>
+                  <p className='text-xs'>24-04-2024</p>
+                </div>
+              </div>
+              <div className=' border-2 border-[rgb(95,40,74)] h-10 w-0 rounded-full ml-5 my-1'></div>
+              <div className='flex items-center gap-2'>
+                <CheckCircle className=' h-10 w-10 text-[rgb(95,40,74)]' />
+                <div className=''>
+                  <p className='font-semibold uppercase text-sm'>shipped</p>
+                  <p className='text-xs'>24-04-2024</p>
+                </div>
+              </div>
+              <div className=' border-2 border-[rgb(95,40,74)] h-10 w-0 rounded-full ml-5 my-1'></div>
+              <div className='flex items-center gap-2'>
+                <CheckCircle className=' h-10 w-10 text-[rgb(95,40,74)]' />
+                <div className=''>
+                  <p className='font-semibold uppercase text-sm'>delivered</p>
+                  <p className='text-xs'>24-04-2024</p>
+                </div>
+              </div>
+            </div>
+            <button
+              onClick={() => setShowPopUp(false)}
+              className='py-2 px-5 capitalize rounded-full bg-[rgb(95,40,74)] text-white font-semibold text-center w-[75%]'
+            >
+              close
+            </button>
           </div>
         </div>
       </div>

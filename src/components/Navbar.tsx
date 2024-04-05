@@ -133,12 +133,13 @@ export default function Navbar() {
         </div>
 
         {/* Side Bar  */}
-        <div onClick={handleSidebar} className='md:hidden flex-1 z-20'>
-          {sidebar ? (
+        <div onClick={handleSidebar} className='md:hidden flex-1 z-1'>
+          {/* {sidebar ? (
             <X className='w-10 h-10 text-white' />
           ) : (
             <Menu className='w-10 h-10' />
-          )}
+            )} */}
+          <Menu className='w-10 h-10' />
         </div>
 
         {/* Logo  */}

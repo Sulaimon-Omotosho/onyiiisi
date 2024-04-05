@@ -1,4 +1,4 @@
-import { Heart, Minus, NotebookText, Plus, ShoppingCart } from 'lucide-react'
+import { Heart, Minus, NotebookText, Plus, ShoppingCart, X } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 import { signOut, useSession } from 'next-auth/react'
@@ -13,6 +13,10 @@ const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
 
   return (
     <div className='fixed md:hidden h-[100vh] flex flex-col items-center w-full bg-[rgb(95,40,74)] text-2xl text-white uppercase font-semibold  '>
+      <X
+        onClick={closeSidebar}
+        className='w-10 h-10 text-white absolute top-5 right-5'
+      />
       {session && (
         <Link
           href='/profile'
