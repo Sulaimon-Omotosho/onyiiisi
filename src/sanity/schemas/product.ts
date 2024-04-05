@@ -107,6 +107,11 @@ export default defineType({
       type: 'boolean',
     }),
     defineField({
+      name: 'popular',
+      title: 'Popular',
+      type: 'boolean',
+    }),
+    defineField({
       name: 'body',
       title: 'Body',
       type: 'blockContent',
