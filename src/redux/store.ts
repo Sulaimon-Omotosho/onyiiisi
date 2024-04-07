@@ -14,25 +14,7 @@ import {
 } from "redux-persist";
 import createWebStorage from "redux-persist/es/storage/createWebStorage";
 
-// Wrap cartReducer with persistReducer
-// const persistedCartReducer = persistReducer(
-//   {
-//     key: "cart",
-//     version: 1,
-//     storage: createWebStorage("local"),
-//   },
-//   cartReducer
-// );
-
-// Wrap wishlistReducer with persistReducer
-// const persistedWishlistReducer = persistReducer(
-//   {
-//     key: "wishlist",
-//     version: 1,
-//     storage: createWebStorage("local"),
-//   },
-//   wishlistReducer
-// );
+// Define the root state interface
 
 const rootReducer = combineReducers({
   cartState: cartReducer,
@@ -42,21 +24,18 @@ const rootReducer = combineReducers({
 // create a dummy server for the local storage
 export function createPersistStore(): WebStorage {
   const isServer = typeof window === "undefined";
-  //   return dummy server
-  if (isServer) {
-    return {
-      getItem() {
-        return Promise.resolve(null);
-      },
-      setItem() {
-        return Promise.resolve();
-      },
-      removeItem() {
-        return Promise.resolve();
-      },
-    };
-  }
-  return createWebStorage("local");
+  // return dummy server if (isServer) {
+  return {
+    getItem() {
+      return Promise.resolve(null);
+    },
+    setItem() {
+      return Promise.resolve();
+    },
+    removeItem() {
+      return Promise.resolve();
+    },
+  };
 }
 
 const storage =
@@ -71,6 +50,7 @@ const persistConfig = {
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
+
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
@@ -82,3 +62,7 @@ export const store = configureStore({
 });
 
 export let persistor = persistStore(store);
+
+// Export the RootState type
+export type AppDispatch = typeof store.dispatch;
+export type RootState = ReturnType<typeof store.getState>;
