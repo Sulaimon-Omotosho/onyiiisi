@@ -82,7 +82,7 @@ export const productsByCollection = async (collectionName: string) => {
 
 const popularProductsQuery = groq`*[_type == 'product' && references(*[_type == 'popular' && title == $popularName]._id)] {...} | order(createdAt desc)`
 
-export const popularProducts = async (popularName: string) => {
+export const popularProducts = async (popularName: boolean) => {
   const products: ProductProps[] = await client.fetch(popularProductsQuery, {
     popularName,
   })
