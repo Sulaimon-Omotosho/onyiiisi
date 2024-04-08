@@ -68,13 +68,15 @@ const CartPage = () => {
               href={`/product/${item.slug}`}
               className='relative w-[120px] md:w-[200px] lg:w-[350px] h-[120px] md:h-[200px] lg:h-[350px]'
             >
-              <Image
-                src={urlFor(item.image).url()}
-                alt='Earring'
-                fill
-                objectFit='cover'
-                className=' border-2 border-gray-600 rounded-md'
-              />
+              {item.image && (
+                <Image
+                  src={urlFor(item.image).url()}
+                  alt='Earring'
+                  fill
+                  objectFit='cover'
+                  className=' border-2 border-gray-600 rounded-md'
+                />
+              )}
             </Link>
             <div className='relative flex w-[70%] gap-4 lg:gap-8 flex-col'>
               <div className='flex justify-between'>

@@ -4,7 +4,7 @@ import Search from '@/components/Search'
 // import { earringsPage } from '@/constants'
 import { productsByCollection, urlFor } from '@/lib/sanity-client'
 import { ProductProps } from '@/lib/types'
-import { Heart, Plus } from 'lucide-react'
+import { Heart, MoveUp, Plus } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
@@ -160,6 +160,9 @@ const CollectionsPage = () => {
                     <p className=' font-thin text-xs text-gray-600'>
                       {product?.gram} grams
                     </p>
+                  </div>
+                  <div className='text-green-800 flex justify-center font-bold lg:text-xl items-center m-3 lg:m-5 xl:m-7'>
+                    <MoveUp className='h-3' />${product.price}
                   </div>
                 </div>
               ))
