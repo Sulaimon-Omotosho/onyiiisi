@@ -1,7 +1,16 @@
-import { Heart, Minus, NotebookText, Plus, ShoppingCart, X } from 'lucide-react'
+import {
+  ArrowBigRight,
+  Heart,
+  Minus,
+  NotebookText,
+  Plus,
+  ShoppingCart,
+  X,
+} from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 import { signOut, useSession } from 'next-auth/react'
+import MiniSidebar from './MiniSidebar'
 
 const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
   const { data: session } = useSession()
@@ -12,10 +21,10 @@ const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
   }
 
   return (
-    <div className='fixed md:hidden h-[100vh] flex flex-col items-center w-full bg-[rgb(95,40,74)] text-2xl text-white uppercase font-semibold  '>
+    <div className='fixed md:hidden h-[100vh] flex flex-col items-center w-full bg-[rgb(95,40,74)] text-2xl text-white uppercase font-semibold '>
       <X
         onClick={closeSidebar}
-        className='w-10 h-10 text-white absolute top-5 right-5'
+        className='w-10 h-10 text-white absolute top-5 z-30 right-5'
       />
       {session && (
         <Link
@@ -33,14 +42,17 @@ const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
             // href='/shop'
             className='flex gap-2 items-center text-2xl'
           >
-            {shop ? (
-              <Minus className='h-8 w-8' />
-            ) : (
-              <Plus className='h-8 w-8' />
-            )}
+            <ArrowBigRight />
             shop
           </div>
           <div
+            className={`absolute w-full h-[100vh] transition-all duration-500 z-20 ${
+              shop ? 'top-0 left-0' : 'top-0 left-[-500px]'
+            }`}
+          >
+            <MiniSidebar shop={handleShop} closeSidebar={closeSidebar} />
+          </div>
+          {/* <div
             className={` ${
               shop
                 ? 'capitalize pt-2  pl-5 flex flex-col gap-3 font-thin'
@@ -74,7 +86,7 @@ const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
             >
               collections
             </Link>
-          </div>
+          </div> */}
         </div>
 
         <Link

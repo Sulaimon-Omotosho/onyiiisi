@@ -161,7 +161,7 @@ const CollectionsPage = () => {
                       {product?.gram} grams
                     </p>
                   </div>
-                  <div className='text-green-800 flex justify-center font-bold lg:text-xl items-center m-3 lg:m-5 xl:m-7'>
+                  <div className='text-green-800 flex justify-center font-bold lg:text-xl items-center md:m-3 lg:m-5 xl:m-7'>
                     <MoveUp className='h-3' />${product.price}
                   </div>
                 </div>
