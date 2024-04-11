@@ -7,10 +7,11 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "@/redux/store";
 
 export default function Providers({ children }: { children: ReactNode }) {
+  persistor.persist();
   return (
     <SessionProvider>
       <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
+        <PersistGate loading={<div>Loading...</div>} persistor={persistor}>
           {children}
           <Toaster richColors position="bottom-right" />
         </PersistGate>

@@ -16,26 +16,29 @@ import createWebStorage from "redux-persist/es/storage/createWebStorage";
 
 // Define the root state interface
 
-const rootReducer = combineReducers({
-  cartState: cartReducer,
-  wishlistState: wishlistReducer,
-});
+// const rootReducer = combineReducers({
+//   cartState: cartReducer,
+//   wishlistState: wishlistReducer,
+// });
 
 // create a dummy server for the local storage
 export function createPersistStore(): WebStorage {
   const isServer = typeof window === "undefined";
-  // return dummy server if (isServer) {
-  return {
-    getItem() {
-      return Promise.resolve(null);
-    },
-    setItem() {
-      return Promise.resolve();
-    },
-    removeItem() {
-      return Promise.resolve();
-    },
-  };
+  // return dummy server
+  if (isServer) {
+    return {
+      getItem() {
+        return Promise.resolve(null);
+      },
+      setItem() {
+        return Promise.resolve();
+      },
+      removeItem() {
+        return Promise.resolve();
+      },
+    };
+  }
+  return createWebStorage("local");
 }
 
 const storage =
@@ -49,10 +52,12 @@ const persistConfig = {
   storage,
 };
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedReducer = persistReducer(persistConfig, cartReducer);
 
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: {
+    cart: persistedReducer,
+  },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
@@ -64,5 +69,5 @@ export const store = configureStore({
 export let persistor = persistStore(store);
 
 // Export the RootState type
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
+// export type AppDispatch = typeof store.dispatch;
+// export type RootState = ReturnType<typeof store.getState>;
