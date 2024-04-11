@@ -138,7 +138,7 @@ const ProfilePage = () => {
             />
           </div>
           <div className=''>
-            <div className='justify-between flex capitalize font-semibold text-xl'>
+            <div className='justify-between flex capitalize font-semibold text-xl pb-5'>
               <h2 className=''>shipping address</h2>
               <h2 className='flex items-center hover:underline underline-offset-4 cursor-pointer'>
                 <Plus /> add address
