@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { salesCarousel } from '@/constants'
 import { useState } from 'react'
 
-export default function SalesCarousel() {
+export default function RelatedProducts() {
   const [currentIndex, setCurrentIndex] = useState(0)
 
   const prevSale = () => {

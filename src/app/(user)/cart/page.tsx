@@ -166,6 +166,16 @@ const CartPage = () => {
               className="uppercase font-semibold hover:underline py-5 underline-offset-8 text-gray-700"
             >
               continue shopping
+
+              {item.image && (
+                <Image
+                  src={urlFor(item.image).url()}
+                  alt='Earring'
+                  fill
+                  objectFit='cover'
+                  className=' border-2 border-gray-600 rounded-md'
+                />
+              )}
             </Link>
           </div>
         </div>
