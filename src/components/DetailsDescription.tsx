@@ -81,132 +81,33 @@ const DetailsDescription = () => {
             </p>
           </div>
           <div className={`${showRev ? 'block' : 'hidden'}`}>
-            <div className='relative mb-3'>
-              <p className='capitalize text-lg text-black'>honey</p>
-              <p className='capitalize text-sm mb-3'>apr 4, 2023</p>
-              <p className='text-lg'>I Love my chain</p>
-              <p className='text-black'>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Aliquid, perspiciatis?
-              </p>
-              <hr className='border-b-1 border-black my-1' />
-              <div className='absolute top-1 right-1'>
-                <div className='flex gap-1'>
-                  <Star
-                    style={{ fill: 'rgb(244,206,80)' }}
-                    color='rgb(244,206,80)'
-                    size={20}
-                  />
-                  <Star
-                    style={{ fill: 'rgb(244,206,80)' }}
-                    color='rgb(244,206,80)'
-                    size={20}
-                  />
-                  <Star
-                    style={{ fill: 'rgb(244,206,80)' }}
-                    color='rgb(244,206,80)'
-                    size={20}
-                  />
-                  <Star
-                    style={{ fill: 'rgb(244,206,80)' }}
-                    color='rgb(244,206,80)'
-                    size={20}
-                  />
-                  <Star
-                    style={{ fill: 'rgb(244,206,80)' }}
-                    color='rgb(244,206,80)'
-                    size={20}
-                  />
-                </div>
-                <p className='capitalize text-orange-500 text-sm'>
-                  verified purchase
+            {[1, 2, 3, 4, 5].map((value) => (
+              <div key={value} className='relative mb-3'>
+                <p className='capitalize text-lg text-black'>honey</p>
+                <p className='capitalize text-sm mb-3'>apr 4, 2023</p>
+                <p className='text-lg'>I Love my chain</p>
+                <p className='text-black'>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Aliquid, perspiciatis?
                 </p>
-              </div>
-            </div>
-            <div className='relative mb-3'>
-              <p className='capitalize text-lg text-black'>honey</p>
-              <p className='capitalize text-sm mb-3'>apr 4, 2023</p>
-              <p className='text-lg'>I Love my chain</p>
-              <p className='text-black'>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Aliquid, perspiciatis?
-              </p>
-              <hr className='border-b-1 border-black my-1' />
-              <div className='absolute top-1 right-1'>
-                <div className='flex gap-1'>
-                  <Star
-                    style={{ fill: 'rgb(244,206,80)' }}
-                    color='rgb(244,206,80)'
-                    size={20}
-                  />
-                  <Star
-                    style={{ fill: 'rgb(244,206,80)' }}
-                    color='rgb(244,206,80)'
-                    size={20}
-                  />
-                  <Star
-                    style={{ fill: 'rgb(244,206,80)' }}
-                    color='rgb(244,206,80)'
-                    size={20}
-                  />
-                  <Star
-                    style={{ fill: 'rgb(244,206,80)' }}
-                    color='rgb(244,206,80)'
-                    size={20}
-                  />
-                  <Star
-                    style={{ fill: 'rgb(244,206,80)' }}
-                    color='rgb(244,206,80)'
-                    size={20}
-                  />
+                <hr className='border-b-1 border-black my-1' />
+                <div className='absolute top-1 right-1'>
+                  <div className='flex gap-1'>
+                    {[1, 2, 3, 4, 5].map((value, idx) => (
+                      <Star
+                        key={value}
+                        style={{ fill: 'rgb(244,206,80)' }}
+                        color='rgb(244,206,80)'
+                        size={20}
+                      />
+                    ))}
+                  </div>
+                  <p className='capitalize text-orange-500 text-sm'>
+                    verified purchase
+                  </p>
                 </div>
-                <p className='capitalize text-orange-500 text-sm'>
-                  verified purchase
-                </p>
               </div>
-            </div>
-            <div className='relative mb-3'>
-              <p className='capitalize text-lg text-black'>honey</p>
-              <p className='capitalize text-sm mb-3'>apr 4, 2023</p>
-              <p className='text-lg'>I Love my chain</p>
-              <p className='text-black'>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Aliquid, perspiciatis?
-              </p>
-              <hr className='border-b-1 border-black my-1' />
-              <div className='absolute top-1 right-1'>
-                <div className='flex gap-1'>
-                  <Star
-                    style={{ fill: 'rgb(244,206,80)' }}
-                    color='rgb(244,206,80)'
-                    size={20}
-                  />
-                  <Star
-                    style={{ fill: 'rgb(244,206,80)' }}
-                    color='rgb(244,206,80)'
-                    size={20}
-                  />
-                  <Star
-                    style={{ fill: 'rgb(244,206,80)' }}
-                    color='rgb(244,206,80)'
-                    size={20}
-                  />
-                  <Star
-                    style={{ fill: 'rgb(244,206,80)' }}
-                    color='rgb(244,206,80)'
-                    size={20}
-                  />
-                  <Star
-                    style={{ fill: 'rgb(244,206,80)' }}
-                    color='rgb(244,206,80)'
-                    size={20}
-                  />
-                </div>
-                <p className='capitalize text-orange-500 text-sm'>
-                  verified purchase
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
           <div className={`${showSpec ? 'block' : 'hidden'}`}>
             <ul className='list-disc pl-5 capitalize'>

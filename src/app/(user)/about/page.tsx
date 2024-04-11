@@ -4,6 +4,8 @@ import React from 'react'
 import { products } from '@/constants'
 import Blog from '@/components/Blog'
 import SocialMedia from '@/components/SocialMedia'
+import Faq from '@/components/Faq'
+import FAQs from '@/components/FAQs'
 
 const AboutPage = () => {
   return (
@@ -146,10 +148,12 @@ const AboutPage = () => {
 
       <div className='relative flex justify-center items-center h-[750px] w-full my-20'>
         <Image src='/FAQ bg.jpeg' alt='faq bg' fill className='object-cover' />
-        <div className='absolute rounded-lg p-16 bg-white'>
-          <h1 className='text-4xl font-bold uppercase text-center'>
+        <div className='absolute rounded-lg p-5 md:p-8 lg:p-16 bg-white md:w-[80%]'>
+          <h1 className='text-2xl md:text-4xl font-bold uppercase text-center'>
             frequently asked questions
           </h1>
+          {/* <Faq /> */}
+          <FAQs />
         </div>
       </div>
 

@@ -600,3 +600,31 @@ export const historyDetails = [
     status: 'delivered',
   },
 ]
+
+export const faqData = [
+  {
+    question: 'What materials are used in your jewelry pieces?',
+    answer:
+      'Our jewelry pieces are crafted using high-quality materials such as sterling silver, 18k gold, and genuine gemstones sourced from trusted suppliers. Each piece is meticulously crafted to ensure durability and timeless elegance.',
+  },
+  {
+    question: 'Do you offer customization options for your jewelry?',
+    answer:
+      'Yes, we offer customization options for many of our jewelry pieces. From selecting the type of metal to choosing gemstones and engravings, we provide personalized options to create a piece that reflects your unique style and preferences.',
+  },
+  {
+    question: 'How do I care for my jewelry to maintain its quality?',
+    answer:
+      'We recommend gently cleaning your jewelry with a soft cloth and mild soap to remove any dirt or oils. Avoid exposing your jewelry to harsh chemicals, extreme temperatures, or abrasive materials. When not in use, store your jewelry in a clean, dry place away from sunlight to prevent tarnishing and damage.',
+  },
+  {
+    question: 'What is your shipping and return policy?',
+    answer:
+      'We offer worldwide shipping with various shipping options to suit your needs. Our return policy allows for returns within 30 days of purchase for a full refund or exchange, provided the item is in its original condition and packaging.',
+  },
+  {
+    question: 'How can I contact customer support if I have further questions?',
+    answer:
+      'Our customer support team is available to assist you with any inquiries or concerns. You can reach us through our contact form on the website, via email at support@onnyiisi.com, or by phone at +1 (555) 123-4567. We strive to provide prompt and helpful assistance to ensure your satisfaction.',
+  },
+]

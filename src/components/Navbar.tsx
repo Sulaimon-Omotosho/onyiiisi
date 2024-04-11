@@ -9,6 +9,7 @@ import {
   LogOut,
   NotebookText,
   Dot,
+  User,
 } from 'lucide-react'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
@@ -128,6 +129,14 @@ export default function Navbar() {
           {session && (
             <Link href='/profile' className='hidden lg:inline'>
               Hi, {session?.user?.name}
+            </Link>
+          )}
+          {session && (
+            <Link
+              href='/profile'
+              className='hidden md:inline lg:hidden cursor-pointer'
+            >
+              <User />
             </Link>
           )}
         </div>
