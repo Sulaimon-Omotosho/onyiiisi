@@ -23,6 +23,9 @@ const CheckOutPage = () => {
     } else if (paymentMethod === "stripe") {
       router.push("/stripe");
       toast("Processing Stripe payment...");
+    } else if (paymentMethod === "flutterwave") {
+      router.push("/flutterwave");
+      toast("Processing Flutterwave payment");
     } else {
       toast("Please select a payment method.");
     }
@@ -298,14 +301,16 @@ const CheckOutPage = () => {
                     type="radio"
                     name="paymentMethod"
                     id="transfer"
-                    value="transfer"
+                    value="flutterwave"
                     className="h-5 w-5"
+                    checked={paymentMethod === "flutterwave"}
+                    onChange={handlePaymentMethodChange}
                   />
                   <label
                     htmlFor="transfer"
                     className="capitalize text-slate-600"
                   >
-                    Bank Debit Transfer
+                    Flutterwave
                   </label>
                 </div>
               </form>

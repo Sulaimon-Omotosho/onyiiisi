@@ -4,7 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { toast } from "sonner";
 import React, { useEffect, useState } from "react";
-import { addToCart } from "@/redux/cart-slice";
+import {
+  addToCart,
+  decreaseQuantity,
+  increaseQuantity,
+} from "@/redux/cart-slice";
 import { useDispatch } from "react-redux";
 import { ChevronLeft, ChevronRight, Heart, Share2, Star } from "lucide-react";
 import { ProductProps } from "@/lib/types";
@@ -18,33 +22,10 @@ const SingleProductPage = () => {
   const params = useParams();
   const id = params.id;
   const dispatch = useDispatch();
-
+  const [total, setTotal] = useState(73.4);
+  const [quantity, setQuantity] = useState(1);
   const [product, setProduct] = useState<ProductProps>();
   const [loading, setLoading] = useState(true);
-
-  const handleAddToCart = () => {
-    if (Array.isArray(product) && product.length > 0) {
-      const selectedProduct = product[0];
-      const cartItem = {
-        _id: selectedProduct._id,
-        title: selectedProduct.title,
-        price: selectedProduct.price,
-        categoryName: selectedProduct.categoryName,
-        brand: selectedProduct.brand,
-        quantity: quantity,
-      };
-      dispatch(addToCart(cartItem));
-      toast("Added product to cart");
-      const existingCartItems = JSON.parse(
-        localStorage.getItem("cartItems") || "[]"
-      );
-      localStorage.setItem(
-        "cartItems",
-        JSON.stringify([...existingCartItems, cartItem])
-      );
-      toast("Added product to cart");
-    }
-  };
 
   useEffect(() => {
     if (typeof id === "string") {
@@ -70,16 +51,6 @@ const SingleProductPage = () => {
   const goToImg = (idx: number) => {
     setCurrentIndex(idx);
   };
-
-  // Price
-  const [total, setTotal] = useState(73.4);
-  const [quantity, setQuantity] = useState(1);
-
-  // useEffect(() => {
-  //   setTotal(quantity * 73.4)
-  // }, [quantity])
-
-  // Descriptions
 
   return (
     <div className="py-5 lg:py-20">
@@ -216,7 +187,7 @@ const SingleProductPage = () => {
                     >
                       -
                     </button>{" "}
-                    <p className="w-10 text-center">{quantity}</p>{" "}
+                    <p className="w-10 text-center">{product?.quantity}</p>{" "}
                     <button
                       onClick={() =>
                         setQuantity((next) => (next < 10 ? next + 1 : 10))
@@ -227,7 +198,12 @@ const SingleProductPage = () => {
                   </div>
                 </div>
                 <button
-                  onClick={handleAddToCart}
+                  onClick={() => {
+                    dispatch(addToCart(product));
+                    toast.success(
+                      `${product?.title.substring(0, 12)}... added to cart`
+                    );
+                  }}
                   className="text-white bg-[rgb(95,40,74)] py-2 lg:py-5 mx-5 rounded-full uppercase font-thin flex items-center justify-center gap-1 lg:gap-2 "
                 >
                   add to cart
