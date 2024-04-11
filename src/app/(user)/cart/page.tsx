@@ -6,6 +6,7 @@ import Image from "next/image";
 import { toast } from "sonner";
 import Link from "next/link";
 import { StateProps } from "@/lib/types";
+import { addToWishlist } from "@/redux/wishlist-slice";
 import {
   deleteProduct,
   increaseQuantity,
@@ -117,7 +118,13 @@ const CartPage = () => {
                   <div className="">
                     <hr className="border-gray-700 mb-3" />
                     <div className="px-5 flex justify-between items-center">
-                      <button className="flex gap-1 text-[rgb(95,40,74)] font-semibold">
+                      <button
+                        onClick={() => {
+                          dispatch(addToWishlist(item));
+                          toast.success("added to wishlist");
+                        }}
+                        className="flex gap-1 text-[hsl(323,41%,26%)] font-semibold"
+                      >
                         {" "}
                         <Heart />{" "}
                         <p className="hidden md:inline"> Move to Wishlist</p>
