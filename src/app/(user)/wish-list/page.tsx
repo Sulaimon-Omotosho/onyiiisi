@@ -1,11 +1,56 @@
-import { Heart, ShoppingCart, Trash } from 'lucide-react'
+'use client'
+
+import { Heart, MoveDown, MoveUp, ShoppingCart, Trash } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { cartItems } from '@/constants'
 import RelatedProducts from '@/components/RelatedProducts'
+import { MetalPrices } from '@/lib/types'
+import fetchMetalPrices from '@/app/api/metalPrices/metalPrices'
 
 const WishListPage = () => {
+  // Metal Prices
+  const [metalPrices, setMetalPrices] = useState<MetalPrices | null>(null)
+
+  useEffect(() => {
+    const fetchPrices = async () => {
+      try {
+        const data = await fetchMetalPrices()
+        setMetalPrices(data)
+      } catch (error) {}
+    }
+    fetchPrices()
+  }, [])
+
+  // console.log(metalPrices?.rates.XAU)
+  const calcProductPrice = (item: any) => {
+    // console.log('Product gram:', product.gram)
+    // console.log('Metal price:', metalPrices?.rates?.USD)
+    if (metalPrices && metalPrices?.rates?.USD) {
+      const ounces = parseFloat(item.size) / 31.1035
+      const newPrice = metalPrices?.rates?.USD * ounces
+      const previousPrice = parseFloat(item.price)
+
+      let priceChange = 'same'
+      if (newPrice > previousPrice) {
+        priceChange = 'up'
+      } else if (newPrice < previousPrice) {
+        priceChange = 'down'
+      }
+
+      return {
+        price: newPrice.toFixed(2),
+        change: priceChange,
+      }
+    } else {
+      return {
+        price: item.price,
+        change: 'same',
+      }
+    }
+  }
+
   return (
     <div>
       <div className='lg:py-20 px-3 md:px-10 xl:px-20'>
@@ -56,9 +101,22 @@ const WishListPage = () => {
                       {item.grade} | {item.size} grams
                     </p>
                   </div>
-                  <p className='text-2xl font-semibold text-orange-800'>
-                    ${item.price}
-                  </p>
+                  <div
+                    className={`${
+                      calcProductPrice(item).change === 'up'
+                        ? 'text-green-800'
+                        : calcProductPrice(item).change === 'down'
+                        ? 'text-red-600'
+                        : 'text-black'
+                    } flex justify-center font-bold lg:text-xl items-center md:m-3 lg:m-5 xl:m-7`}
+                  >
+                    {calcProductPrice(item).change === 'up' ? (
+                      <MoveUp className='h-3' />
+                    ) : calcProductPrice(item).change === 'down' ? (
+                      <MoveDown className='h-3' />
+                    ) : null}
+                    ${calcProductPrice(item).price}
+                  </div>
                 </div>
                 <div className=''>
                   <hr className='border-gray-700 mb-3' />

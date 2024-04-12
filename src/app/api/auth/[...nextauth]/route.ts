@@ -23,6 +23,11 @@ const authOptions: NextAuthOptions = {
   },
 
   providers: [
+    // GoogleProvider({
+    //   clientId: process.env.GOOGLE_CLIENT_ID as string,
+    //   clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    // }),
+
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
@@ -79,8 +84,3 @@ const authOptions: NextAuthOptions = {
 
 const handler = NextAuth(authOptions)
 export { handler as GET, handler as POST }
-
-// GoogleProvider({
-//   clientId: process.env.GOOGLE_CLIENT_ID as string,
-//   clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-// }),
