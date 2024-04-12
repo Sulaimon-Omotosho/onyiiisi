@@ -3,7 +3,7 @@ import Image from 'next/image'
 import SalesCarousel from './SalesCarousel'
 import Link from 'next/link'
 import { topCategories } from '@/constants'
-import LatestProducts from './LatestProducts'
+import PopularProducts from './PopularProducts'
 
 export default function Categories() {
   return (
@@ -62,7 +62,7 @@ export default function Categories() {
             </button>
           </Link>
         </div>
-        <LatestProducts />
+        <PopularProducts />
       </div>
     </div>
   )

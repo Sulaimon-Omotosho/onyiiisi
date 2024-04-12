@@ -80,11 +80,11 @@ export const productsByCollection = async (collectionName: string) => {
   return products
 }
 
-const popularProductsQuery = groq`*[_type == 'product' && references(*[_type == 'popular' && title == $popularName]._id)] {...} | order(createdAt desc)`
+const popularProductsQuery = groq`*[_type == 'product' && popular == true] {...} | order(createdAt desc)`
 
-export const popularProducts = async (popularName: boolean) => {
+export const popularProd = async (popular: any) => {
   const products: ProductProps[] = await client.fetch(popularProductsQuery, {
-    popularName,
+    popular: true,
   })
   return products
 }

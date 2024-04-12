@@ -1,13 +1,14 @@
 'use client'
 
+import { fetchMetalPrices } from '@/app/api/metalPrices/route'
 import Loading from '@/components/Loading'
 import Search from '@/components/Search'
 // import { earringsPage } from '@/constants'
 import { productsBySpecial, urlFor } from '@/lib/sanity-client'
-import { ProductProps } from '@/lib/types'
+import { MetalPrices, ProductProps } from '@/lib/types'
 import { addToCart } from '@/redux/cart-slice'
 import { addToWishlist } from '@/redux/wishlist-slice'
-import { Heart, MoveUp, Plus } from 'lucide-react'
+import { Heart, MoveDown, MoveUp, Plus } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
@@ -53,6 +54,47 @@ const SpecialsPage = () => {
     indexOfFirstProduct,
     indexOfLastProduct
   )
+
+  // Metal Prices
+  const [metalPrices, setMetalPrices] = useState<MetalPrices | null>(null)
+
+  useEffect(() => {
+    const fetchPrices = async () => {
+      try {
+        const data = await fetchMetalPrices()
+        setMetalPrices(data)
+      } catch (error) {}
+    }
+    fetchPrices()
+  }, [])
+
+  // console.log(metalPrices?.rates.XAU)
+  const calcProductPrice = (product: any) => {
+    // console.log('Product gram:', product.gram)
+    // console.log('Metal price:', metalPrices?.rates?.USD)
+    if (metalPrices && metalPrices?.rates?.USD) {
+      const ounces = parseFloat(product.gram) / 31.1035
+      const newPrice = metalPrices?.rates?.USD * ounces
+      const previousPrice = parseFloat(product.price)
+
+      let priceChange = 'same'
+      if (newPrice > previousPrice) {
+        priceChange = 'up'
+      } else if (newPrice < previousPrice) {
+        priceChange = 'down'
+      }
+
+      return {
+        price: newPrice.toFixed(2),
+        change: priceChange,
+      }
+    } else {
+      return {
+        price: product.price,
+        change: 'same',
+      }
+    }
+  }
 
   return (
     <div className='py-0 lg:py-20'>
@@ -187,8 +229,21 @@ const SpecialsPage = () => {
                       </p>
                     </div>
                   </Link>
-                  <div className='text-green-800 flex justify-center font-bold lg:text-xl items-center md:m-3 lg:m-5 xl:m-7'>
-                    <MoveUp className='h-3' />${product.price}
+                  <div
+                    className={`${
+                      calcProductPrice(product).change === 'up'
+                        ? 'text-green-800'
+                        : calcProductPrice(product).change === 'down'
+                        ? 'text-red-600'
+                        : 'text-black'
+                    } flex justify-center font-bold lg:text-xl items-center md:m-3 lg:m-5 xl:m-7`}
+                  >
+                    {calcProductPrice(product).change === 'up' ? (
+                      <MoveUp className='h-3' />
+                    ) : calcProductPrice(product).change === 'down' ? (
+                      <MoveDown className='h-3' />
+                    ) : null}
+                    ${calcProductPrice(product).price}
                   </div>
                 </div>
               ))
