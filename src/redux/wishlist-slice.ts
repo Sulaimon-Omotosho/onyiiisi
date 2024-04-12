@@ -1,11 +1,11 @@
 import { toast } from "sonner";
 import { ProductProps } from "@/lib/types";
 import { createSlice } from "@reduxjs/toolkit";
-type WishlistStateProps = {
+type StoreStateProps = {
   productData: ProductProps[];
 };
 
-const initialState: WishlistStateProps = {
+const initialState: StoreStateProps = {
   productData: [],
 };
 

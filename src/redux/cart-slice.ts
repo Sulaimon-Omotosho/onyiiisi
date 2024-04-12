@@ -58,6 +58,7 @@ export const cartSlice = createSlice({
 
 export const {
   addToCart,
+  addToCartFromWishlist,
   increaseQuantity,
   decreaseQuantity,
   deleteProduct,

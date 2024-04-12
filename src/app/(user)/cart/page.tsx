@@ -7,21 +7,23 @@ import { toast } from "sonner";
 import Link from "next/link";
 import { StateProps } from "@/lib/types";
 import { addToWishlist } from "@/redux/wishlist-slice";
+import { useSession } from "next-auth/react";
+import { useCheckout } from "@/hooks/usecheckout";
 import {
   deleteProduct,
   increaseQuantity,
   decreaseQuantity,
 } from "@/redux/cart-slice";
+import { useRouter } from "next/navigation";
 import { urlFor } from "@/lib/sanity-client";
 
-interface CartItem {
-  _id: string;
-}
-
 const CartPage = () => {
+  const { data: session } = useSession();
   const { productData } = useSelector((state: StateProps) => state.cart);
   const dispatch = useDispatch();
+  const router = useRouter();
   const [totalAmt, setTotalAmt] = useState(0);
+  const { createCheckout } = useCheckout();
 
   useEffect(() => {
     let price = 0;
@@ -105,7 +107,7 @@ const CartPage = () => {
                     >
                       -
                     </button>
-                    <p className="">{item?.quantity}</p>
+                    {/* <p className="">{quantity}</p> */}
                     <button
                       onClick={() => {
                         dispatch(increaseQuantity({ _id: item?._id }));
@@ -158,16 +160,18 @@ const CartPage = () => {
               <p className="uppercase text-gray-500 text-xl">item subtotal</p>
               <p className="text-xl">${totalAmt.toFixed(2)}</p>
             </div>
-            <button className="text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[75%] md:w-[50%] lg:w-[30%] cursor-pointer rounded-full uppercase font-bold text-md flex items-center justify-center gap-1 lg:gap-2 ">
-              <Link href="/checkout">proceed to checkout</Link>
+            <button
+              onClick={() => createCheckout(productData)}
+              className="text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[75%] md:w-[50%] lg:w-[30%] cursor-pointer rounded-full uppercase font-bold text-md flex items-center justify-center gap-1 lg:gap-2 "
+            >
+              <span>proceed to checkout</span>
             </button>
             <Link
               href="/shop"
               className="uppercase font-semibold hover:underline py-5 underline-offset-8 text-gray-700"
             >
               continue shopping
-
-              {item.image && (
+              {/* {item.image && (
                 <Image
                   src={urlFor(item.image).url()}
                   alt='Earring'
@@ -175,7 +179,7 @@ const CartPage = () => {
                   objectFit='cover'
                   className=' border-2 border-gray-600 rounded-md'
                 />
-              )}
+              )} */}
             </Link>
           </div>
         </div>

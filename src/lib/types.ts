@@ -71,6 +71,9 @@ export interface StateProps {
   cart: {
     productData: ProductProps[];
   };
+  wishlist: {
+    productData: ProductProps[];
+  };
 }
 
 export type CustomFormFieldsType = {
