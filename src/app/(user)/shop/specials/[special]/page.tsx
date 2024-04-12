@@ -1,6 +1,6 @@
 'use client'
 
-import { fetchMetalPrices } from '@/app/api/metalPrices/route'
+import fetchMetalPrices from '@/app/api/metalPrices/route'
 import Loading from '@/components/Loading'
 import Search from '@/components/Search'
 // import { earringsPage } from '@/constants'

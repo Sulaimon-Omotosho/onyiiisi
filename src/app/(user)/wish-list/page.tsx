@@ -6,8 +6,8 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { cartItems } from '@/constants'
 import RelatedProducts from '@/components/RelatedProducts'
-import { fetchMetalPrices } from '@/app/api/metalPrices/route'
 import { MetalPrices } from '@/lib/types'
+import fetchMetalPrices from '@/app/api/metalPrices/route'
 
 const WishListPage = () => {
   // Metal Prices
@@ -28,7 +28,7 @@ const WishListPage = () => {
     // console.log('Product gram:', product.gram)
     // console.log('Metal price:', metalPrices?.rates?.USD)
     if (metalPrices && metalPrices?.rates?.USD) {
-      const ounces = parseFloat(item.gram) / 31.1035
+      const ounces = parseFloat(item.size) / 31.1035
       const newPrice = metalPrices?.rates?.USD * ounces
       const previousPrice = parseFloat(item.price)
 

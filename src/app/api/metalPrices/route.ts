@@ -1,4 +1,4 @@
-export const fetchMetalPrices = async () => {
+export default async function fetchMetalPrices() {
   try {
     const response = await fetch(
       `https://api.metalpriceapi.com/v1/latest?api_key=5ecc76ffdb8bfebc1265515a51661b1f&base=XAU&currencies=EUR,USD,XAG`
