@@ -1,14 +1,19 @@
 'use client'
 
+import Loading from '@/components/Loading'
 import Search from '@/components/Search'
 // import { earringsPage } from '@/constants'
 import { productsByCollection, urlFor } from '@/lib/sanity-client'
 import { ProductProps } from '@/lib/types'
+import { addToCart } from '@/redux/cart-slice'
+import { addToWishlist } from '@/redux/wishlist-slice'
 import { Heart, MoveUp, Plus } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { toast } from 'sonner'
 import { string } from 'zod'
 
 const CollectionsPage = () => {
@@ -19,6 +24,7 @@ const CollectionsPage = () => {
   const [products, setProducts] = useState<ProductProps[]>([])
   const [currentPage, setCurrentPage] = useState(1)
   const [productsPerPage, setProductsPerPage] = useState(16)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     if (typeof collectionName === 'string') {
@@ -124,43 +130,64 @@ const CollectionsPage = () => {
           {/* Products  */}
           <div className='flex flex-wrap flex-grow gap-10 lg:gap-14 my-10 mx-5 justify-center'>
             {loading ? (
-              <p>Loading...</p>
+              <Loading />
             ) : (
               currentProducts?.map((product) => (
                 <div
                   key={product?._id}
                   className=' bg-[rgb(230,230,230)] rounded-md text-center h-[350px] md:h-[220px] lg:h-[280px] 2xl:h-[300px] w-[320px] md:w-[190px] lg:w-[250px] 2xl:w-[280px] flex-grow'
                 >
-                  <Link href={`/product/${product._id}`}>
-                    <div className='h-[80%] border-b-[1px] flex items-center justify-center border-gray-400 relative overflow-hidden'>
-                      {product.placeholder && (
-                        <Image
-                          src={urlFor(product.placeholder).url()}
-                          alt={product.title}
-                          fill
-                          className=' object-cover'
-                          // height={150}
-                          // width={150}
-                        />
-                      )}
-                      <div className='absolute w-full h-full flex justify-between p-4 bottom-14 hover:bottom-0 transition-all ease-in-out duration-3000'>
-                        <div className='w-10 h-10 bg-[rgb(95,40,74)] rounded-md text-white flex justify-center items-center hover:scale-125 transition-all duration-300'>
-                          {' '}
-                          <Heart />{' '}
-                        </div>
-                        <div className='w-10 h-10 bg-[rgb(95,40,74)] rounded-md text-white flex justify-center items-center hover:scale-125 transition-all duration-300'>
-                          {' '}
-                          <Plus />{' '}
-                        </div>
+                  <div className='h-[80%] border-b-[1px] flex items-center justify-center border-gray-400 relative overflow-hidden'>
+                    {product.placeholder && (
+                      <Image
+                        src={urlFor(product.placeholder).url()}
+                        alt={product.title}
+                        fill
+                        className=' object-cover'
+                        // height={150}
+                        // width={150}
+                      />
+                    )}
+                    <div className='absolute w-full h-full flex justify-between p-4 bottom-14 hover:bottom-0 transition-all ease-in-out duration-3000'>
+                      <div
+                        onClick={() => {
+                          dispatch(addToWishlist(product))
+                          toast.success(
+                            `${product?.title.substring(
+                              0,
+                              12
+                            )}... added to wishlist`
+                          )
+                        }}
+                        className='w-10 h-10 bg-[rgb(95,40,74)] rounded-md text-white flex justify-center items-center hover:scale-125 transition-all duration-300'
+                      >
+                        {' '}
+                        <Heart />{' '}
+                      </div>
+                      <div
+                        onClick={() => {
+                          dispatch(addToCart(product))
+                          toast.success(
+                            `${product?.title.substring(0, 12)}... added to cart
+                      `
+                          )
+                        }}
+                        className='w-10 h-10 bg-[rgb(95,40,74)] rounded-md text-white flex justify-center items-center hover:scale-125 transition-all duration-300'
+                      >
+                        {' '}
+                        <Plus />{' '}
                       </div>
                     </div>
-                  </Link>
-                  <div className='pt-1'>
-                    <h3 className='font-semibold text-sm'>{product.title}</h3>
-                    <p className=' font-thin text-xs text-gray-600'>
-                      {product?.gram} grams
-                    </p>
                   </div>
+
+                  <Link href={`/product/${product._id}`}>
+                    <div className='pt-1'>
+                      <h3 className='font-semibold text-sm'>{product.title}</h3>
+                      <p className=' font-thin text-xs text-gray-600'>
+                        {product?.gram} grams
+                      </p>
+                    </div>
+                  </Link>
                   <div className='text-green-800 flex justify-center font-bold lg:text-xl items-center md:m-3 lg:m-5 xl:m-7'>
                     <MoveUp className='h-3' />${product.price}
                   </div>
