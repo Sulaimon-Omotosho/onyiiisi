@@ -7,7 +7,7 @@ import React, { useEffect, useState } from 'react'
 import { cartItems } from '@/constants'
 import RelatedProducts from '@/components/RelatedProducts'
 import { MetalPrices } from '@/lib/types'
-import fetchMetalPrices from '@/app/api/metalPrices/route'
+import fetchMetalPrices from '@/app/api/metalPrices/metalPrices'
 
 const WishListPage = () => {
   // Metal Prices
