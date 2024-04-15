@@ -162,7 +162,7 @@ const CollectionsPage = () => {
                           <Plus
                             onClick={() => {
                               dispatch(addToCart(product));
-                              toast.success("added to wishlist");
+                              toast.success("added to cart");
                             }}
                           />{" "}
                         </div>

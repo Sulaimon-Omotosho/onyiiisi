@@ -1,7 +1,7 @@
 "use client";
 
 import Search from "@/components/Search";
-// import { earringsPage } from '@/constants'
+import { toast } from "sonner";
 import { productsBySpecial, urlFor } from "@/lib/sanity-client";
 import { ProductProps } from "@/lib/types";
 import { Heart, MoveUp, Plus } from "lucide-react";
@@ -16,6 +16,7 @@ import { string } from "zod";
 
 const SpecialsPage = () => {
   const params = useParams();
+  const dispatch = useDispatch();
   const specialsName = params.special;
 
   const [loading, setLoading] = useState(true);
@@ -149,11 +150,21 @@ const SpecialsPage = () => {
                       <div className="absolute w-full h-full flex justify-between p-4 bottom-14 hover:bottom-0 transition-all ease-in-out duration-3000">
                         <div className="w-10 h-10 bg-[rgb(95,40,74)] rounded-md text-white flex justify-center items-center hover:scale-125 transition-all duration-300">
                           {" "}
-                          <Heart />{" "}
+                          <Heart
+                            onClick={() => {
+                              dispatch(addToWishlist(product));
+                              toast.success("added to wishlist");
+                            }}
+                          />{" "}
                         </div>
                         <div className="w-10 h-10 bg-[rgb(95,40,74)] rounded-md text-white flex justify-center items-center hover:scale-125 transition-all duration-300">
                           {" "}
-                          <Plus />{" "}
+                          <Plus
+                            onClick={() => {
+                              dispatch(addToCart(product));
+                              toast.success("added to cart");
+                            }}
+                          />{" "}
                         </div>
                       </div>
                     </div>
