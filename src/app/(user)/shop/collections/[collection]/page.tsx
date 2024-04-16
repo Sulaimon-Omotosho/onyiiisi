@@ -1,36 +1,30 @@
 "use client";
 
-import fetchMetalPrices from '@/app/api/metalPrices/metalPrices'
-import Loading from '@/components/Loading'
-import Search from '@/components/Search'
+import fetchMetalPrices from "@/app/api/metalPrices/metalPrices";
+import Loading from "@/components/Loading";
+import Search from "@/components/Search";
 // import { earringsPage } from '@/constants'
-import { productsByCollection, urlFor } from '@/lib/sanity-client'
-import { MetalPrices, ProductProps } from '@/lib/types'
-import { addToCart } from '@/redux/cart-slice'
-import { addToWishlist } from '@/redux/wishlist-slice'
-import { Heart, MoveDown, MoveUp, Plus } from 'lucide-react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { useParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { toast } from 'sonner'
-import { string } from 'zod'
+import { productsByCollection, urlFor } from "@/lib/sanity-client";
+import { MetalPrices, ProductProps } from "@/lib/types";
+import { addToCart } from "@/redux/cart-slice";
+import { addToWishlist } from "@/redux/wishlist-slice";
+import { Heart, MoveDown, MoveUp, Plus } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { toast } from "sonner";
+import { string } from "zod";
 
 const CollectionsPage = () => {
   const params = useParams();
   const dispatch = useDispatch();
   const collectionName = params.collection;
-
   const [loading, setLoading] = useState(true);
   const [products, setProducts] = useState<ProductProps[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage, setProductsPerPage] = useState(16);
-  const [loading, setLoading] = useState(true)
-  const [products, setProducts] = useState<ProductProps[]>([])
-  const [currentPage, setCurrentPage] = useState(1)
-  const [productsPerPage, setProductsPerPage] = useState(16)
-  const dispatch = useDispatch()
 
   useEffect(() => {
     if (typeof collectionName === "string") {
@@ -58,48 +52,47 @@ const CollectionsPage = () => {
   const currentProducts = products.slice(
     indexOfFirstProduct,
     indexOfLastProduct
-  )
-
+  );
   // Metal Prices
-  const [metalPrices, setMetalPrices] = useState<MetalPrices | null>(null)
+  const [metalPrices, setMetalPrices] = useState<MetalPrices | null>(null);
 
   useEffect(() => {
     const fetchPrices = async () => {
       try {
-        const data = await fetchMetalPrices()
-        setMetalPrices(data)
+        const data = await fetchMetalPrices();
+        setMetalPrices(data);
       } catch (error) {}
-    }
-    fetchPrices()
-  }, [])
+    };
+    fetchPrices();
+  }, []);
 
   // console.log(metalPrices?.rates.XAU)
   const calcProductPrice = (product: any) => {
     // console.log('Product gram:', product.gram)
     // console.log('Metal price:', metalPrices?.rates?.USD)
     if (metalPrices && metalPrices?.rates?.USD) {
-      const ounces = parseFloat(product.gram) / 31.1035
-      const newPrice = metalPrices?.rates?.USD * ounces
-      const previousPrice = parseFloat(product.price)
+      const ounces = parseFloat(product.gram) / 31.1035;
+      const newPrice = metalPrices?.rates?.USD * ounces;
+      const previousPrice = parseFloat(product.price);
 
-      let priceChange = 'same'
+      let priceChange = "same";
       if (newPrice > previousPrice) {
-        priceChange = 'up'
+        priceChange = "up";
       } else if (newPrice < previousPrice) {
-        priceChange = 'down'
+        priceChange = "down";
       }
 
       return {
         price: newPrice.toFixed(2),
         change: priceChange,
-      }
+      };
     } else {
       return {
         price: product.price,
-        change: 'same',
-      }
+        change: "same",
+      };
     }
-  }
+  };
 
   return (
     <div className="py-0 lg:py-20">
@@ -184,70 +177,70 @@ const CollectionsPage = () => {
                   key={product?._id}
                   className=" bg-[rgb(230,230,230)] rounded-md text-center h-[350px] md:h-[220px] lg:h-[280px] 2xl:h-[300px] w-[320px] md:w-[190px] lg:w-[250px] 2xl:w-[280px] flex-grow"
                 >
-                  <div className='h-[80%] border-b-[1px] flex items-center justify-center border-gray-400 relative overflow-hidden'>
+                  <div className="h-[80%] border-b-[1px] flex items-center justify-center border-gray-400 relative overflow-hidden">
                     {product.placeholder && (
                       <Image
                         src={urlFor(product.placeholder).url()}
                         alt={product.title}
                         fill
-                        className=' object-cover'
+                        className=" object-cover"
                         // height={150}
                         // width={150}
                       />
                     )}
-                    <div className='absolute w-full h-full flex justify-between p-4 bottom-14 hover:bottom-0 transition-all ease-in-out duration-3000'>
+                    <div className="absolute w-full h-full flex justify-between p-4 bottom-14 hover:bottom-0 transition-all ease-in-out duration-3000">
                       <div
                         onClick={() => {
-                          dispatch(addToWishlist(product))
+                          dispatch(addToWishlist(product));
                           toast.success(
                             `${product?.title.substring(
                               0,
                               12
                             )}... added to wishlist`
-                          )
+                          );
                         }}
-                        className='w-10 h-10 bg-[rgb(95,40,74)] rounded-md text-white flex justify-center items-center hover:scale-125 transition-all duration-300'
+                        className="w-10 h-10 bg-[rgb(95,40,74)] rounded-md text-white flex justify-center items-center hover:scale-125 transition-all duration-300"
                       >
-                        {' '}
-                        <Heart />{' '}
+                        {" "}
+                        <Heart />{" "}
                       </div>
                       <div
                         onClick={() => {
-                          dispatch(addToCart(product))
+                          dispatch(addToCart(product));
                           toast.success(
                             `${product?.title.substring(0, 12)}... added to cart
                       `
-                          )
+                          );
                         }}
-                        className='w-10 h-10 bg-[rgb(95,40,74)] rounded-md text-white flex justify-center items-center hover:scale-125 transition-all duration-300'
+                        className="w-10 h-10 bg-[rgb(95,40,74)] rounded-md text-white flex justify-center items-center hover:scale-125 transition-all duration-300"
                       >
-                        {' '}
-                        <Plus />{' '}
+                        {" "}
+                        <Plus />{" "}
                       </div>
                     </div>
                   </div>
 
                   <Link href={`/product/${product._id}`}>
-                    <div className='pt-1'>
-                      <h3 className='font-semibold text-sm'>{product.title}</h3>
-                      <p className=' font-thin text-xs text-gray-600'>
+                    <div className="pt-1">
+                      <h3 className="font-semibold text-sm">{product.title}</h3>
+                      <p className=" font-thin text-xs text-gray-600">
                         {product?.gram} grams
                       </p>
                     </div>
                   </Link>
                   <div
                     className={`${
-                      calcProductPrice(product).change === 'up'
-                        ? 'text-green-800'
-                        : calcProductPrice(product).change === 'down'
-                        ? 'text-red-600'
-                        : 'text-black'
+                      calcProductPrice(product).change === "up"
+                        ? "text-green-800"
+                        : calcProductPrice(product).change === "down"
+                        ? "text-red-600"
+                        : "text-black"
                     } flex justify-center font-bold lg:text-xl items-center md:m-3 lg:m-5 xl:m-7`}
                   >
-                    {calcProductPrice(product).change === 'up' ? (
-                      <MoveUp className='h-3' />
-                    ) : calcProductPrice(product).change === 'down' ? (
-                      <MoveDown className='h-3' />
+                    {calcProductPrice(product).change === "up" ? (
+                      <MoveUp className="h-3" />
+                    ) : calcProductPrice(product).change === "down" ? (
+                      <MoveDown className="h-3" />
                     ) : null}
                     ${calcProductPrice(product).price}
                   </div>

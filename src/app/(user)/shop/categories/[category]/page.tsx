@@ -21,12 +21,10 @@ const CategoryPage = () => {
   const params = useParams();
   const dispatch = useDispatch();
   const categoryName = params.category;
-
   const [loading, setLoading] = useState(true)
   const [products, setProducts] = useState<ProductProps[]>([])
   const [currentPage, setCurrentPage] = useState(1)
   const [productsPerPage, setProductsPerPage] = useState(16)
-  const dispatch = useDispatch()
 
   useEffect(() => {
     if (typeof categoryName === "string") {

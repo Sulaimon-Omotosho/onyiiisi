@@ -24,9 +24,12 @@ export const wishlistSlice = createSlice({
       }
     },
     deleteFromWishlist: (state, action) => {
-      state.productData = state.productData.filter(
-        (item) => item._id !== action.payload
-      );
+      return {
+        ...state,
+        productData: state.productData.filter(
+          (item) => item._id == action.payload
+        ),
+      };
     },
     clearWishlist: (state) => {
       state.productData = [];

@@ -184,19 +184,24 @@ const SingleProductPage = () => {
               <div className="flex flex-col gap-7">
                 <div className="flex justify-between">
                   <p className="text-lg md:text-2xl capitalize">Quantity</p>
-                  <div className="text-2xl flex">
+                  <div className="text-2xl flex w-14">
                     <button
-                      onClick={() =>
-                        setQuantity((prev) => (prev > 1 ? prev - 1 : 1))
-                      }
+                      onClick={() => {
+                        dispatch(decreaseQuantity({ _id: product?._id }));
+                        toast.success("Product reduced successully");
+                        console.log(product);
+                      }}
                     >
                       -
                     </button>{" "}
-                    <p className="w-10 text-center">{quantity}</p>{" "}
+                    <p className="w-5 text-center">
+                      {product?.productQuantity}
+                    </p>{" "}
                     <button
-                      onClick={() =>
-                        setQuantity((next) => (next < 10 ? next + 1 : 10))
-                      }
+                      onClick={() => {
+                        dispatch(increaseQuantity({ _id: product?._id }));
+                        toast.success("Product increased successully");
+                      }}
                     >
                       +
                     </button>

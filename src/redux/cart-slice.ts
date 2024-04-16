@@ -18,7 +18,7 @@ export const cartSlice = createSlice({
         (item: ProductProps) => item?._id === action?.payload?._id
       );
       if (existingProduct) {
-        existingProduct.quantity += action.payload.quantity;
+        existingProduct.productQuantity += action.payload.productQuantity;
       } else {
         state.productData.push(action.payload);
       }
@@ -28,22 +28,47 @@ export const cartSlice = createSlice({
       toast.success("Product added to cart from wishlist");
     },
     increaseQuantity: (state, action) => {
-      const existingProduct = state.productData.find(
-        (item) => item?._id === action.payload?._id
+      const productIndex = state.productData.findIndex(
+        (item) => item._id === action.payload._id
       );
-      existingProduct && existingProduct.quantity++;
+      if (productIndex !== -1) {
+        return {
+          ...state,
+          productData: [
+            ...state.productData.slice(0, productIndex),
+            {
+              ...state.productData[productIndex],
+              productQuantity:
+                state.productData[productIndex].productQuantity + 1,
+            },
+            ...state.productData.slice(productIndex + 1),
+          ],
+        };
+      }
+      return state;
     },
     decreaseQuantity: (state, action) => {
-      const existingProduct = state.productData.find(
-        (item: ProductProps) => item._id === action.payload._id
+      const productIndex = state.productData.findIndex(
+        (item) => item._id === action.payload._id
       );
-      if (existingProduct?.quantity === 1) {
-        existingProduct.quantity === 1;
-        toast.error("Product cannot be less than one ");
-      } else {
-        existingProduct && existingProduct.quantity--;
-        toast.success("Product reduced successfully");
+      if (productIndex !== -1) {
+        if (state.productData[productIndex].productQuantity === 1) {
+          return state;
+        }
+        return {
+          ...state,
+          productData: [
+            ...state.productData.slice(0, productIndex),
+            {
+              ...state.productData[productIndex],
+              productQuantity:
+                state.productData[productIndex].productQuantity - 1,
+            },
+            ...state.productData.slice(productIndex + 1),
+          ],
+        };
       }
+      return state; // No change if product not found
     },
     deleteProduct: (state, action) => {
       state.productData = state.productData.filter(

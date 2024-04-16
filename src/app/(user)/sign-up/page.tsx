@@ -55,7 +55,7 @@ const SignUpPage = () => {
         height: "100%",
       }}
     >
-      <div className="bg-white w-full md:w-[80%] lg:w-[60%] xl:w-[50%] my-[80px] md:my-[150px] rounded-lg p-5 md:p-16">
+      <div className="bg-white relative z-30 w-full md:w-[80%] lg:w-[60%] xl:w-[50%] my-[80px] md:my-[150px] rounded-lg p-5 md:p-16">
         <h1 className="text-2xl font-bold text-center">
           Create your Onyiisi Account
         </h1>
