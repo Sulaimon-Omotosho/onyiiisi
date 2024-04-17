@@ -4,7 +4,6 @@ import React from 'react'
 import { products } from '@/constants'
 import Blog from '@/components/Blog'
 import SocialMedia from '@/components/SocialMedia'
-import Faq from '@/components/Faq'
 import FAQs from '@/components/FAQs'
 
 const AboutPage = () => {

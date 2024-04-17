@@ -37,8 +37,7 @@ const Newsletter = () => {
             Subscribe
           </button>
           <p className='hidden md:flex text-center text-xs font-thin text-gray-500'>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi,
-            eum!
+            By sharing your email, you agree to receive our weekly updates!
           </p>
         </div>
       </div>
