@@ -6,28 +6,30 @@ import Image from 'next/image'
 import { toast } from 'sonner'
 import Link from 'next/link'
 import { StateProps } from '@/lib/types'
+import { addToWishlist } from '@/redux/wishlist-slice'
+import { useSession } from 'next-auth/react'
+import { useCheckout } from '@/hooks/useCheckout'
 import {
   deleteProduct,
   increaseQuantity,
   decreaseQuantity,
 } from '@/redux/cart-slice'
+import { useRouter } from 'next/navigation'
 import { urlFor } from '@/lib/sanity-client'
-import { addToWishlist } from '@/redux/wishlist-slice'
-import Loading from '@/components/Loading'
-
-interface CartItem {
-  _id: string
-}
 
 const CartPage = () => {
+  const { data: session } = useSession()
+  // const {quantity, setQuantity} = useState(0)
   const { productData } = useSelector((state: StateProps) => state.cart)
   const dispatch = useDispatch()
+  const router = useRouter()
   const [totalAmt, setTotalAmt] = useState(0)
+  const { createCheckout } = useCheckout()
 
   useEffect(() => {
     let price = 0
     productData.map((item) => {
-      price += item?.price * item?.quantity
+      price += item?.price * item?.productQuantity
       return price
     })
     setTotalAmt(price)
@@ -49,12 +51,15 @@ const CartPage = () => {
               {/* <Link
                 className='text-gray-400 hover:text-gray-800'
                 href='/shop/earrings'
+              <Link
+                className="text-gray-400 hover:text-gray-800"
+                href="/shop/earrings"
               >
-                Earrings |{' '}
+                Earrings |{" "}
               </Link>
               <Link
-                className='text-gray-400 hover:text-gray-800'
-                href='/product/test123'
+                className="text-gray-400 hover:text-gray-800"
+                href="/product/test123"
               >
                 Details |{' '}
               </Link> */}
@@ -108,11 +113,12 @@ const CartPage = () => {
                     >
                       -
                     </button>
-                    <p className=''>{item?.quantity}</p>
+                    <p className=''>{item.productQuantity}</p>
+
                     <button
                       onClick={() => {
                         dispatch(increaseQuantity({ _id: item?._id }))
-                        toast.success('Product added successully')
+                        toast.success('Product increased successully')
                       }}
                     >
                       +
@@ -124,14 +130,9 @@ const CartPage = () => {
                       <button
                         onClick={() => {
                           dispatch(addToWishlist(item))
-                          toast.success(
-                            `${item?.title.substring(
-                              0,
-                              12
-                            )}... added to wishlist`
-                          )
+                          toast.success('added to wishlist')
                         }}
-                        className='flex gap-1 text-[rgb(95,40,74)] font-semibold'
+                        className='flex gap-1 text-[hsl(323,41%,26%)] font-semibold'
                       >
                         {' '}
                         <Heart />{' '}
@@ -166,8 +167,11 @@ const CartPage = () => {
               <p className='uppercase text-gray-500 text-xl'>item subtotal</p>
               <p className='text-xl'>${totalAmt.toFixed(2)}</p>
             </div>
-            <button className='text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[75%] md:w-[50%] lg:w-[30%] cursor-pointer rounded-full uppercase font-bold text-md flex items-center justify-center gap-1 lg:gap-2 '>
-              <Link href='/checkout'>proceed to checkout</Link>
+            <button
+              onClick={() => createCheckout(productData)}
+              className='text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[75%] md:w-[50%] lg:w-[30%] cursor-pointer rounded-full uppercase font-bold text-md flex items-center justify-center gap-1 lg:gap-2 '
+            >
+              <span>proceed to checkout</span>
             </button>
             <Link
               href='/shop'
@@ -187,9 +191,7 @@ const CartPage = () => {
           </div>
         </div>
       ) : (
-        <div>
-          <Loading />
-        </div>
+        <div>Loading</div>
       )}
     </>
   )

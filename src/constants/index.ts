@@ -170,7 +170,7 @@ export const blogs = [
   {
     id: '1',
     img: '/blog img.jpg',
-    date: 'jan 24, 2024',
+    date: 'Jan 24, 2024',
     title: 'blog header',
     details:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa molestias fugit doloribus incidunt deserunt ipsum distinctio culpa labore aperiam, corporis repellendus quod enim id! Dolorem officia provident ab aspernatur pariatur.',
@@ -178,7 +178,7 @@ export const blogs = [
   {
     id: '2',
     img: '/blog img.jpg',
-    date: 'feb 14, 2024',
+    date: 'Feb 14, 2024',
     title: 'blog header',
     details:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa molestias fugit doloribus incidunt deserunt ipsum distinctio culpa labore aperiam, corporis repellendus quod enim id! Dolorem officia provident ab aspernatur pariatur.',
@@ -186,7 +186,7 @@ export const blogs = [
   {
     id: '3',
     img: '/blog img.jpg',
-    date: 'mar 10, 2024',
+    date: 'Mar 10, 2024',
     title: 'blog header',
     details:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa molestias fugit doloribus incidunt deserunt ipsum distinctio culpa labore aperiam, corporis repellendus quod enim id! Dolorem officia provident ab aspernatur pariatur.',
