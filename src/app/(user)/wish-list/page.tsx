@@ -63,7 +63,7 @@ const WishListPage = () => {
             <Link className='text-gray-400 hover:text-gray-800' href='/shop'>
               Shop |{' '}
             </Link>
-            <Link
+            {/* <Link
               className='text-gray-400 hover:text-gray-800'
               href='/shop/earrings'
             >
@@ -74,7 +74,7 @@ const WishListPage = () => {
               href='/product/test123'
             >
               Details |{' '}
-            </Link>
+            </Link> */}
             <p className='font-semibold'> Wishlist</p>
           </div>
         </div>
@@ -83,19 +83,22 @@ const WishListPage = () => {
         <div className='flex-col flex gap-10'>
           {cartItems.map((item, idx) => (
             <div key={idx} className='flex gap-5 md:gap-10 items-center'>
-              <div className='relative w-[120px] md:w-[200px] lg:w-[350px] h-[120px] md:h-[200px] lg:h-[350px]'>
-                <Image
-                  src={item.img}
-                  alt='Earring'
-                  fill
-                  className='object-cover border-2 border-gray-600 rounded-md'
-                />
-              </div>
+              <Link href={`/product/${item.slug}`}>
+                <div className='relative w-[120px] md:w-[200px] lg:w-[350px] h-[120px] md:h-[200px] lg:h-[350px]'>
+                  <Image
+                    src={item.img}
+                    alt='Earring'
+                    fill
+                    className='object-cover border-2 border-gray-600 rounded-md'
+                  />
+                </div>
+              </Link>
               <div className='relative flex w-[70%] gap-4 lg:gap-8 flex-col'>
                 <div className='flex justify-between pb-10 md:pb-20'>
                   <div className=''>
                     <h3 className='md:text-lg lg:text-2xl text-gray-800 font-semibold capitalize lg:pb-2'>
-                      {item.title} <span>{item.desc}</span>
+                      {item.title}:{' '}
+                      <span className='text-sm font-thin'>{item.desc}</span>
                     </h3>
                     <p className='capitalize text-sm lg:text-lg text-gray-500'>
                       {item.grade} | {item.size} grams

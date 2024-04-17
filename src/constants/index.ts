@@ -83,21 +83,21 @@ export const salesCarousel = [
   {
     image: '/70.jpg',
     title: '-70%',
-    desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+    desc: 'Indulge in irresistible savings of up to 70% off on select items.',
     type: 'Platinum',
     price: '674',
   },
   {
     image: '/trendingCarousel.jpg',
     title: 'trending',
-    desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+    desc: 'Discover the hottest products dominating the market at unbeatable prices!',
     type: 'Platinum',
     price: '674',
   },
   {
     image: '/limitedCarousel.jpg',
     title: 'Limited',
-    desc: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
+    desc: 'Explore our exclusive range of limited products and special offers.',
     type: 'Platinum',
     price: '674',
   },
@@ -396,49 +396,49 @@ export const feedbacks = [
   {
     name: 'jane doe',
     comment:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea vero iure expedita laudantium sunt reiciendis, porro, debitis cumque soluta consequuntur quo? Ipsam iste, dolorem officia sed odit quas nihil, id autem eos cumque.',
+      'Your jewelry store is fantastic! I loved the designs and shopping experience. The quality exceeded expectations. Thanks for the great experience I will be back for more',
     verified: 'verified user',
     image: '/Feedback 1.jpg',
   },
   {
     name: 'harry reddin',
     comment:
-      'Lorem ipsum dolor sit amet consetur adipisicing elit. Ea vero iure expedita lauium sunt reiciendis, porro, debitis cumque soluta consequr quo? Ipsam iste, dolorem officia sed odit quas nihil, id autem eos cumque.',
+      'Your jewelry store is a treasure trove! I was blown away by the exquisite designs and seamless shopping experience. The quality of the products is top-notch, and I could not be happier with my purchase. Thank you for offering such stunning pieces I will definitely be a returning customer',
     verified: 'verified user',
     image: '/Feedback 3.jpg',
   },
   {
     name: 'shelby quan',
     comment:
-      'Lorem ipsum dr sit amet consectetur adipisicing elit. Ea vero iure expedita lautium sunt reiciendis, porro, debitis cumque solu consequuntur quo? Ipsam iste, dolorem officia sed odit quas nihil, id autem eos que.',
+      'Your jewelry store is fantastic! I was impressed by the variety of designs and the seamless shopping experience. The quality of the products is excellent, and I am delighted with my purchase. Thanks for the great experience I will definitely be back for more!',
     verified: 'verified user',
     image: '/Feedback 2.jpg',
   },
   {
     name: 'harry reddin',
     comment:
-      'Lorem ipsum dolor sit amet consetur adipisicing elit. Ea vero iure expedita lauium sunt reiciendis, porro, debitis cumque soluta consequr quo? Ipsam iste, dolorem officia sed odit quas nihil, id autem eos cumque.',
+      'Your jewelry store is top-notch! The designs are stunning, and shopping was a breeze. The quality is superb I will be back for more soon!',
     verified: 'verified user',
     image: '/Feedback 3.jpg',
   },
   {
     name: 'shin fu',
     comment:
-      'Lorem im dolor sit amet consectetur adipisicing elit. Ea vero iure expedita laudantium sunt reiciendis, porro, debitis cumque souta consequuntur qsam iste, dolorem officia sed odit quas hil, id autem eos cumque.',
+      'Your jewelry store is fantastic! I found the perfect piece effortlessly. The quality is outstanding will be back for more items soon!',
     verified: 'verified user',
     image: '/Feedback 3.jpg',
   },
   {
     name: 'mary good',
     comment:
-      'Lorem ipsum dolor sit amet conctetur adipisicing elit. Ea vero iure expedita laudantium sunt reiciendis, porro, debitis cumque soluta sequuntur quo? Ipsam iste, dolorem officia sed odit quas nihil, id am eos cumque.',
+      'Your jewelry store is fantastic! The variety of designs is impressive, and I found exactly what I was looking for. The quality is exceptional. most definitely will be a repeat customer!',
     verified: 'verified user',
     image: '/Feedback 4.jpg',
   },
   {
     name: 'harry reddin',
     comment:
-      'Lorem ipsum dolor sit amet consetur adipisicing elit. Ea vero iure expedita lauium sunt reiciendis, porro, debitis cumque soluta consequr quo? Ipsam iste, dolorem officia sed odit quas nihil, id autem eos cumque.',
+      'Your jewelry store is amazing! The selection is superb, and I found the perfect piece. The quality exceeded my expectations. will definitely be returning for more!',
     verified: 'verified user',
     image: '/Feedback 3.jpg',
   },
@@ -626,5 +626,23 @@ export const faqData = [
     question: 'How can I contact customer support if I have further questions?',
     answer:
       'Our customer support team is available to assist you with any inquiries or concerns. You can reach us through our contact form on the website, via email at support@onnyiisi.com, or by phone at +1 (555) 123-4567. We strive to provide prompt and helpful assistance to ensure your satisfaction.',
+  },
+]
+
+export const blogData = [
+  {
+    title: 'The Anatomy of Elegance: Decoding Jewelry Design ',
+    blog: 'In this article, we uncover the secrets behind creating truly elegant and timeless jewelry pieces. From the choice of materials to the craftsmanship techniques, we explore how every detail contributes to the overall aesthetic and allure of a piece.',
+    date: 'Tuesday, 12 May, 2024',
+  },
+  {
+    title: 'Birthstones: Unveiling the Meaning Behind Each Gem',
+    blog: 'From January garnet to December turquoise, we explore the history, lore, and symbolism behind these precious gems. Whether you are celebrating a birthday or seeking a meaningful gift, discover the perfect birthstone jewelry piece to cherish forever.',
+    date: 'Wednesday, 13 May, 2024',
+  },
+  {
+    title: 'Styling Tips: Elevate Your Look with the Perfect Jewelry',
+    blog: 'In this article, we share expert tips and tricks for styling jewelry to elevate your look and express your personal style. From layering necklaces to stacking bracelets, learn how to mix and match pieces to create stunning and sophisticated ensembles.',
+    date: 'Thursday, 14 May, 2024',
   },
 ]
