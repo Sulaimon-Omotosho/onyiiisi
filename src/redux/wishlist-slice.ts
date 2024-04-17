@@ -1,11 +1,11 @@
 import { toast } from "sonner";
 import { ProductProps } from "@/lib/types";
 import { createSlice } from "@reduxjs/toolkit";
-type WishlistStateProps = {
+type StoreStateProps = {
   productData: ProductProps[];
 };
 
-const initialState: WishlistStateProps = {
+const initialState: StoreStateProps = {
   productData: [],
 };
 
@@ -24,9 +24,12 @@ export const wishlistSlice = createSlice({
       }
     },
     deleteFromWishlist: (state, action) => {
-      state.productData = state.productData.filter(
-        (item) => item._id !== action.payload
-      );
+      return {
+        ...state,
+        productData: state.productData.filter(
+          (item) => item._id == action.payload
+        ),
+      };
     },
     clearWishlist: (state) => {
       state.productData = [];
