@@ -16,6 +16,7 @@ import {
 } from '@/redux/cart-slice'
 import { useRouter } from 'next/navigation'
 import { urlFor } from '@/lib/sanity-client'
+import Loading from '@/components/Loading'
 
 const CartPage = () => {
   const { data: session } = useSession()
@@ -25,6 +26,8 @@ const CartPage = () => {
   const router = useRouter()
   const [totalAmt, setTotalAmt] = useState(0)
   const { createCheckout } = useCheckout()
+  const [LoadingTimeout, setLoadingTimeout] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     let price = 0
@@ -35,9 +38,27 @@ const CartPage = () => {
     setTotalAmt(price)
   }, [productData])
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoadingTimeout(true)
+    }, 4000)
+    return () => clearTimeout(timer)
+  }, [])
+
+  useEffect(() => {
+    const loadingTimer = setTimeout(() => {
+      setLoading(false)
+    }, 4000)
+    return () => clearTimeout(loadingTimer)
+  }, [productData])
+
   return (
     <>
-      {productData?.length > 0 ? (
+      {loading ? (
+        <div className='h-[100vh]'>
+          <Loading />
+        </div>
+      ) : productData?.length > 0 ? (
         <div className='lg:py-20 px-3 md:px-10 xl:px-20'>
           {/* Navigation */}
           <div className='flex py-10 justify-between items-center'>
@@ -191,7 +212,15 @@ const CartPage = () => {
           </div>
         </div>
       ) : (
-        <div>Loading</div>
+        <div className='h-[100vh] flex flex-col gap-5 justify-center items-center'>
+          <p className='text-3xl font-bold'>Cart Empty</p>
+          <Link
+            href='/shop'
+            className=' hover:underline underline-offset-4 hover:font-semibold hover:scale-110 transition-all duration-300 '
+          >
+            Go To Shop
+          </Link>
+        </div>
       )}
     </>
   )
