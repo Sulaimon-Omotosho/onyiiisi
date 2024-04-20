@@ -1,5 +1,6 @@
 import ContactForm from '@/components/ContactForm'
 import SocialMedia from '@/components/SocialMedia'
+import { blogData } from '@/constants'
 import { MoveDownRight } from 'lucide-react'
 import Image from 'next/image'
 import React from 'react'
@@ -78,102 +79,32 @@ const BlogPage = () => {
             className='object-cover'
           />
         </div>
-        <div className='py-3 md:py-5 lg:py-8'>
-          <div className='py-3 md:py-5'>
-            <div className='flex flex-col gap-5 md:gap-0 md:flex-row justify-between items-center'>
-              <div className='md:w-1/3'>
-                <h3 className='text-xl lg:text-3xl font-bold'>
-                  The Anatomy of Elegance: Decoding Jewelry Design{' '}
-                </h3>
-                <p className='text-xs font-mono pt-1 md:pt-5'>
-                  Tuesday, 12 May, 2024
-                </p>
+        {blogData.map((data, idx) => (
+          <div key={idx} className='py-3 md:py-5 lg:py-8'>
+            <div className='py-3 md:py-5'>
+              <div className='flex flex-col gap-5 md:gap-0 md:flex-row justify-between items-center'>
+                <div className='md:w-1/3'>
+                  <h3 className='text-xl lg:text-3xl font-bold'>
+                    {data.title}
+                  </h3>
+                  <p className='text-xs font-mono pt-1 md:pt-5'>{data.date}</p>
+                </div>
+                <div className='md:w-1/3 flex justify-end items-center '>
+                  <p className='text-sm  lg:text-md '>{data.blog}</p>
+                </div>
+                <div className='md:w-1/3 flex justify-end'>
+                  <button className='text-[rgb(95,40,74)] border-2 border-[rgb(95,40,74)] py-2 lg:py-3 w-[120px] lg:w-[150px] rounded-full uppercase font-thin text-xs flex items-center justify-center gap-1 lg:gap-2 '>
+                    read article
+                    <span>
+                      <MoveDownRight className='w-4 lg:w-5 h-4 lg:h-5 pt-1' />
+                    </span>
+                  </button>
+                </div>
               </div>
-              <div className='md:w-1/3 flex justify-end items-center '>
-                <p className='text-sm  lg:text-md '>
-                  In this article, we uncover the secrets behind creating truly
-                  elegant and timeless jewelry pieces. From the choice of
-                  materials to the craftsmanship techniques, we explore how
-                  every detail contributes to the overall aesthetic and allure
-                  of a piece.{' '}
-                </p>
-              </div>
-              <div className='md:w-1/3 flex justify-end'>
-                <button className='text-[rgb(95,40,74)] border-2 border-[rgb(95,40,74)] py-2 lg:py-3 w-[120px] lg:w-[150px] rounded-full uppercase font-thin text-xs flex items-center justify-center gap-1 lg:gap-2 '>
-                  read article
-                  <span>
-                    <MoveDownRight className='w-4 lg:w-5 h-4 lg:h-5 pt-1' />
-                  </span>
-                </button>
-              </div>
+              <hr className='border-[1px] border-slate-500 mt-8 lg:mt-10' />
             </div>
-            <hr className='border-[1px] border-slate-500 mt-8 lg:mt-10' />
           </div>
-        </div>
-        <div className='py-3 md:py-5 lg:py-8'>
-          <div className='py-3 md:py-5'>
-            <div className='flex flex-col gap-5 md:gap-0 md:flex-row justify-between items-center'>
-              <div className='md:w-1/3'>
-                <h3 className='text-xl lg:text-3xl font-bold'>
-                  The Anatomy of Elegance: Decoding Jewelry Design{' '}
-                </h3>
-                <p className='text-xs font-mono pt-1 md:pt-5'>
-                  Tuesday, 12 May, 2024
-                </p>
-              </div>
-              <div className='md:w-1/3 flex justify-end items-center '>
-                <p className='text-sm  lg:text-md '>
-                  In this article, we uncover the secrets behind creating truly
-                  elegant and timeless jewelry pieces. From the choice of
-                  materials to the craftsmanship techniques, we explore how
-                  every detail contributes to the overall aesthetic and allure
-                  of a piece.{' '}
-                </p>
-              </div>
-              <div className='md:w-1/3 flex justify-end'>
-                <button className='text-[rgb(95,40,74)] border-2 border-[rgb(95,40,74)] py-2 lg:py-3 w-[120px] lg:w-[150px] rounded-full uppercase font-thin text-xs flex items-center justify-center gap-1 lg:gap-2 '>
-                  read article
-                  <span>
-                    <MoveDownRight className='w-4 lg:w-5 h-4 lg:h-5 pt-1' />
-                  </span>
-                </button>
-              </div>
-            </div>
-            <hr className='border-[1px] border-slate-500 mt-8 lg:mt-10' />
-          </div>
-        </div>
-        <div className='py-3 md:py-5 lg:py-8'>
-          <div className='py-3 md:py-5'>
-            <div className='flex flex-col gap-5 md:gap-0 md:flex-row justify-between items-center'>
-              <div className='md:w-1/3'>
-                <h3 className='text-xl lg:text-3xl font-bold'>
-                  The Anatomy of Elegance: Decoding Jewelry Design{' '}
-                </h3>
-                <p className='text-xs font-mono pt-1 md:pt-5'>
-                  Tuesday, 12 May, 2024
-                </p>
-              </div>
-              <div className='md:w-1/3 flex justify-end items-center '>
-                <p className='text-sm  lg:text-md '>
-                  In this article, we uncover the secrets behind creating truly
-                  elegant and timeless jewelry pieces. From the choice of
-                  materials to the craftsmanship techniques, we explore how
-                  every detail contributes to the overall aesthetic and allure
-                  of a piece.{' '}
-                </p>
-              </div>
-              <div className='md:w-1/3 flex justify-end'>
-                <button className='text-[rgb(95,40,74)] border-2 border-[rgb(95,40,74)] py-2 lg:py-3 w-[120px] lg:w-[150px] rounded-full uppercase font-thin text-xs flex items-center justify-center gap-1 lg:gap-2 '>
-                  read article
-                  <span>
-                    <MoveDownRight className='w-4 lg:w-5 h-4 lg:h-5 pt-1' />
-                  </span>
-                </button>
-              </div>
-            </div>
-            <hr className='border-[1px] border-slate-500 mt-8 lg:mt-10' />
-          </div>
-        </div>
+        ))}
       </div>
 
       {/* Contact Us  */}
