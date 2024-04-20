@@ -16,7 +16,6 @@ import {
 } from "@/redux/cart-slice";
 import { useRouter } from "next/navigation";
 import { urlFor } from "@/lib/sanity-client";
-import Loading from "@/components/Loading";
 
 const CartPage = () => {
   const { data: session } = useSession();
@@ -74,11 +73,7 @@ const CartPage = () => {
 
   return (
     <>
-      {loading ? (
-        <div className="h-[100vh]">
-          <Loading />
-        </div>
-      ) : productData?.length > 0 ? (
+      {productData?.length > 0 ? (
         <div className="lg:py-20 px-3 md:px-10 xl:px-20">
           {/* Navigation */}
           <div className="flex py-10 justify-between items-center">
@@ -89,9 +84,6 @@ const CartPage = () => {
               <Link className="text-gray-400 hover:text-gray-800" href="/shop">
                 Shop |{" "}
               </Link>
-              {/* <Link
-                className='text-gray-400 hover:text-gray-800'
-                href='/shop/earrings'
               <Link
                 className="text-gray-400 hover:text-gray-800"
                 href="/shop/earrings"
@@ -102,8 +94,8 @@ const CartPage = () => {
                 className="text-gray-400 hover:text-gray-800"
                 href="/product/test123"
               >
-                Details |{' '}
-              </Link> */}
+                Details |{" "}
+              </Link>
               <p className="font-semibold"> Cart</p>
             </div>
           </div>
@@ -118,9 +110,9 @@ const CartPage = () => {
                   href={`/product/${item?.slug?.current}`}
                   className="relative w-[120px] md:w-[200px] lg:w-[350px] h-[120px] md:h-[200px] lg:h-[350px]"
                 >
-                  {item.placeholder && (
+                  {item.image && (
                     <Image
-                      src={urlFor(item?.placeholder).url()}
+                      src={urlFor(item?.image).url()}
                       alt="Earring"
                       fill
                       objectFit="cover"
@@ -133,19 +125,17 @@ const CartPage = () => {
                     <div className="">
                       <h3 className="md:text-lg lg:text-2xl text-gray-800 font-semibold capitalize lg:pb-2">
                         {item?.title.substring(0, 20)}{" "}
-                        <span className="text-xs font-thin">
-                          {item?.description}
-                        </span>
+                        <span>{item?.description}</span>
                       </h3>
                       <p className="capitalize text-sm lg:text-lg text-gray-500">
-                        {item.brand} | {item.gram} grams
+                        {item.brand} | {item.size} grams
                       </p>
                     </div>
                     <p className="text-2xl font-semibold text-orange-800">
                       ${item.price}
                     </p>
                   </div>
-                  <div className="flex gap-5 px-3 items-center justify-between border-[1px] rounded-md border-gray-500 w-fit h-fit text-2xl text-gray-500">
+                  <div className="flex gap-5 px-3 items-center justify-between border-[1px] rounded-md border-gray-500 z-20 w-fit h-fit text-2xl text-gray-500">
                     <button
                       onClick={() => {
                         dispatch(decreaseQuantity({ _id: item?._id }));
@@ -155,7 +145,6 @@ const CartPage = () => {
                       -
                     </button>
                     <p className="">{item.productQuantity}</p>
-
                     <button
                       onClick={() => {
                         dispatch(increaseQuantity({ _id: item?._id }));
@@ -232,15 +221,7 @@ const CartPage = () => {
           </div>
         </div>
       ) : (
-        <div className="h-[100vh] flex flex-col gap-5 justify-center items-center">
-          <p className="text-3xl font-bold">Cart Empty</p>
-          <Link
-            href="/shop"
-            className=" hover:underline underline-offset-4 hover:font-semibold hover:scale-110 transition-all duration-300 "
-          >
-            Go To Shop
-          </Link>
-        </div>
+        <div>Loading</div>
       )}
     </>
   );

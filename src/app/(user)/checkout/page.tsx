@@ -25,11 +25,13 @@ const CheckOutPage = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const order = searchParams.get("order");
-  const parsedItems: { updatedItems: CheckoutItem[] } = order
-    ? JSON.parse(order as string)
-    : { updatedItems: [] };
-  const updatedItems: CheckoutItem[] = parsedItems.updatedItems || [];
-  console.log("updatedItems:", updatedItems);
+  // const parsedItems: { updatedItems: CheckoutItem[] } = order
+  //   ? JSON.parse(order as string)
+  //   : { updatedItems: [] };
+  const parsedItems: CheckoutItem[] = order ? JSON.parse(order as string) : [];
+  console.log("ParsedItems:", parsedItems);
+  // const updatedItems: CheckoutItem[] = parsedItems.updatedItems || [];
+  // console.log("updatedItems:", updatedItems);
 
   const handlePaymentMethodChange = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -220,11 +222,11 @@ const CheckOutPage = () => {
           </div>
           <div className="h-full overflow-hidden">
             <div className="h-1/2 overflow-y-auto">
-              {updatedItems.map((item, idx) => (
+              {parsedItems.map((item, idx) => (
                 <div key={idx} className="">
-                  <div className="py-5 flex flex-col lg:flex-row  gap-2 xl:gap-5">
+                  <div className="py-5 flex flex-col lg:flex-row gap-2 xl:gap-5">
                     <div className="w-1/4">
-                      <div className="relative h-[120px] xl:h-[150px] w-[120px] xl:w-[150px] rounded-md overflow-hidden border-2 border-slate-400">
+                      <div className="relative h-[100px] xl:h-[130px] w-[100px] xl:w-[150px] rounded-md overflow-hidden border-2 border-slate-400">
                         <Image
                           src={item.product_data.image}
                           alt={item.product_data.name}
@@ -236,7 +238,7 @@ const CheckOutPage = () => {
                       </div>
                     </div>
                     <div className="flex justify-between w-full lg:w-3/4 py-3">
-                      <div className="flex flex-col justify-between">
+                      <div className="flex flex-col ml-3 justify-between">
                         <h3 className="capitalize text-xl lg:text-2xl font-semibold">
                           {item.product_data.name}
                         </h3>
@@ -250,7 +252,7 @@ const CheckOutPage = () => {
                           </span>
                         </p>
                       </div>
-                      <h3 className="text-2xl lg:text-3xl font-bold text-green-800">
+                      <h3 className="text-2xl mr-3 lg:text-3xl font-bold text-green-800">
                         ${item.price}
                       </h3>
                     </div>
