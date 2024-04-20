@@ -5,10 +5,31 @@ import { countries } from "@/constants";
 import { checkouts } from "@/constants";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { urlFor } from "@/lib/sanity-client";
+import { useSearchParams } from "next/navigation";
+
+interface ProductData {
+  name: string;
+  description: string;
+  image: any;
+}
+
+interface CheckoutItem {
+  quantity: number;
+  price: number;
+  product_data: ProductData;
+}
 
 const CheckOutPage = () => {
   const [paymentMethod, setPaymentMethod] = useState("");
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const order = searchParams.get("order");
+  const parsedItems: { updatedItems: CheckoutItem[] } = order
+    ? JSON.parse(order as string)
+    : { updatedItems: [] };
+  const updatedItems: CheckoutItem[] = parsedItems.updatedItems || [];
+  console.log("updatedItems:", updatedItems);
 
   const handlePaymentMethodChange = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -199,14 +220,14 @@ const CheckOutPage = () => {
           </div>
           <div className="h-full overflow-hidden">
             <div className="h-1/2 overflow-y-auto">
-              {checkouts.map((order, idx) => (
+              {updatedItems.map((item, idx) => (
                 <div key={idx} className="">
                   <div className="py-5 flex flex-col lg:flex-row  gap-2 xl:gap-5">
                     <div className="w-1/4">
                       <div className="relative h-[120px] xl:h-[150px] w-[120px] xl:w-[150px] rounded-md overflow-hidden border-2 border-slate-400">
                         <Image
-                          src={order.img}
-                          alt={order.title}
+                          src={item.product_data.image}
+                          alt={item.product_data.name}
                           fill
                           // height={150}
                           // width={150}
@@ -217,20 +238,20 @@ const CheckOutPage = () => {
                     <div className="flex justify-between w-full lg:w-3/4 py-3">
                       <div className="flex flex-col justify-between">
                         <h3 className="capitalize text-xl lg:text-2xl font-semibold">
-                          {order.title}
+                          {item.product_data.name}
                         </h3>
-                        <p className="text-md lg:text-xl text-gray-500 capitalize">
-                          {order.grade} | {order.size} Grams
-                        </p>{" "}
+                        {/* <p className="text-md lg:text-xl text-gray-500 capitalize">
+                          {item.grade} | {item.size} Grams
+                        </p>{" "} */}
                         <p className="text-md lg:text-xl text-gray-500 capitalize">
                           Quantity:{" "}
                           <span className="text-black text-2xl">
-                            {order.quantity}
+                            {item.quantity}
                           </span>
                         </p>
                       </div>
                       <h3 className="text-2xl lg:text-3xl font-bold text-green-800">
-                        ${order.price}
+                        ${item.price}
                       </h3>
                     </div>
                   </div>

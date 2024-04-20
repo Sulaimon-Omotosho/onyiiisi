@@ -8,7 +8,7 @@ import Link from "next/link";
 import { StateProps } from "@/lib/types";
 import { addToWishlist } from "@/redux/wishlist-slice";
 import { useSession } from "next-auth/react";
-import { useCheckout } from "@/hooks/useCheckout";
+// import { useCheckout } from "@/hooks/useCheckout";
 import {
   deleteProduct,
   increaseQuantity,
@@ -19,12 +19,11 @@ import { urlFor } from "@/lib/sanity-client";
 
 const CartPage = () => {
   const { data: session } = useSession();
-  // const {quantity, setQuantity} = useState(0)
   const { productData } = useSelector((state: StateProps) => state.cart);
   const dispatch = useDispatch();
   const router = useRouter();
   const [totalAmt, setTotalAmt] = useState(0);
-  const { createCheckout } = useCheckout();
+  // const { createCheckout } = useCheckout();
 
   useEffect(() => {
     let price = 0;
@@ -34,6 +33,43 @@ const CartPage = () => {
     });
     setTotalAmt(price);
   }, [productData]);
+
+  const createCheckout = async () => {
+    if (session?.user) {
+      try {
+        const response = await fetch("/api/checkout", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            items: productData,
+            email: session?.user?.email,
+          }),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.text();
+          console.error("Error during checkout:", errorData);
+          toast.error("Error during checkout. Please try again.");
+          return;
+        }
+        const data = await response.json();
+        const { updatedItems } = data;
+        if (updatedItems) {
+          router.push(`/checkout?order=${JSON.stringify(updatedItems)}`);
+        } else {
+          toast.error("Error during checkout. Please try again");
+        }
+      } catch (error) {
+        console.error("Error during checkout:", error);
+        toast.error("Error during checkout. Please try again.");
+      }
+    } else {
+      toast.error("Please sign in to make Checkout");
+      router.push("/login");
+    }
+  };
 
   return (
     <>
@@ -162,7 +198,7 @@ const CartPage = () => {
               <p className="text-xl">${totalAmt.toFixed(2)}</p>
             </div>
             <button
-              onClick={() => createCheckout(productData)}
+              onClick={createCheckout}
               className="text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[75%] md:w-[50%] lg:w-[30%] cursor-pointer rounded-full uppercase font-bold text-md flex items-center justify-center gap-1 lg:gap-2 "
             >
               <span>proceed to checkout</span>

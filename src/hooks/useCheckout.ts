@@ -10,26 +10,32 @@ export const useCheckout = () => {
   const createCheckout = async (productData: any[]) => {
     if (session?.user) {
       try {
-        const response = await fetch("http://localhost:3000/checkout", {
+        const response = await fetch("/api/checkout", {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify({
             items: productData,
             email: session?.user?.email,
           }),
         });
-        const data = await response.json();
-        console.log(data);
-        if (response.ok) {
-          router.push("/checkout");
-        } else {
-          router.push("/login");
+
+        if (!response.ok) {
+          const errorData = await response.text();
+          console.error("Error during checkout:", errorData);
+          toast.error("Error during checkout. Please try again.");
+          return;
         }
+
+        const data = await response.json();
+        router.push("/checkout");
       } catch (error) {
-        console.error("Error creating checkout:", error);
-        toast.error("Error creating checkout");
+        console.error("Error during checkout:", error);
+        toast.error("Error during checkout. Please try again.");
       }
     } else {
+      toast.error("Please sign in to make Checkout");
       router.push("/login");
     }
   };
