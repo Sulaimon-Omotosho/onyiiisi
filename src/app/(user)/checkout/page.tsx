@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { urlFor } from "@/lib/sanity-client";
 import { useSearchParams } from "next/navigation";
+import axios from "axios";
 
 interface ProductData {
   name: string;
@@ -17,6 +18,8 @@ interface ProductData {
 interface CheckoutItem {
   quantity: number;
   price: number;
+  brand: string;
+  gram: number;
   product_data: ProductData;
 }
 
@@ -32,6 +35,22 @@ const CheckOutPage = () => {
   console.log("ParsedItems:", parsedItems);
   // const updatedItems: CheckoutItem[] = parsedItems.updatedItems || [];
   // console.log("updatedItems:", updatedItems);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    email: "",
+    address: "",
+    state: "",
+    postalCode: "",
+    city: "",
+    country: "",
+    deliveryNotes: "",
+  });
+
+  const handleFormChange = (e: any) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handlePaymentMethodChange = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -39,18 +58,59 @@ const CheckOutPage = () => {
     setPaymentMethod(e.target.value);
   };
 
-  const handlePlaceOrder = () => {
-    if (paymentMethod === "paypal") {
-      router.push("/paypal");
-      toast("Processing PayPal payment...");
-    } else if (paymentMethod === "stripe") {
-      router.push("/stripe");
-      toast("Processing Stripe payment...");
-    } else if (paymentMethod === "flutterwave") {
-      router.push("/flutterwave");
-      toast("Processing Flutterwave payment");
-    } else {
-      toast("Please select a payment method.");
+  const handlePlaceOrder = async () => {
+    try {
+      const response = await fetch("/api/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          items: parsedItems,
+          billingInfo: formData,
+          paymentMethod: paymentMethod,
+        }),
+      });
+
+      if (response.ok) {
+        const { order } = await response.json();
+
+        // Initiate Flutterwave payment
+        const flutterwaveResponse = await initializeFlutterwavePayment(
+          order._id
+        );
+
+        if (flutterwaveResponse.status === "successful") {
+          // Handle successful payment
+          console.log("Payment successful");
+          // Redirect to success page or update UI
+        } else {
+          // Handle payment error
+          console.error("Payment error");
+        }
+      } else {
+        // Handle error placing order
+        console.error("Error placing order");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const initializeFlutterwavePayment = async (orderId: string) => {
+    try {
+      const response = await axios.post("/api/flutterwave", {
+        orderId,
+        // Add other required data for Flutterwave
+      });
+
+      return response.data;
+    } catch (error) {
+      console.error("Error initializing Flutterwave payment:", error);
+      return {
+        status: "error",
+        message: "Error initializing Flutterwave payment",
+      };
     }
   };
   return (
@@ -242,9 +302,9 @@ const CheckOutPage = () => {
                         <h3 className="capitalize text-xl lg:text-2xl font-semibold">
                           {item.product_data.name}
                         </h3>
-                        {/* <p className="text-md lg:text-xl text-gray-500 capitalize">
-                          {item.grade} | {item.size} Grams
-                        </p>{" "} */}
+                        <p className="text-md lg:text-xl text-gray-500 capitalize">
+                          {item.brand} | {item.gram} Grams
+                        </p>{" "}
                         <p className="text-md lg:text-xl text-gray-500 capitalize">
                           Quantity:{" "}
                           <span className="text-black text-2xl">

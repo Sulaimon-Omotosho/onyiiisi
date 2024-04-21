@@ -128,7 +128,7 @@ const CartPage = () => {
                         <span>{item?.description}</span>
                       </h3>
                       <p className="capitalize text-sm lg:text-lg text-gray-500">
-                        {item.brand} | {item.size} grams
+                        {item.brand} | {item.gram} grams
                       </p>
                     </div>
                     <p className="text-2xl font-semibold text-orange-800">

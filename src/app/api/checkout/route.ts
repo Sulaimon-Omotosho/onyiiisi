@@ -9,6 +9,8 @@ export const POST = async (request: NextRequest) => {
     const updatedItems = await items.map((item: ProductProps) => ({
       quantity: item.productQuantity,
       price: item.price,
+      brand: item.brand,
+      gram: item.gram,
       product_data: {
         name: item.title,
         description: item.description,
