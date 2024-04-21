@@ -5,10 +5,52 @@ import { countries } from "@/constants";
 import { checkouts } from "@/constants";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { urlFor } from "@/lib/sanity-client";
+import { useSearchParams } from "next/navigation";
+import axios from "axios";
+
+interface ProductData {
+  name: string;
+  description: string;
+  image: any;
+}
+
+interface CheckoutItem {
+  quantity: number;
+  price: number;
+  brand: string;
+  gram: number;
+  product_data: ProductData;
+}
 
 const CheckOutPage = () => {
   const [paymentMethod, setPaymentMethod] = useState("");
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const order = searchParams.get("order");
+  // const parsedItems: { updatedItems: CheckoutItem[] } = order
+  //   ? JSON.parse(order as string)
+  //   : { updatedItems: [] };
+  const parsedItems: CheckoutItem[] = order ? JSON.parse(order as string) : [];
+  console.log("ParsedItems:", parsedItems);
+  // const updatedItems: CheckoutItem[] = parsedItems.updatedItems || [];
+  // console.log("updatedItems:", updatedItems);
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    email: "",
+    address: "",
+    state: "",
+    postalCode: "",
+    city: "",
+    country: "",
+    deliveryNotes: "",
+  });
+
+  const handleFormChange = (e: any) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handlePaymentMethodChange = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -16,18 +58,59 @@ const CheckOutPage = () => {
     setPaymentMethod(e.target.value);
   };
 
-  const handlePlaceOrder = () => {
-    if (paymentMethod === "paypal") {
-      router.push("/paypal");
-      toast("Processing PayPal payment...");
-    } else if (paymentMethod === "stripe") {
-      router.push("/stripe");
-      toast("Processing Stripe payment...");
-    } else if (paymentMethod === "flutterwave") {
-      router.push("/flutterwave");
-      toast("Processing Flutterwave payment");
-    } else {
-      toast("Please select a payment method.");
+  const handlePlaceOrder = async () => {
+    try {
+      const response = await fetch("/api/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          items: parsedItems,
+          billingInfo: formData,
+          paymentMethod: paymentMethod,
+        }),
+      });
+
+      if (response.ok) {
+        const { order } = await response.json();
+
+        // Initiate Flutterwave payment
+        const flutterwaveResponse = await initializeFlutterwavePayment(
+          order._id
+        );
+
+        if (flutterwaveResponse.status === "successful") {
+          // Handle successful payment
+          console.log("Payment successful");
+          // Redirect to success page or update UI
+        } else {
+          // Handle payment error
+          console.error("Payment error");
+        }
+      } else {
+        // Handle error placing order
+        console.error("Error placing order");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
+
+  const initializeFlutterwavePayment = async (orderId: string) => {
+    try {
+      const response = await axios.post("/api/flutterwave", {
+        orderId,
+        // Add other required data for Flutterwave
+      });
+
+      return response.data;
+    } catch (error) {
+      console.error("Error initializing Flutterwave payment:", error);
+      return {
+        status: "error",
+        message: "Error initializing Flutterwave payment",
+      };
     }
   };
   return (
@@ -199,14 +282,14 @@ const CheckOutPage = () => {
           </div>
           <div className="h-full overflow-hidden">
             <div className="h-1/2 overflow-y-auto">
-              {checkouts.map((order, idx) => (
+              {parsedItems.map((item, idx) => (
                 <div key={idx} className="">
-                  <div className="py-5 flex flex-col lg:flex-row  gap-2 xl:gap-5">
+                  <div className="py-5 flex flex-col lg:flex-row gap-2 xl:gap-5">
                     <div className="w-1/4">
-                      <div className="relative h-[120px] xl:h-[150px] w-[120px] xl:w-[150px] rounded-md overflow-hidden border-2 border-slate-400">
+                      <div className="relative h-[100px] xl:h-[130px] w-[100px] xl:w-[150px] rounded-md overflow-hidden border-2 border-slate-400">
                         <Image
-                          src={order.img}
-                          alt={order.title}
+                          src={item.product_data.image}
+                          alt={item.product_data.name}
                           fill
                           // height={150}
                           // width={150}
@@ -215,22 +298,22 @@ const CheckOutPage = () => {
                       </div>
                     </div>
                     <div className="flex justify-between w-full lg:w-3/4 py-3">
-                      <div className="flex flex-col justify-between">
+                      <div className="flex flex-col ml-3 justify-between">
                         <h3 className="capitalize text-xl lg:text-2xl font-semibold">
-                          {order.title}
+                          {item.product_data.name}
                         </h3>
                         <p className="text-md lg:text-xl text-gray-500 capitalize">
-                          {order.grade} | {order.size} Grams
+                          {item.brand} | {item.gram} Grams
                         </p>{" "}
                         <p className="text-md lg:text-xl text-gray-500 capitalize">
                           Quantity:{" "}
                           <span className="text-black text-2xl">
-                            {order.quantity}
+                            {item.quantity}
                           </span>
                         </p>
                       </div>
-                      <h3 className="text-2xl lg:text-3xl font-bold text-green-800">
-                        ${order.price}
+                      <h3 className="text-2xl mr-3 lg:text-3xl font-bold text-green-800">
+                        ${item.price}
                       </h3>
                     </div>
                   </div>
