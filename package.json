@@ -17,6 +17,7 @@
     "@reduxjs/toolkit": "^2.2.1",
     "@sanity/image-url": "^1.0.2",
     "@sanity/vision": "^3.34.0",
+    "axios": "^1.6.8",
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
