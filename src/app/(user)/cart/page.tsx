@@ -73,17 +73,19 @@ const CartPage = () => {
 
   return (
     <>
-      {productData?.length > 0 ? (
-        <div className="lg:py-20 px-3 md:px-10 xl:px-20">
-          {/* Navigation */}
-          <div className="flex py-10 justify-between items-center">
-            <div className="flex gap-1">
-              <Link className="text-gray-400 hover:text-gray-800" href="/">
-                Home |{" "}
-              </Link>
-              <Link className="text-gray-400 hover:text-gray-800" href="/shop">
-                Shop |{" "}
-              </Link>
+      <div className='lg:py-20 px-3 md:px-10 xl:px-20'>
+        {/* Navigation */}
+        <div className='flex py-10 justify-between items-center'>
+          <div className='flex gap-1'>
+            <Link className='text-gray-400 hover:text-gray-800' href='/'>
+              Home |{' '}
+            </Link>
+            <Link className='text-gray-400 hover:text-gray-800' href='/shop'>
+              Shop |{' '}
+            </Link>
+            {/* <Link
+                className='text-gray-400 hover:text-gray-800'
+                href='/shop/earrings'
               <Link
                 className="text-gray-400 hover:text-gray-800"
                 href="/shop/earrings"
@@ -94,13 +96,18 @@ const CartPage = () => {
                 className="text-gray-400 hover:text-gray-800"
                 href="/product/test123"
               >
-                Details |{" "}
-              </Link>
-              <p className="font-semibold"> Cart</p>
-            </div>
+                Details |{' '}
+              </Link> */}
+            <p className='font-semibold'> Cart</p>
           </div>
-          {/* Items  */}
-          <div className="flex-col flex gap-10">
+        </div>
+        {/* Items  */}
+        {loading ? (
+          <div className='h-[100%]'>
+            <Loading />
+          </div>
+        ) : productData?.length > 0 ? (
+          <div className='flex-col flex gap-10'>
             {productData.map((item) => (
               <div
                 key={item?._id}
@@ -190,25 +197,36 @@ const CartPage = () => {
               </div>
             ))}
           </div>
-
-          {/* CheckOut  */}
-          <div className="flex flex-col items-center">
-            <div className="m-10 rounded-md w-[95%] md:w-[80%] lg:w-[70%] flex justify-between bg-gray-200 p-4">
-              <p className="uppercase text-gray-500 text-xl">item subtotal</p>
-              <p className="text-xl">${totalAmt.toFixed(2)}</p>
-            </div>
-            <button
-              onClick={createCheckout}
-              className="text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[75%] md:w-[50%] lg:w-[30%] cursor-pointer rounded-full uppercase font-bold text-md flex items-center justify-center gap-1 lg:gap-2 "
-            >
-              <span>proceed to checkout</span>
-            </button>
+        ) : (
+          <div className='h-[100%] flex flex-col gap-5 justify-center items-center'>
+            <p className='text-3xl font-bold'>Cart Empty</p>
             <Link
-              href="/shop"
-              className="uppercase font-semibold hover:underline py-5 underline-offset-8 text-gray-700"
+              href='/shop'
+              className=' hover:underline underline-offset-4 hover:font-semibold hover:scale-110 transition-all duration-300 '
             >
-              continue shopping
-              {/* {item.image && (
+              Go To Shop
+            </Link>
+          </div>
+        )}
+
+        {/* CheckOut  */}
+        <div className='flex flex-col items-center'>
+          <div className='m-10 rounded-md w-[95%] md:w-[80%] lg:w-[70%] flex justify-between bg-gray-200 p-4'>
+            <p className='uppercase text-gray-500 text-xl'>item subtotal</p>
+            <p className='text-xl'>${totalAmt.toFixed(2)}</p>
+          </div>
+          <button
+            onClick={() => createCheckout(productData)}
+            className='text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[75%] md:w-[50%] lg:w-[30%] cursor-pointer rounded-full uppercase font-bold text-md flex items-center justify-center gap-1 lg:gap-2 '
+          >
+            <span>proceed to checkout</span>
+          </button>
+          <Link
+            href='/shop'
+            className='uppercase font-semibold hover:underline py-5 underline-offset-8 text-gray-700'
+          >
+            continue shopping
+            {/* {item.image && (
                 <Image
                   src={urlFor(item.image).url()}
                   alt='Earring'
@@ -217,12 +235,9 @@ const CartPage = () => {
                   className=' border-2 border-gray-600 rounded-md'
                 />
               )} */}
-            </Link>
-          </div>
+          </Link>
         </div>
-      ) : (
-        <div>Loading</div>
-      )}
+      </div>
     </>
   );
 };
