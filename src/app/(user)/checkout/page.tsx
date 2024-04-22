@@ -59,6 +59,10 @@ const CheckOutPage = () => {
   };
 
   const handlePlaceOrder = async () => {
+    if (!formData.address) {
+      toast("Please fill the shipping address form.");
+      return;
+    }
     try {
       const response = await fetch("/api/orders", {
         method: "POST",
