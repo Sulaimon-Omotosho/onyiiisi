@@ -142,8 +142,7 @@ const CartPage = () => {
                   <div className="flex justify-between">
                     <div className="">
                       <h3 className="md:text-lg lg:text-2xl text-gray-800 font-semibold capitalize lg:pb-2">
-                        {item?.title.substring(0, 20)}{" "}
-                        <span>{item?.description}</span>
+                        {item?.title} <span>{item?.description}</span>
                       </h3>
                       <p className="capitalize text-sm lg:text-lg text-gray-500">
                         {item.brand} | {item.gram} grams

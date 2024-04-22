@@ -117,7 +117,7 @@ const WishListPage = () => {
                       <div className="flex justify-between items-center px-5">
                         <button
                           onClick={() => {
-                            dispatch(addToCart(item));
+                            dispatch(addToCart(item._id));
                             toast.success(
                               `${item?.title.substring(0, 12)}... added to cart`
                             );
@@ -130,7 +130,7 @@ const WishListPage = () => {
                         </button>
                         <button
                           onClick={() => {
-                            dispatch(deleteFromWishlist(item));
+                            dispatch(deleteFromWishlist(item._id));
                           }}
                           className="flex gap-1 text-gray-500 text-sm"
                         >

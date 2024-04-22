@@ -191,7 +191,7 @@ const CollectionsPage = () => {
                     <div className="absolute w-full h-full flex justify-between p-4 bottom-14 hover:bottom-0 transition-all ease-in-out duration-3000">
                       <div
                         onClick={() => {
-                          dispatch(addToWishlist(product));
+                          dispatch(addToWishlist(product?._id));
                           toast.success(
                             `${product?.title.substring(
                               0,
@@ -206,7 +206,7 @@ const CollectionsPage = () => {
                       </div>
                       <div
                         onClick={() => {
-                          dispatch(addToCart(product));
+                          dispatch(addToCart(product?._id));
                           toast.success(
                             `${product?.title.substring(0, 12)}... added to cart
                       `
