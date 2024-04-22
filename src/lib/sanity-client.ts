@@ -89,6 +89,23 @@ export const popularProd = async (popular: any) => {
   return products
 }
 
+const trendingProductsQuery = groq`*[_type == 'product' && trending == true] {...} | order(createdAt desc)`
+
+export const trendingProd = async (trending: any) => {
+  const products: ProductProps[] = await client.fetch(trendingProductsQuery, {
+    trending: true,
+  })
+  return products
+}
+const limitedProductsQuery = groq`*[_type == 'product' && limited == true] {...} | order(createdAt desc)`
+
+export const limitedProd = async (limited: any) => {
+  const products: ProductProps[] = await client.fetch(limitedProductsQuery, {
+    limited: true,
+  })
+  return products
+}
+
 const productByIdQuery = groq`*[_type == 'product' && _id == $productId][0]{...}`
 
 export const productById = async (_id: string) => {

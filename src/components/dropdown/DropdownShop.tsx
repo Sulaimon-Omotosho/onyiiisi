@@ -61,13 +61,21 @@ export default function DropdownShop() {
     <div className=''>
       <div className='py-[50px] px-9 absolute lg:fixed z-30 w-full bg-[rgb(71,28,13)]'>
         <div className='flex-1 flex items-center gap-6 lg:gap-10 '>
-          <div className='w-[150px] lg:w-[202px] h-[108px] lg:h-[144px] relative rounded-md mr-14 overflow-hidden object-cover'>
-            <Image
-              src='/shop.png'
-              fill
-              // objectFit='cover'
-              alt='shop image'
-            />
+          <div className='flex flex-col justify-center items-center gap-3'>
+            <Link
+              href='/shop'
+              className='uppercase underline underline-offset-4 pr-[70px]'
+            >
+              new in
+            </Link>
+            <div className='w-[150px] lg:w-[202px] h-[108px] lg:h-[144px] relative rounded-md mr-14 overflow-hidden object-cover'>
+              <Image
+                src='/shop.png'
+                fill
+                // objectFit='cover'
+                alt='shop image'
+              />
+            </div>
           </div>
           <div className='flex-4 flex gap-[60px] lg:gap-[120px]'>
             <div className=''>

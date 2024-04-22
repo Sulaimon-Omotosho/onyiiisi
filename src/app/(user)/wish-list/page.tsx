@@ -1,18 +1,18 @@
 "use client";
 
-import { Heart, ShoppingCart, Trash } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
-import { useEffect, useState } from "react";
-import { StateProps } from "@/lib/types";
-import { addToCart } from "@/redux/cart-slice";
-import { deleteFromWishlist } from "@/redux/wishlist-slice";
-import { useSelector, useDispatch } from "react-redux";
-import RelatedProducts from "@/components/RelatedProducts";
-import { urlFor } from "@/lib/sanity-client";
-import { toast } from "sonner";
-import Loading from "@/components/Loading";
+import { Heart, MoveDownRight, ShoppingCart, Trash } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
+import React from 'react'
+import { useEffect, useState } from 'react'
+import { StateProps } from '@/lib/types'
+import { addToCart } from '@/redux/cart-slice'
+import { deleteFromWishlist } from '@/redux/wishlist-slice'
+import { useSelector, useDispatch } from 'react-redux'
+import { urlFor } from '@/lib/sanity-client'
+import { toast } from 'sonner'
+import Loading from '@/components/Loading'
+import PopularItems from '@/components/PopularItems'
 
 const WishListPage = () => {
   const { productData } = useSelector((state: StateProps) => state.wishlist);
@@ -58,9 +58,9 @@ const WishListPage = () => {
               <Link className="text-gray-400 hover:text-gray-800" href="/shop">
                 Shop |{" "}
               </Link>
-              <Link
-                className="text-gray-400 hover:text-gray-800"
-                href="/shop/earrings"
+              {/* <Link
+                className='text-gray-400 hover:text-gray-800'
+                href='/shop/earrings'
               >
                 Earrings |{" "}
               </Link>
@@ -68,9 +68,9 @@ const WishListPage = () => {
                 className="text-gray-400 hover:text-gray-800"
                 href="/product/test123"
               >
-                Details |{" "}
-              </Link>
-              <p className="font-semibold"> Wishlist</p>
+                Details |{' '}
+              </Link> */}
+              <p className='font-semibold'> Wishlist</p>
             </div>
           </div>
 
@@ -174,8 +174,25 @@ const WishListPage = () => {
               </button> */}
           </div>
         </div>
-        {/* Related Products  */}
-        <RelatedProducts />
+        {/* Popular Products  */}
+        <div className='p-12 mb-10 bg-[rgb(56,22,10)]'>
+          {/* Header */}
+          <div className=' flex justify-center text-white md:justify-between'>
+            <h3 className='uppercase text-3xl md:text-xl font-bold md:font-semibold'>
+              Popular items
+            </h3>
+            <Link href='/shop'>
+              <button className='hidden py-2 lg:py-3 w-[120px] lg:w-[150px] rounded-full uppercase font-thin text-xs md:flex items-center justify-center gap-1 lg:gap-2 border-2 border-white '>
+                learn more
+                <span>
+                  <MoveDownRight className='w-4 lg:w-5 h-4 lg:h-5 pt-1' />
+                </span>
+              </button>
+            </Link>
+          </div>
+          {/* <PopularProducts /> */}
+          <PopularItems />
+        </div>
       </div>
     </>
   );

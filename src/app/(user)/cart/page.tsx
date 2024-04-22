@@ -1,13 +1,13 @@
-"use client";
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Heart, Trash } from "lucide-react";
-import Image from "next/image";
-import { toast } from "sonner";
-import Link from "next/link";
-import { StateProps } from "@/lib/types";
-import { addToWishlist } from "@/redux/wishlist-slice";
-import { useSession } from "next-auth/react";
+'use client'
+import { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { Heart, Trash } from 'lucide-react'
+import Image from 'next/image'
+import { toast } from 'sonner'
+import Link from 'next/link'
+import { StateProps } from '@/lib/types'
+import { addToWishlist } from '@/redux/wishlist-slice'
+import { useSession } from 'next-auth/react'
 // import { useCheckout } from "@/hooks/useCheckout";
 import Loading from "@/components/Loading";
 
@@ -15,28 +15,42 @@ import {
   deleteProduct,
   increaseQuantity,
   decreaseQuantity,
-} from "@/redux/cart-slice";
-import { useRouter } from "next/navigation";
-import { urlFor } from "@/lib/sanity-client";
+} from '@/redux/cart-slice'
+import { useRouter } from 'next/navigation'
+import { urlFor } from '@/lib/sanity-client'
+import Loading from '@/components/Loading'
 
 const CartPage = () => {
-  const { data: session } = useSession();
-  const { productData } = useSelector((state: StateProps) => state.cart);
-  const dispatch = useDispatch();
-  const router = useRouter();
-  const [totalAmt, setTotalAmt] = useState(0);
+  const { data: session } = useSession()
+  const { productData } = useSelector((state: StateProps) => state.cart)
+  const dispatch = useDispatch()
+  const router = useRouter()
+  const [totalAmt, setTotalAmt] = useState(0)
   // const { createCheckout } = useCheckout();
-  const [LoadingTimeout, setLoadingTimeout] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [LoadingTimeout, setLoadingTimeout] = useState(false)
+  const [loading, setLoading] = useState(true)
+  useEffect(() => {
+    let price = 0
+    productData.map((item) => {
+      price += item?.price * item?.productQuantity
+      return price
+    })
+    setTotalAmt(price)
+  }, [productData])
 
   useEffect(() => {
-    let price = 0;
-    productData.map((item) => {
-      price += item?.price * item?.productQuantity;
-      return price;
-    });
-    setTotalAmt(price);
-  }, [productData]);
+    const timer = setTimeout(() => {
+      setLoadingTimeout(true)
+    }, 4000)
+    return () => clearTimeout(timer)
+  }, [])
+
+  useEffect(() => {
+    const loadingTimer = setTimeout(() => {
+      setLoading(false)
+    }, 4000)
+    return () => clearTimeout(loadingTimer)
+  }, [productData])
 
   useEffect(() => {
     const loadingTimer = setTimeout(() => {
@@ -48,39 +62,39 @@ const CartPage = () => {
   const createCheckout = async () => {
     if (session?.user) {
       try {
-        const response = await fetch("/api/checkout", {
-          method: "POST",
+        const response = await fetch('/api/checkout', {
+          method: 'POST',
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
           body: JSON.stringify({
             items: productData,
             email: session?.user?.email,
           }),
-        });
+        })
 
         if (!response.ok) {
-          const errorData = await response.text();
-          console.error("Error during checkout:", errorData);
-          toast.error("Error during checkout. Please try again.");
-          return;
+          const errorData = await response.text()
+          console.error('Error during checkout:', errorData)
+          toast.error('Error during checkout. Please try again.')
+          return
         }
-        const data = await response.json();
-        const { updatedItems } = data;
+        const data = await response.json()
+        const { updatedItems } = data
         if (updatedItems) {
-          router.push(`/checkout?order=${JSON.stringify(updatedItems)}`);
+          router.push(`/checkout?order=${JSON.stringify(updatedItems)}`)
         } else {
-          toast.error("Error during checkout. Please try again");
+          toast.error('Error during checkout. Please try again')
         }
       } catch (error) {
-        console.error("Error during checkout:", error);
-        toast.error("Error during checkout. Please try again.");
+        console.error('Error during checkout:', error)
+        toast.error('Error during checkout. Please try again.')
       }
     } else {
-      toast.error("Please sign in to make Checkout");
-      router.push("/login");
+      toast.error('Please sign in to make Checkout')
+      router.push('/login')
     }
-  };
+  }
 
   return (
     <>
@@ -122,19 +136,19 @@ const CartPage = () => {
             {productData.map((item) => (
               <div
                 key={item?._id}
-                className="flex gap-5 md:gap-10 items-center"
+                className='flex gap-5 md:gap-10 items-center'
               >
                 <Link
                   href={`/product/${item?.slug?.current}`}
-                  className="relative w-[120px] md:w-[200px] lg:w-[350px] h-[120px] md:h-[200px] lg:h-[350px]"
+                  className='relative w-[120px] md:w-[200px] lg:w-[350px] h-[120px] md:h-[200px] lg:h-[350px]'
                 >
-                  {item.image && (
+                  {item.placeholder && (
                     <Image
-                      src={urlFor(item?.image).url()}
-                      alt="Earring"
+                      src={urlFor(item?.placeholder).url()}
+                      alt='Earring'
                       fill
-                      objectFit="cover"
-                      className=" border-2 border-gray-600 rounded-md"
+                      objectFit='cover'
+                      className=' border-2 border-gray-600 rounded-md'
                     />
                   )}
                 </Link>
@@ -144,62 +158,62 @@ const CartPage = () => {
                       <h3 className="md:text-lg lg:text-2xl text-gray-800 font-semibold capitalize lg:pb-2">
                         {item?.title} <span>{item?.description}</span>
                       </h3>
-                      <p className="capitalize text-sm lg:text-lg text-gray-500">
+                      <p className='capitalize text-sm lg:text-lg text-gray-500'>
                         {item.brand} | {item.gram} grams
                       </p>
                     </div>
-                    <p className="text-2xl font-semibold text-orange-800">
+                    <p className='text-2xl font-semibold text-orange-800'>
                       ${item.price}
                     </p>
                   </div>
-                  <div className="flex gap-5 px-3 items-center justify-between border-[1px] rounded-md border-gray-500 z-20 w-fit h-fit text-2xl text-gray-500">
+                  <div className='flex gap-5 px-3 items-center justify-between border-[1px] rounded-md border-gray-500 z-20 w-fit h-fit text-2xl text-gray-500'>
                     <button
                       onClick={() => {
-                        dispatch(decreaseQuantity({ _id: item?._id }));
-                        toast.success("Product reduced successully");
+                        dispatch(decreaseQuantity({ _id: item?._id }))
+                        toast.success('Product reduced successully')
                       }}
                     >
                       -
                     </button>
-                    <p className="">{item.productQuantity}</p>
+                    <p className=''>{item.productQuantity}</p>
                     <button
                       onClick={() => {
-                        dispatch(increaseQuantity({ _id: item?._id }));
-                        toast.success("Product increased successully");
+                        dispatch(increaseQuantity({ _id: item?._id }))
+                        toast.success('Product increased successully')
                       }}
                     >
                       +
                     </button>
                   </div>
-                  <div className="">
-                    <hr className="border-gray-700 mb-3" />
-                    <div className="px-5 flex justify-between items-center">
+                  <div className=''>
+                    <hr className='border-gray-700 mb-3' />
+                    <div className='px-5 flex justify-between items-center'>
                       <button
                         onClick={() => {
-                          dispatch(addToWishlist(item));
-                          toast.success("added to wishlist");
+                          dispatch(addToWishlist(item))
+                          toast.success('added to wishlist')
                         }}
-                        className="flex gap-1 text-[hsl(323,41%,26%)] font-semibold"
+                        className='flex gap-1 text-[hsl(323,41%,26%)] font-semibold'
                       >
-                        {" "}
-                        <Heart />{" "}
-                        <p className="hidden md:inline"> Move to Wishlist</p>
+                        {' '}
+                        <Heart />{' '}
+                        <p className='hidden md:inline'> Move to Wishlist</p>
                       </button>
                       <button
                         onClick={() => {
-                          dispatch(deleteProduct(item._id));
+                          dispatch(deleteProduct(item._id))
                           toast.success(
                             `${item?.title.substring(
                               0,
                               12
                             )}... removed from cart`
-                          );
+                          )
                         }}
-                        className="flex gap-1 text-gray-500 text-sm"
+                        className='flex gap-1 text-gray-500 text-sm'
                       >
-                        {" "}
+                        {' '}
                         <Trash size={18} />
-                        <p className="hidden md:inline"> Remove</p>
+                        <p className='hidden md:inline'> Remove</p>
                       </button>
                     </div>
                   </div>
@@ -249,7 +263,7 @@ const CartPage = () => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default CartPage;
+export default CartPage
