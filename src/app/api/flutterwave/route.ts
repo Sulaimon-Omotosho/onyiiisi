@@ -61,7 +61,7 @@ const initializeFlutterwavePayment = async (orderId: string) => {
       tx_ref: txRef,
       amount: total,
       currency: "USD", // or any other currency code
-      redirect_url: `${process.env.NEXT_PUBLIC_BASE_URL}/flutterwave-callback`,
+      redirect_url: `${process.env.NEXTAUTH_UR}/flutterwave-callback`,
       payment_options: "card,ussd",
       customer: {
         email,
@@ -71,7 +71,7 @@ const initializeFlutterwavePayment = async (orderId: string) => {
       customizations: {
         title: "Payment for your order",
         description: "Pay for your order securely",
-        logo: "https://your-logo-url.com/logo.png", // Replace with your logo URL
+        // logo: "https://your-logo-url.com/logo.png", // Replace with your logo URL
       },
     };
 

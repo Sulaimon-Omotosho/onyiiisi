@@ -21,6 +21,7 @@
     "bcryptjs": "^2.4.3",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "flutterwave-react-v3": "^1.3.2",
     "lucide-react": "^0.350.0",
     "mongodb": "^6.5.0",
     "mongoose": "^8.2.3",
