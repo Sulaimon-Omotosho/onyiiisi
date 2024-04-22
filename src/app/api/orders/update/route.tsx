@@ -1,4 +1,3 @@
-"use client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import Order, { OrderDoc } from "@/models/Order";
 import dbConnect from "@/lib/db";
