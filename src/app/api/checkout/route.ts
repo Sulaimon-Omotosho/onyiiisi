@@ -1,6 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
 import { ProductProps } from "@/lib/types";
-// import { urlFor } from "@/lib/sanity-client";
 
 export const POST = async (request: NextRequest) => {
   try {
