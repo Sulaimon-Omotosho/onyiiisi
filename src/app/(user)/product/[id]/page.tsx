@@ -209,7 +209,8 @@ const SingleProductPage = () => {
                 </div>
                 <button
                   onClick={() => {
-                    dispatch(addToCart(product))
+                    dispatch(addToCart(product?._id));
+
                     toast.success(
                       `${product?.title.substring(0, 12)}... added to cart`
                     )

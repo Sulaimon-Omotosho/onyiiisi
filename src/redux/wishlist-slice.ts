@@ -1,6 +1,7 @@
 import { toast } from "sonner";
 import { ProductProps } from "@/lib/types";
 import { createSlice } from "@reduxjs/toolkit";
+
 type StoreStateProps = {
   productData: ProductProps[];
 };
@@ -14,22 +15,22 @@ export const wishlistSlice = createSlice({
   initialState,
   reducers: {
     addToWishlist: (state, action) => {
-      const existingProduct = state?.productData.find(
-        (item: ProductProps) => item?._id === action?.payload?._id
+      const existingProductIndex = state.productData.findIndex(
+        (item: ProductProps) => item._id === action.payload._id
       );
-      if (existingProduct) {
-        existingProduct.quantity += action.payload.quantity;
+
+      if (existingProductIndex !== -1) {
+        state.productData[existingProductIndex].quantity +=
+          action.payload.quantity;
       } else {
         state.productData.push(action.payload);
       }
     },
     deleteFromWishlist: (state, action) => {
-      return {
-        ...state,
-        productData: state.productData.filter(
-          (item) => item._id == action.payload
-        ),
-      };
+      state.productData = state.productData.filter(
+        (item) => item._id !== action.payload
+      );
+      toast.success("deleted from wishlist");
     },
     clearWishlist: (state) => {
       state.productData = [];

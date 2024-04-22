@@ -152,12 +152,11 @@ const CartPage = () => {
                     />
                   )}
                 </Link>
-                <div className='relative flex w-[70%] gap-4 lg:gap-8 flex-col'>
-                  <div className='flex justify-between'>
-                    <div className=''>
-                      <h3 className='md:text-lg lg:text-2xl text-gray-800 font-semibold capitalize lg:pb-2'>
-                        {item?.title.substring(0, 20)}{' '}
-                        <span>{item?.description}</span>
+                <div className="relative flex w-[70%] gap-4 lg:gap-8 flex-col">
+                  <div className="flex justify-between">
+                    <div className="">
+                      <h3 className="md:text-lg lg:text-2xl text-gray-800 font-semibold capitalize lg:pb-2">
+                        {item?.title} <span>{item?.description}</span>
                       </h3>
                       <p className='capitalize text-sm lg:text-lg text-gray-500'>
                         {item.brand} | {item.gram} grams

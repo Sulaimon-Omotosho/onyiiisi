@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { urlFor } from "@/lib/sanity-client";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
+import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
 
 interface ProductData {
   name: string;
@@ -58,11 +59,32 @@ const CheckOutPage = () => {
     setPaymentMethod(e.target.value);
   };
 
+  const config = {
+    public_key: "YOUR_FLUTTERWAVE_PUBLIC_KEY",
+    tx_ref: `${Date.now()}`,
+    amount: 100, // Set the correct amount
+    currency: "NGN", // Set the correct currency code
+    payment_options: "card,mobilemoney,ussd",
+    customer: {
+      email: formData.email,
+      phone_number: formData.phoneNumber,
+      name: `${formData.firstName} ${formData.lastName}`,
+    },
+    customizations: {
+      title: "Order Payment",
+      description: "Payment for Checkout Items",
+      logo: "YOUR_LOGO_URL",
+    },
+  };
+
+  const handleFlutterPayment = useFlutterwave(config);
+
   const handlePlaceOrder = async () => {
     if (!formData.address) {
       toast("Please fill the shipping address form.");
       return;
     }
+
     try {
       const response = await fetch("/api/orders", {
         method: "POST",
@@ -72,49 +94,29 @@ const CheckOutPage = () => {
         body: JSON.stringify({
           items: parsedItems,
           billingInfo: formData,
-          paymentMethod: paymentMethod,
+          paymentMethod,
         }),
       });
 
       if (response.ok) {
         const { order } = await response.json();
 
-        // Initiate Flutterwave payment
-        const flutterwaveResponse = await initializeFlutterwavePayment(
-          order._id
-        );
-
-        if (flutterwaveResponse.status === "successful") {
-          // Handle successful payment
-          console.log("Payment successful");
-          // Redirect to success page or update UI
-        } else {
-          // Handle payment error
-          console.error("Payment error");
-        }
+        // Trigger Flutterwave payment
+        handleFlutterPayment({
+          callback: (paymentResponse) => {
+            console.log("Payment successful:", paymentResponse);
+            closePaymentModal(); // Close the payment modal after success
+          },
+          onClose: () => {
+            console.log("Payment modal closed");
+          },
+        });
       } else {
-        // Handle error placing order
-        console.error("Error placing order");
+        toast("Error placing order.");
       }
     } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
-  const initializeFlutterwavePayment = async (orderId: string) => {
-    try {
-      const response = await axios.post("/api/flutterwave", {
-        orderId,
-        // Add other required data for Flutterwave
-      });
-
-      return response.data;
-    } catch (error) {
-      console.error("Error initializing Flutterwave payment:", error);
-      return {
-        status: "error",
-        message: "Error initializing Flutterwave payment",
-      };
+      console.error("An error occurred:", error);
+      toast("An unexpected error occurred.");
     }
   };
   return (
