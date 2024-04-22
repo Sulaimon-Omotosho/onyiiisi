@@ -79,7 +79,7 @@ export default function Navbar() {
       </div>
       <div className='px-[40px] lg:px-[60px] h-20 border-b-[1px] border-slate-500 flex justify-between items-center z-20 lg:fixed w-full bg-[rgb(56,22,10)]'>
         {/* Logo  */}
-        <div className='flex-1'>
+        <div className='flex-3 md:flex-1 w-full'>
           <Link href='/'>
             <h1
               style={{ fontStyle: 'italic' }}
@@ -219,16 +219,6 @@ export default function Navbar() {
       >
         <DropdownShop />
       </div>
-      {/* <div
-        onMouseLeave={toggleSalesDropdown}
-        className={`${
-          salesDropDown
-            ? 'absolute top-20 left-0 right-0 opacity-100'
-            : ' hidden opacity-0'
-        } transition-top ease-in-out duration-300   `}
-      >
-        <DropdownSales />
-      </div> */}
     </header>
   )
 }
