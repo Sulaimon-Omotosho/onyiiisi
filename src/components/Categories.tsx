@@ -20,7 +20,7 @@ export default function Categories() {
               key={idx}
               className='w-[352px] lg:w-[470px] xl:w-[628px] h-[267px] lg:h-[356px] xl:h-[475px] relative flex justify-center items-center overflow-hidden flex-grow'
             >
-              <Link href={category.slug}>
+              <Link href='/shop'>
                 <Image
                   src={category.image}
                   alt={category.title}
@@ -32,7 +32,7 @@ export default function Categories() {
                 <h3 className='capitalize text-white text-2xl font-thin pb-2'>
                   {category.title}
                 </h3>
-                <Link href={category.slug} className='hidden md:block'>
+                <Link href='/shop' className='hidden md:block'>
                   <button className='text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[150px] rounded-full uppercase font-thin text-xs flex items-center justify-center gap-1 lg:gap-2 '>
                     learn more
                     <span>

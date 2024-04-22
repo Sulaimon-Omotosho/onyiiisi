@@ -58,7 +58,7 @@ const WishListPage = () => {
               <Link className='text-gray-400 hover:text-gray-800' href='/shop'>
                 Shop |{' '}
               </Link>
-              <Link
+              {/* <Link
                 className='text-gray-400 hover:text-gray-800'
                 href='/shop/earrings'
               >
@@ -69,7 +69,7 @@ const WishListPage = () => {
                 href='/product/test123'
               >
                 Details |{' '}
-              </Link>
+              </Link> */}
               <p className='font-semibold'> Wishlist</p>
             </div>
           </div>

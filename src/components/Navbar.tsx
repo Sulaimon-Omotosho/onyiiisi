@@ -66,19 +66,30 @@ export default function Navbar() {
       return true
     }
   }
-  console.log(pathMatch)
 
   return (
     <header className='relative bg-[rgb(56,22,10)] text-slate-300 z-20'>
       {' '}
       <div
         className={`absolute w-full md:hidden transition-all duration-500 h-[100vh] z-20 ${
-          sidebar ? 'top-0 left-0' : 'top-0 left-[-500px] shadow-none'
+          sidebar ? 'top-0 left-0' : 'top-0 left-[-750px] shadow-none'
         }`}
       >
         <Sidebar closeSidebar={closeSidebar} />
       </div>
       <div className='px-[40px] lg:px-[60px] h-20 border-b-[1px] border-slate-500 flex justify-between items-center z-20 lg:fixed w-full bg-[rgb(56,22,10)]'>
+        {/* Logo  */}
+        <div className='flex-1'>
+          <Link href='/'>
+            <h1
+              style={{ fontStyle: 'italic' }}
+              className={`font-bold uppercase text-3xl italic text-white text-right md:text-left ${georgia.className}`}
+            >
+              Onyiisi
+            </h1>
+          </Link>
+        </div>
+
         {/* Links  */}
         <div className='hidden md:flex gap-5 lg:gap-10 flex-1 uppercase'>
           <div
@@ -142,25 +153,13 @@ export default function Navbar() {
         </div>
 
         {/* Side Bar  */}
-        <div onClick={handleSidebar} className='md:hidden flex-1 z-1'>
+        <div onClick={handleSidebar} className='md:hidden flex-1 z-1 absolute'>
           {/* {sidebar ? (
             <X className='w-10 h-10 text-white' />
           ) : (
             <Menu className='w-10 h-10' />
             )} */}
           <Menu className='w-10 h-10' />
-        </div>
-
-        {/* Logo  */}
-        <div className='flex-1'>
-          <Link href='/'>
-            <h1
-              style={{ fontStyle: 'italic' }}
-              className={`font-bold text-2xl italic text-white text-center ${georgia.className}`}
-            >
-              Onyiisi
-            </h1>
-          </Link>
         </div>
 
         {/* Navbar Icons  */}

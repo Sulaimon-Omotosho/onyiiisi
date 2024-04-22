@@ -134,9 +134,9 @@ const CartPage = () => {
                   href={`/product/${item?.slug?.current}`}
                   className='relative w-[120px] md:w-[200px] lg:w-[350px] h-[120px] md:h-[200px] lg:h-[350px]'
                 >
-                  {item.image && (
+                  {item.placeholder && (
                     <Image
-                      src={urlFor(item?.image).url()}
+                      src={urlFor(item?.placeholder).url()}
                       alt='Earring'
                       fill
                       objectFit='cover'
