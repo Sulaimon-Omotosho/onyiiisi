@@ -634,15 +634,18 @@ export const blogData = [
     title: 'The Anatomy of Elegance: Decoding Jewelry Design ',
     blog: 'In this article, we uncover the secrets behind creating truly elegant and timeless jewelry pieces. From the choice of materials to the craftsmanship techniques, we explore how every detail contributes to the overall aesthetic and allure of a piece.',
     date: 'Tuesday, 12 May, 2024',
+    img: '/blog img.jpg',
   },
   {
     title: 'Birthstones: Unveiling the Meaning Behind Each Gem',
     blog: 'From January garnet to December turquoise, we explore the history, lore, and symbolism behind these precious gems. Whether you are celebrating a birthday or seeking a meaningful gift, discover the perfect birthstone jewelry piece to cherish forever.',
     date: 'Wednesday, 13 May, 2024',
+    img: '/blog img.jpg',
   },
   {
     title: 'Styling Tips: Elevate Your Look with the Perfect Jewelry',
     blog: 'In this article, we share expert tips and tricks for styling jewelry to elevate your look and express your personal style. From layering necklaces to stacking bracelets, learn how to mix and match pieces to create stunning and sophisticated ensembles.',
     date: 'Thursday, 14 May, 2024',
+    img: '/blog img.jpg',
   },
 ]
