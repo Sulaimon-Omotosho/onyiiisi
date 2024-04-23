@@ -3,7 +3,7 @@ import Categories from '@/components/Categories'
 import FeedbackCarousel from '@/components/FeedbackCarousel'
 import Hero from '@/components/Hero'
 import Newsletter from '@/components/Newsletter'
-import Search from '@/components/Search'
+// import Search from '@/components/Search'
 import { client } from '@/lib/sanity-client'
 import { type BannerProps, type GuaranteesProps } from '@/lib/types'
 import { groq } from 'next-sanity'
@@ -25,7 +25,6 @@ export default async function Home() {
 
   return (
     <main>
-      <Search placeholder={`Search Products...`} />
       <Hero banners={banners} guarantees={guarantees} />
       <Categories />
       <FeedbackCarousel />
