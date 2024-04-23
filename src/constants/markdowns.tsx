@@ -3,7 +3,7 @@ import { ProductProps } from '@/lib/types'
 import { useEffect, useState } from 'react'
 // import { salesCarousel } from '.'
 
-export const markdowns = () => {
+export const useMarkdowns = () => {
   const [trend, setTrend] = useState<ProductProps[]>([])
   const [limited, setLimited] = useState<ProductProps[]>([])
   const [popular, setPopular] = useState<ProductProps[]>([])
@@ -93,4 +93,4 @@ export const markdowns = () => {
   return markdown
 }
 
-export default markdowns
+export default useMarkdowns
