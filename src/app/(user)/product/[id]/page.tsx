@@ -65,7 +65,7 @@ const SingleProductPage = () => {
     }
   }, [id])
 
-  // console.log(product?.category[0]._key)
+  console.log(product?.category)
 
   // Fetch Related Products
 
