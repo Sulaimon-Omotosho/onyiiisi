@@ -79,11 +79,11 @@ export default function Navbar() {
       </div>
       <div className='px-[40px] lg:px-[60px] h-20 border-b-[1px] border-slate-500 flex justify-between items-center z-20 lg:fixed w-full bg-[rgb(56,22,10)]'>
         {/* Logo  */}
-        <div className='flex-3 md:flex-1 w-full'>
-          <Link href='/'>
+        <div className='flex-5 md:flex-1 w-full'>
+          <Link href='/' className='flex justify-end items-center'>
             <h1
               style={{ fontStyle: 'italic' }}
-              className={`font-bold uppercase text-3xl italic text-white text-right md:text-left ${georgia.className}`}
+              className={`font-bold uppercase text-3xl italic text-white md:text-left ${georgia.className}`}
             >
               Onyiisi
             </h1>
@@ -91,7 +91,7 @@ export default function Navbar() {
         </div>
 
         {/* Links  */}
-        <div className='hidden md:flex gap-5 lg:gap-10 flex-1 uppercase'>
+        <div className='hidden md:flex gap-5 lg:gap-10 flex-3 uppercase pl-10 w-full'>
           <div
             onMouseEnter={toggleShopDropdown}
             className='flex items-center justify-center'
