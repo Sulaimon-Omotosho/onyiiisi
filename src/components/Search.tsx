@@ -1,4 +1,5 @@
-'use-client'
+'use client'
+
 import React, { useEffect, useState } from 'react'
 import { SearchIcon } from 'lucide-react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'

@@ -3,6 +3,7 @@ import HeroCarousel from './HeroCarousel'
 // import { guarantees } from '@/constants'
 import { BannerProps, GuaranteesProps } from '@/lib/types'
 import { urlFor } from '@/lib/sanity-client'
+import { Filter, SearchIcon } from 'lucide-react'
 
 export default function Hero({
   banners,
@@ -13,6 +14,17 @@ export default function Hero({
 }) {
   return (
     <div className='py-0 lg:py-16 xl:py-20'>
+      <div className='flex justify-center'>
+        <div className='w-[50%] relative'>
+          <SearchIcon className='absolute left-2 top-2 text-slate-400' />
+          <input
+            // value={text}
+            placeholder='Search Products...'
+            className='inline p-2 rounded-full w-full bg-slate-100 pl-10'
+          />
+          <Filter className='absolute top-2 right-2 text-slate-400' />
+        </div>
+      </div>
       {/* Hero Header  */}
       <div className='px-5 md:px-10 lg:px-16 xl:px-20 uppercase text-2xl md:text-3xl lg:text-5xl xl:text-7xl mt-8'>
         <h1 className='font-thin text-[rgb(95,40,74)]'>radiating Luxury</h1>
