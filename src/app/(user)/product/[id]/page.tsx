@@ -13,7 +13,12 @@ import { addToWishlist } from '@/redux/wishlist-slice'
 import { useDispatch } from 'react-redux'
 import { ChevronLeft, ChevronRight, Heart, Share2, Star } from 'lucide-react'
 import { ProductProps } from '@/lib/types'
-import { productById, productsByCategory, urlFor } from '@/lib/sanity-client'
+import {
+  productById,
+  productsByCategory,
+  productsByCategoryKey,
+  urlFor,
+} from '@/lib/sanity-client'
 import DetailsDescription from '@/components/DetailsDescription'
 import RelatedProducts from '@/components/RelatedProducts'
 import { useParams } from 'next/navigation'
@@ -27,6 +32,7 @@ const SingleProductPage = () => {
   const [total, setTotal] = useState(73.4)
   const [quantity, setQuantity] = useState(1)
   const [product, setProduct] = useState<ProductProps>()
+  const [relatedProducts, setRelatedProducts] = useState<ProductProps[]>([])
   const [loading, setLoading] = useState(true)
 
   // Review
@@ -34,16 +40,21 @@ const SingleProductPage = () => {
   const handleWrite = () => {
     setWrite(!write)
   }
-
   const closeReview = () => {
     setWrite(false)
   }
+
+  // Fetch Product
+
   useEffect(() => {
     if (typeof id === 'string') {
       const fetchProduct = async () => {
         try {
           const product = await productById(id)
           setProduct(product)
+          if (product?.category[0]?._key) {
+            fetchRelatedProducts(product.category[0]._key)
+          }
           setLoading(false)
         } catch (err) {
           console.error('Error fetching product:', err)
@@ -54,7 +65,20 @@ const SingleProductPage = () => {
     }
   }, [id])
 
-  console.log(product)
+  // console.log(product?.category[0]._key)
+
+  // Fetch Related Products
+
+  const fetchRelatedProducts = async (categoryKey: string) => {
+    try {
+      const related = await productsByCategoryKey(categoryKey)
+      setRelatedProducts(related)
+    } catch (err) {
+      console.error('Error fetching related products:', err)
+    }
+  }
+
+  console.log(relatedProducts)
 
   // Carousel
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -209,7 +233,7 @@ const SingleProductPage = () => {
                 </div>
                 <button
                   onClick={() => {
-                    dispatch(addToCart(product?._id));
+                    dispatch(addToCart(product?._id))
 
                     toast.success(
                       `${product?.title.substring(0, 12)}... added to cart`
