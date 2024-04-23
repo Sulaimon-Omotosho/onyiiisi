@@ -77,13 +77,16 @@ export default function Navbar() {
       >
         <Sidebar closeSidebar={closeSidebar} />
       </div>
-      <div className='px-[40px] lg:px-[60px] h-20 border-b-[1px] border-slate-500 flex justify-between items-center z-20 lg:fixed w-full bg-[rgb(56,22,10)]'>
+      <div className='md:px-[40px] lg:px-[60px] h-20 border-b-[1px] border-slate-500 flex justify-between items-center z-20 lg:fixed w-full bg-[rgb(56,22,10)] relative'>
         {/* Logo  */}
         <div className='flex-5 md:flex-1 w-full'>
-          <Link href='/' className='flex justify-end items-center'>
+          <Link
+            href='/'
+            className='md:static absolute top-5 justify-end items-center w-full '
+          >
             <h1
               style={{ fontStyle: 'italic' }}
-              className={`font-bold uppercase text-3xl italic text-white md:text-left ${georgia.className}`}
+              className={`font-bold uppercase text-3xl italic text-white md:text-left text-center w-full ${georgia.className}`}
             >
               Onyiisi
             </h1>
@@ -153,12 +156,10 @@ export default function Navbar() {
         </div>
 
         {/* Side Bar  */}
-        <div onClick={handleSidebar} className='md:hidden flex-1 z-1 absolute'>
-          {/* {sidebar ? (
-            <X className='w-10 h-10 text-white' />
-          ) : (
-            <Menu className='w-10 h-10' />
-            )} */}
+        <div
+          onClick={handleSidebar}
+          className='md:hidden flex-1 z-1 absolute left-5'
+        >
           <Menu className='w-10 h-10' />
         </div>
 
@@ -203,7 +204,7 @@ export default function Navbar() {
             </Button>
           ) : (
             <Link href='/login'>
-              <UserRound className='cursor-pointer' />
+              <UserRound className='cursor-pointer mr-5' />
             </Link>
           )}
         </div>
