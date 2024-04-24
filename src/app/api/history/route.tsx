@@ -1,24 +1,29 @@
-import type { NextApiRequest, NextApiResponse } from "next";
+import { NextResponse } from "next/server";
 import dbConnect from "@/lib/db";
 import Order from "@/models/Order";
-import { getSession } from "next-auth/react";
+import { getServerSession } from "next-auth/next";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  const session = await getSession({ req });
+export const GET = async (request: Request) => {
+  const session = await getServerSession();
 
   if (!session) {
-    return res.status(401).send({ message: "Signin required" });
+    console.log("Unauthorized access attempted");
+    return NextResponse.json({ message: "Signin required" }, { status: 401 });
   }
-  const { user } = session;
+
   try {
     await dbConnect();
+    console.log("Connected to MongoDB");
+
     const orders = await Order.find({});
-    res.status(200).json(orders);
+    console.log(`Fetched ${orders.length} orders`);
+
+    return NextResponse.json(orders, { status: 200 });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error("Failed to fetch orders:", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
-}
+};
