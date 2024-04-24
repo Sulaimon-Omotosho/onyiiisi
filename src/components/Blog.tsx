@@ -1,6 +1,6 @@
 import { Mail, MoveDownRight } from 'lucide-react'
 import Image from 'next/image'
-import { blogs } from '@/constants'
+import { blogs, blogData } from '@/constants'
 
 export default function Blog() {
   return (
@@ -13,8 +13,7 @@ export default function Blog() {
               our blog
             </h3>
             <p className='text-sm font-thin'>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Molestiae, impedit.
+              Delve into amazing topics about jewelries and trends.
             </p>
           </div>
           <button className=' py-2 lg:py-3 w-[120px] lg:w-[150px] rounded-full uppercase font-thin text-xs hidden md:flex items-center justify-center gap-1 lg:gap-2 border-2 border-white '>
@@ -27,7 +26,7 @@ export default function Blog() {
 
         {/* Blog Carousel  */}
         <div className='flex flex-col md:flex-row items-center gap-6 md:justify-between mt-10 xl:mt-20'>
-          {blogs.map((blog, idx) => (
+          {blogData.map((blog, idx) => (
             <div
               key={idx}
               className='w-[360px] md:w-[220px] lg:w-[250px] xl:w-[400px] '
@@ -43,7 +42,7 @@ export default function Blog() {
               <div className=''>
                 <p className='font-thin text-sm'>{blog.date}</p>
                 <h3 className='font-bold capitalize '>{blog.title}</h3>
-                <p className='text-xs font-thin'>{blog.details}</p>
+                <p className='text-xs font-thin'>{blog.blog}</p>
               </div>
             </div>
           ))}

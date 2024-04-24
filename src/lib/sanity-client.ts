@@ -57,6 +57,19 @@ export const productsByCategory = async (categoryName: string) => {
   return products
 }
 
+const productsByCategoryKeyQuery = groq`
+*[_type == 'product' && references(*[_type == 'category' && _id == $categoryKey])] {...} | order(createdAt desc)`
+
+export const productsByCategoryKey = async (categoryKey: string) => {
+  const products: ProductProps[] = await client.fetch(
+    productsByCategoryKeyQuery,
+    {
+      categoryKey,
+    }
+  )
+  return products
+}
+
 const productsBySpecialQuery = groq`
 *[_type == 'product' && references(*[_type == 'specials' && title == $specialsName]._id)] {...} | order(createdAt asc)`
 

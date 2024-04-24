@@ -52,41 +52,6 @@ const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
           >
             <MiniSidebar shop={handleShop} closeSidebar={closeSidebar} />
           </div>
-          {/* <div
-            className={` ${
-              shop
-                ? 'capitalize pt-2  pl-5 flex flex-col gap-3 font-thin'
-                : 'hidden'
-            }`}
-          >
-            <Link
-              href='/shop'
-              onClick={() => {
-                closeSidebar()
-                handleShop()
-              }}
-            >
-              categories
-            </Link>
-            <Link
-              href='/shop'
-              onClick={() => {
-                closeSidebar()
-                handleShop()
-              }}
-            >
-              specials
-            </Link>
-            <Link
-              href='/shop'
-              onClick={() => {
-                closeSidebar()
-                handleShop()
-              }}
-            >
-              collections
-            </Link>
-          </div> */}
         </div>
 
         <Link
@@ -103,6 +68,15 @@ const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
             className='flex gap-2 items-center hover:underline underline-offset-2 text-2xl pl-10'
           >
             blog
+          </Link>
+        </div>
+        <div className=''>
+          <Link
+            href='/shop'
+            onClick={closeSidebar}
+            className='flex gap-2 items-center underline underline-offset-4 text-2xl pl-10'
+          >
+            New in
           </Link>
         </div>
         <Link

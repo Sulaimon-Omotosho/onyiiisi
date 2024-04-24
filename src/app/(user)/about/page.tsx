@@ -5,6 +5,7 @@ import { products } from '@/constants'
 import Blog from '@/components/Blog'
 import SocialMedia from '@/components/SocialMedia'
 import FAQs from '@/components/FAQs'
+import Link from 'next/link'
 
 const AboutPage = () => {
   return (
@@ -135,9 +136,11 @@ const AboutPage = () => {
                 />
               </div>
               <p className='text-md font-medium'>{product.title}</p>
-              <p className='uppercase text-md font-semibold hover:underline cursor-pointer text-orange-800 underline-offset-4'>
-                view more
-              </p>
+              <Link href='/shop'>
+                <p className='uppercase text-md font-semibold hover:underline cursor-pointer text-orange-800 underline-offset-4'>
+                  view more
+                </p>
+              </Link>
             </div>
           ))}
         </div>

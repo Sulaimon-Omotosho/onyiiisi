@@ -6,12 +6,13 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { ProductProps } from '@/lib/types'
 import { trendingProd, urlFor } from '@/lib/sanity-client'
-import { markdowns } from '@/constants/markdowns'
+import { useMarkdowns } from '@/constants/markdowns'
 import Link from 'next/link'
 
 export default function SalesCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [loading, setLoading] = useState(true)
+  const markdowns = useMarkdowns()
   // const [prod, setProd] = useState<ProductProps[]>([])
 
   // useEffect(() => {
@@ -45,7 +46,7 @@ export default function SalesCarousel() {
 
   return (
     <div className='my-5 flex flex-col md:flex-row justify-around content-center items-center relative '>
-      {markdowns().map((sale, idx) => (
+      {markdowns.map((sale, idx) => (
         <div key={idx} className='hidden md:flex flex-col items-center'>
           <Link
             href={`/product/${sale.slug}`}
@@ -74,7 +75,7 @@ export default function SalesCarousel() {
       <ChevronRight className='absolute right-0 cursor-pointer hover:scale-150 ease-in-out duration-300' /> */}
 
       {/* Mobile  */}
-      {markdowns().map((sale, idx) => (
+      {markdowns.map((sale, idx) => (
         <div
           key={idx}
           className={`md:hidden flex flex-col items-center ${
