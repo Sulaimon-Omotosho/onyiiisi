@@ -62,7 +62,7 @@ export interface OrderDoc extends Document {
 
 const OrderSchema = new Schema<OrderDoc>(
   {
-    items: [OrderItemSchema], // Array of OrderItem schemas
+    items: [OrderItemSchema],
     total: {
       type: Number,
       required: true,

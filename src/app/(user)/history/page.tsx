@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
-import { OrderDoc } from "@/models/Order"; // Import the OrderDoc interface
+import { OrderDoc } from "@/models/Order";
 
 interface HistoryPageProps {
   initialOrders?: OrderDoc[];
