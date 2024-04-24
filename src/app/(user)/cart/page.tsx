@@ -9,8 +9,7 @@ import { StateProps } from "@/lib/types";
 import { addToWishlist } from "@/redux/wishlist-slice";
 import { useSession } from "next-auth/react";
 // import { useCheckout } from "@/hooks/useCheckout";
-import Loading from '@/components/Loading'
-
+import Loading from "@/components/Loading";
 import {
   deleteProduct,
   increaseQuantity,
@@ -18,9 +17,6 @@ import {
 } from "@/redux/cart-slice";
 import { useRouter } from "next/navigation";
 import { urlFor } from "@/lib/sanity-client";
-} from '@/redux/cart-slice'
-import { useRouter } from 'next/navigation'
-import { urlFor } from '@/lib/sanity-client'
 
 const CartPage = () => {
   const { data: session } = useSession();
@@ -49,10 +45,10 @@ const CartPage = () => {
 
   useEffect(() => {
     const loadingTimer = setTimeout(() => {
-      setLoading(false)
-    }, 4000)
-    return () => clearTimeout(loadingTimer)
-  }, [productData])
+      setLoading(false);
+    }, 4000);
+    return () => clearTimeout(loadingTimer);
+  }, [productData]);
 
   // useEffect(() => {
   //   const loadingTimer = setTimeout(() => {
@@ -100,15 +96,15 @@ const CartPage = () => {
 
   return (
     <>
-      <div className='lg:py-20 px-3 md:px-10 xl:px-20'>
+      <div className="lg:py-20 px-3 md:px-10 xl:px-20">
         {/* Navigation */}
-        <div className='flex py-10 justify-between items-center'>
-          <div className='flex gap-1'>
-            <Link className='text-gray-400 hover:text-gray-800' href='/'>
-              Home |{' '}
+        <div className="flex py-10 justify-between items-center">
+          <div className="flex gap-1">
+            <Link className="text-gray-400 hover:text-gray-800" href="/">
+              Home |{" "}
             </Link>
-            <Link className='text-gray-400 hover:text-gray-800' href='/shop'>
-              Shop |{' '}
+            <Link className="text-gray-400 hover:text-gray-800" href="/shop">
+              Shop |{" "}
             </Link>
             {/* <Link
                 className='text-gray-400 hover:text-gray-800'
@@ -125,16 +121,16 @@ const CartPage = () => {
               >
                 Details |{' '}
               </Link> */}
-            <p className='font-semibold'> Cart</p>
+            <p className="font-semibold"> Cart</p>
           </div>
         </div>
         {/* Items  */}
         {loading ? (
-          <div className='h-[100%]'>
+          <div className="h-[100%]">
             <Loading />
           </div>
         ) : productData?.length > 0 ? (
-          <div className='flex-col flex gap-10'>
+          <div className="flex-col flex gap-10">
             {productData.map((item) => (
               <div
                 key={item?._id}
@@ -154,10 +150,10 @@ const CartPage = () => {
                     />
                   )}
                 </Link>
-                <div className='relative flex w-[70%] gap-4 lg:gap-8 flex-col'>
-                  <div className='flex justify-between'>
-                    <div className=''>
-                      <h3 className='md:text-lg lg:text-2xl text-gray-800 font-semibold capitalize lg:pb-2'>
+                <div className="relative flex w-[70%] gap-4 lg:gap-8 flex-col">
+                  <div className="flex justify-between">
+                    <div className="">
+                      <h3 className="md:text-lg lg:text-2xl text-gray-800 font-semibold capitalize lg:pb-2">
                         {item?.title} <span>{item?.description}</span>
                       </h3>
                       <p className="capitalize text-sm lg:text-lg text-gray-500">
@@ -224,11 +220,11 @@ const CartPage = () => {
             ))}
           </div>
         ) : (
-          <div className='h-[100%] flex flex-col gap-5 justify-center items-center'>
-            <p className='text-3xl font-bold'>Cart Empty</p>
+          <div className="h-[100%] flex flex-col gap-5 justify-center items-center">
+            <p className="text-3xl font-bold">Cart Empty</p>
             <Link
-              href='/shop'
-              className=' hover:underline underline-offset-4 hover:font-semibold hover:scale-110 transition-all duration-300 '
+              href="/shop"
+              className=" hover:underline underline-offset-4 hover:font-semibold hover:scale-110 transition-all duration-300 "
             >
               Go To Shop
             </Link>
@@ -236,20 +232,20 @@ const CartPage = () => {
         )}
 
         {/* CheckOut  */}
-        <div className='flex flex-col items-center'>
-          <div className='m-10 rounded-md w-[95%] md:w-[80%] lg:w-[70%] flex justify-between bg-gray-200 p-4'>
-            <p className='uppercase text-gray-500 text-xl'>item subtotal</p>
-            <p className='text-xl'>${totalAmt.toFixed(2)}</p>
+        <div className="flex flex-col items-center">
+          <div className="m-10 rounded-md w-[95%] md:w-[80%] lg:w-[70%] flex justify-between bg-gray-200 p-4">
+            <p className="uppercase text-gray-500 text-xl">item subtotal</p>
+            <p className="text-xl">${totalAmt.toFixed(2)}</p>
           </div>
           <button
             onClick={createCheckout}
-            className='text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[75%] md:w-[50%] lg:w-[30%] cursor-pointer rounded-full uppercase font-bold text-md flex items-center justify-center gap-1 lg:gap-2 '
+            className="text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[75%] md:w-[50%] lg:w-[30%] cursor-pointer rounded-full uppercase font-bold text-md flex items-center justify-center gap-1 lg:gap-2 "
           >
             <span>proceed to checkout</span>
           </button>
           <Link
-            href='/shop'
-            className='uppercase font-semibold hover:underline py-5 underline-offset-8 text-gray-700'
+            href="/shop"
+            className="uppercase font-semibold hover:underline py-5 underline-offset-8 text-gray-700"
           >
             continue shopping
             {/* {item.image && (
