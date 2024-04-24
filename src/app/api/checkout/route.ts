@@ -1,5 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
 import { ProductProps } from "@/lib/types";
+import { v4 as uuidv4 } from "uuid";
 
 export const POST = async (request: NextRequest) => {
   try {

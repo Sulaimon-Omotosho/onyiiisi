@@ -60,7 +60,7 @@ const CheckOutPage = () => {
   };
 
   const config = {
-    public_key: "YOUR_FLUTTERWAVE_PUBLIC_KEY",
+    public_key: `${process.env.FLUTTERWAVE_PUBLIC_KEY}`,
     tx_ref: `${Date.now()}`,
     amount: 100, // Set the correct amount
     currency: "NGN", // Set the correct currency code
@@ -79,8 +79,35 @@ const CheckOutPage = () => {
 
   const handleFlutterPayment = useFlutterwave(config);
 
+  const isFormFilled = () => {
+    const {
+      firstName,
+      lastName,
+      phoneNumber,
+      email,
+      address,
+      state,
+      postalCode,
+      city,
+      country,
+      deliveryNotes,
+    } = formData;
+    return (
+      firstName &&
+      lastName &&
+      phoneNumber &&
+      email &&
+      address &&
+      state &&
+      postalCode &&
+      city &&
+      country &&
+      deliveryNotes
+    );
+  };
+
   const handlePlaceOrder = async () => {
-    if (!formData.address) {
+    if (!isFormFilled()) {
       toast("Please fill the shipping address form.");
       return;
     }
@@ -100,7 +127,6 @@ const CheckOutPage = () => {
 
       if (response.ok) {
         const { order } = await response.json();
-
         // Trigger Flutterwave payment
         handleFlutterPayment({
           callback: (paymentResponse) => {
@@ -136,6 +162,8 @@ const CheckOutPage = () => {
                 type="text"
                 id="firstName"
                 name="firstName"
+                value={formData.firstName}
+                onChange={handleFormChange}
                 required
                 className="border-[1px]  border-gray-300 rounded-sm p-3 w-full"
               />
@@ -151,6 +179,8 @@ const CheckOutPage = () => {
                 type="text"
                 id="lastName"
                 name="lastName"
+                value={formData.lastName}
+                onChange={handleFormChange}
                 required
                 className="border-[1px]  border-gray-300 rounded-sm p-3 w-full"
               />
@@ -166,6 +196,8 @@ const CheckOutPage = () => {
                 type="tel"
                 id="phoneNumber"
                 name="phoneNumber"
+                value={formData.phoneNumber}
+                onChange={handleFormChange}
                 required
                 className="border-[1px]  border-gray-300 rounded-sm p-3 w-full"
               />
@@ -181,6 +213,8 @@ const CheckOutPage = () => {
                 type="email"
                 id="email"
                 name="email"
+                value={formData.email}
+                onChange={handleFormChange}
                 required
                 className="border-[1px]  border-gray-300 rounded-sm p-3 w-full"
               />
@@ -196,6 +230,8 @@ const CheckOutPage = () => {
                 type="text"
                 id="address"
                 name="address"
+                value={formData.address}
+                onChange={handleFormChange}
                 required
                 className="border-[1px]  border-gray-300 rounded-sm p-3 w-full"
               />
@@ -212,6 +248,8 @@ const CheckOutPage = () => {
                   type="text"
                   id="state"
                   name="state"
+                  value={formData.state}
+                  onChange={handleFormChange}
                   required
                   className="border-[1px]  border-gray-300 rounded-sm p-3 w-full"
                 />
@@ -227,6 +265,8 @@ const CheckOutPage = () => {
                   type="text"
                   id="postalCode"
                   name="postalCode"
+                  value={formData.postalCode}
+                  onChange={handleFormChange}
                   required
                   className="border-[1px]  border-gray-300 rounded-sm p-3 w-full"
                 />
@@ -243,6 +283,8 @@ const CheckOutPage = () => {
                 type="text"
                 id="city"
                 name="city"
+                value={formData.city}
+                onChange={handleFormChange}
                 required
                 className="border-[1px]  border-gray-300 rounded-sm p-3 w-full"
               />
@@ -257,6 +299,8 @@ const CheckOutPage = () => {
               <select
                 name="country"
                 id="country"
+                value={formData.country}
+                onChange={handleFormChange}
                 className="border-[1px]  border-gray-300 rounded-sm p-3 w-full"
               >
                 {countries.map((country, idx) => (
@@ -274,8 +318,10 @@ const CheckOutPage = () => {
                 Delivery Notes
               </label>
               <textarea
-                name="notes"
-                id="notes"
+                name="deliveryNotes"
+                id="deliveryNotes"
+                value={formData.deliveryNotes}
+                onChange={handleFormChange}
                 className="border-[1px]  border-gray-300 rounded-sm p-3 h-32 w-full"
               />
             </div>
@@ -294,7 +340,7 @@ const CheckOutPage = () => {
                     <div className="w-1/4">
                       <div className="relative h-[100px] xl:h-[130px] w-[100px] xl:w-[150px] rounded-md overflow-hidden border-2 border-slate-400">
                         <Image
-                          src={item.product_data.image}
+                          src={item?.product_data.image}
                           alt={item.product_data.name}
                           fill
                           // height={150}
