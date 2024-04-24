@@ -11,7 +11,14 @@ import {
 } from "@/redux/cart-slice";
 import { addToWishlist } from "@/redux/wishlist-slice";
 import { useDispatch } from "react-redux";
-import { ChevronLeft, ChevronRight, Heart, Share2, Star } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Heart,
+  Share2,
+  Star,
+  MoveUp,
+} from "lucide-react";
 import { ProductProps } from "@/lib/types";
 import {
   productById,
