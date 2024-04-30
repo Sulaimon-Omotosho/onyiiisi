@@ -1,6 +1,7 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import { getSession } from "next-auth/react";
 import { countries } from "@/constants";
 import { checkouts } from "@/constants";
 import { toast } from "sonner";
@@ -34,8 +35,11 @@ const CheckOutPage = () => {
   //   : { updatedItems: [] };
   const parsedItems: CheckoutItem[] = order ? JSON.parse(order as string) : [];
   console.log("ParsedItems:", parsedItems);
+  const [userEmail, setUserEmail] = useState("");
   // const updatedItems: CheckoutItem[] = parsedItems.updatedItems || [];
   // console.log("updatedItems:", updatedItems);
+  const [totalPrice, setTotalPrice] = useState(0);
+
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -62,7 +66,7 @@ const CheckOutPage = () => {
   const config = {
     public_key: `${process.env.FLUTTERWAVE_PUBLIC_KEY}`,
     tx_ref: `${Date.now()}`,
-    amount: 100, // Set the correct amount
+    amount: totalPrice, // Set the correct amount
     currency: "NGN", // Set the correct currency code
     payment_options: "card,mobilemoney,ussd",
     customer: {
@@ -127,6 +131,7 @@ const CheckOutPage = () => {
 
       if (response.ok) {
         const { order } = await response.json();
+        toast("Order created successfully");
         // Trigger Flutterwave payment
         handleFlutterPayment({
           callback: (paymentResponse) => {
@@ -145,6 +150,19 @@ const CheckOutPage = () => {
       toast("An unexpected error occurred.");
     }
   };
+
+  useEffect(() => {
+    const calculateTotalPrice = () => {
+      const total = parsedItems.reduce(
+        (acc, item) => acc + item.price * item.quantity,
+        0
+      );
+      setTotalPrice(total);
+    };
+
+    calculateTotalPrice();
+  }, [parsedItems]);
+
   return (
     <div className="pt-5 md:pt-20 px-5 xl:px-10">
       <div className="flex flex-col-reverse md:flex-row gap-8 md:gap-2 lg:pt-20">
@@ -391,14 +409,14 @@ const CheckOutPage = () => {
               </div>
               <div className="mt-[50px] lg:mt-[100px]">
                 <p className="flex justify-between uppercase text-xl font-semibold text-slate-400">
-                  subtotal <span className="text-black">$4000</span>
+                  subtotal <span className="text-black">${totalPrice}</span>
                 </p>
                 <p className="flex justify-between uppercase text-xl font-semibold text-slate-400">
                   shipping <span className="text-black">$340</span>
                 </p>
                 <hr className="my-2" />
                 <p className="flex justify-between uppercase text-xl font-semibold text-slate-400 mt-4">
-                  total <span className="text-black">$4340</span>
+                  total <span className="text-black">${totalPrice + 340}</span>
                 </p>
                 <hr className="my-2" />
               </div>

@@ -1,4 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
+import User from "./User";
 
 // Define the OrderItem interface and schema
 interface OrderItem {
@@ -40,6 +41,7 @@ const OrderItemSchema = new Schema<OrderItem>({
 
 // Define the Order interface and schema
 export interface OrderDoc extends Document {
+  user: mongoose.Types.ObjectId;
   items: OrderItem[];
   total: number;
   email: string;
@@ -62,6 +64,7 @@ export interface OrderDoc extends Document {
 
 const OrderSchema = new Schema<OrderDoc>(
   {
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
     items: [OrderItemSchema],
     total: {
       type: Number,
