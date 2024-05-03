@@ -71,7 +71,7 @@ export default function Navbar() {
     <header className="relative bg-[rgb(56,22,10)] text-slate-300">
       {" "}
       <div
-        className={`absolute w-full md:hidden transition-all duration-500 h-[100vh] ${
+        className={`absolute w-full md:hidden transition-all duration-500 h-[100vh] z-40 ${
           sidebar ? "top-0 left-0" : "top-0 left-[-750px] shadow-none"
         }`}
       >
