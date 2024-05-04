@@ -164,7 +164,7 @@ export default function Navbar() {
         </div>
 
         {/* Navbar Icons  */}
-        <div className="flex-1 flex gap-5 lg:scale-100 justify-end items-center">
+        <div className="relative flex-1 flex gap-5 lg:scale-100 justify-end items-center">
           {isAdminUser && (
             <Link href={"/studio"} target="_blank" className="hidden md:inline">
               Studio
@@ -199,7 +199,11 @@ export default function Navbar() {
             </p> */}
           </div>
           {session ? (
-            <Button onClick={() => signOut()} variant={"ghost"}>
+            <Button
+              className="z-10"
+              onClick={() => signOut()}
+              variant={"ghost"}
+            >
               <LogOut className="cursor-pointer" />
             </Button>
           ) : (
