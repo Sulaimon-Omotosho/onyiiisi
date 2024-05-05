@@ -21,7 +21,7 @@ const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
   };
 
   return (
-    <div className="fixed md:hidden h-[100vh] flex flex-col items-center w-full bg-[rgb(95,40,74)] text-2xl text-white uppercase font-semibold ">
+    <div className="fixed md:hidden h-[100vh] flex flex-col items-center w-full bg-[rgb(95,40,74)] text-2xl text-white uppercase font-semibold z-40">
       <X
         onClick={closeSidebar}
         className="w-10 h-10 text-white absolute top-5 z-30 right-5"
