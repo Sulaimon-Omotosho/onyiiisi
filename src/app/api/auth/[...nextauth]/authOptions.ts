@@ -36,14 +36,11 @@ const authOptions: NextAuthOptions = {
       async authorize(credentials, req) {
         const formEmail = credentials?.email as string;
         const plainPassword = credentials?.password as string;
-
         await dbConnect(); // Connect to the database
         const isUserExist = await User.findOne({ email: formEmail });
-
         if (!isUserExist) {
           return null; // User not found
         }
-
         const isValidPassword = bcrypt.compareSync(
           plainPassword,
           isUserExist.password
@@ -52,7 +49,6 @@ const authOptions: NextAuthOptions = {
         if (!isValidPassword) {
           return null; // Invalid password
         }
-
         // Return the authorized user information
         return {
           id: isUserExist._id,
