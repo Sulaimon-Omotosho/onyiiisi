@@ -9,7 +9,7 @@ import dbConnect from "@/lib/db";
 import User from "@/models/User";
 import { Adapter } from "next-auth/adapters";
 
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
   adapter: MongoDBAdapter(clientPromise) as Adapter,
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
