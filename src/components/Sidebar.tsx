@@ -6,48 +6,48 @@ import {
   Plus,
   ShoppingCart,
   X,
-} from 'lucide-react'
-import Link from 'next/link'
-import { useState } from 'react'
-import { signOut, useSession } from 'next-auth/react'
-import MiniSidebar from './MiniSidebar'
+} from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
+import { signOut, useSession } from "next-auth/react";
+import MiniSidebar from "./MiniSidebar";
 
 const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
-  const { data: session } = useSession()
-  const [shop, setShop] = useState(false)
+  const { data: session } = useSession();
+  const [shop, setShop] = useState(false);
 
   const handleShop = () => {
-    setShop(!shop)
-  }
+    setShop(!shop);
+  };
 
   return (
-    <div className='fixed md:hidden h-[100vh] flex flex-col items-center w-full bg-[rgb(95,40,74)] text-2xl text-white uppercase font-semibold '>
+    <div className="fixed md:hidden h-[100vh] flex flex-col items-center w-full bg-[rgb(95,40,74)] text-2xl text-white uppercase font-semibold z-40">
       <X
         onClick={closeSidebar}
-        className='w-10 h-10 text-white absolute top-5 z-30 right-5'
+        className="w-10 h-10 text-white absolute top-5 z-30 right-5"
       />
       {session && (
         <Link
-          href='/profile'
+          href="/profile"
           onClick={closeSidebar}
-          className='absolute top-6 text-lg capitalize'
+          className="absolute top-6 text-lg capitalize"
         >
           Hi, {session?.user?.name}
         </Link>
       )}
-      <div className='flex flex-col mt-20 items-left gap-10 w-fit '>
-        <div className=''>
+      <div className="flex flex-col mt-20 items-left gap-10 w-fit ">
+        <div className="">
           <div
             onClick={handleShop}
             // href='/shop'
-            className='flex gap-2 items-center text-2xl'
+            className="flex gap-2 items-center text-2xl"
           >
             <ArrowBigRight />
             shop
           </div>
           <div
             className={`absolute w-full h-[100vh] transition-all duration-500 z-20 ${
-              shop ? 'top-0 left-0' : 'top-0 left-[-500px]'
+              shop ? "top-0 left-0" : "top-0 left-[-500px]"
             }`}
           >
             <MiniSidebar shop={handleShop} closeSidebar={closeSidebar} />
@@ -56,67 +56,67 @@ const Sidebar = ({ closeSidebar }: { closeSidebar: () => void }) => {
 
         <Link
           onClick={closeSidebar}
-          href='/about'
-          className='flex gap-2 items-center hover:underline underline-offset-2 text-2xl pl-10'
+          href="/about"
+          className="flex gap-2 items-center hover:underline underline-offset-2 text-2xl pl-10"
         >
           about
         </Link>
-        <div className=''>
+        <div className="">
           <Link
-            href='/blog'
+            href="/blog"
             onClick={closeSidebar}
-            className='flex gap-2 items-center hover:underline underline-offset-2 text-2xl pl-10'
+            className="flex gap-2 items-center hover:underline underline-offset-2 text-2xl pl-10"
           >
             blog
           </Link>
         </div>
-        <div className=''>
+        <div className="">
           <Link
-            href='/shop'
+            href="/shop"
             onClick={closeSidebar}
-            className='flex gap-2 items-center underline underline-offset-4 text-2xl pl-10'
+            className="flex gap-2 items-center underline underline-offset-4 text-2xl pl-10"
           >
             New in
           </Link>
         </div>
         <Link
-          href='/cart'
+          href="/cart"
           onClick={closeSidebar}
-          className='relative flex gap-2'
+          className="relative flex gap-2"
         >
-          <ShoppingCart className='h-8 w-8' />
+          <ShoppingCart className="h-8 w-8" />
           cart
-          <p className='absolute left-5 top-[-5px] bg-[rgb(95,40,74)] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold'>
+          {/* <p className='absolute left-5 top-[-5px] bg-[rgb(95,40,74)] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold'>
             {2}
-          </p>
+          </p> */}
         </Link>
         <Link
           onClick={closeSidebar}
-          href='/wish-list'
-          className='relative flex gap-2'
+          href="/wish-list"
+          className="relative flex gap-2"
         >
-          <Heart className='h-8 w-8' />
+          <Heart className="h-8 w-8" />
           wishlist
-          <p className='absolute left-5 top-[-5px] bg-[rgb(95,40,74)] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold'>
+          {/* <p className='absolute left-5 top-[-5px] bg-[rgb(95,40,74)] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold'>
             {9}
-          </p>
+          </p> */}
         </Link>
         {session && (
           <Link
-            href='/history'
+            href="/history"
             onClick={closeSidebar}
-            className='relative flex gap-2 items-center'
+            className="relative flex gap-2 items-center"
           >
-            <NotebookText className='cursor-pointer' />
+            <NotebookText className="cursor-pointer" />
             orders
-            <p className='absolute left-5 top-[-5px] bg-[rgb(95,40,74)] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold'>
+            {/* <p className='absolute left-5 top-[-5px] bg-[rgb(95,40,74)] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-semibold'>
               {1}
-            </p>
+            </p> */}
           </Link>
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;

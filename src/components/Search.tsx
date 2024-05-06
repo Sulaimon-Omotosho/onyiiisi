@@ -1,29 +1,29 @@
-'use client'
+"use client";
 
-import React, { useEffect, useState } from 'react'
-import { SearchIcon } from 'lucide-react'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { useDebounce } from 'use-debounce'
+import React, { useEffect, useState } from "react";
+import { SearchIcon } from "lucide-react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useDebounce } from "use-debounce";
 
 const Search = ({ placeholder }: { placeholder: string }) => {
-  const searchParams = useSearchParams()
-  const pathname = usePathname()
-  const { replace } = useRouter()
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
   // const [text, setText] = useState('')
   // const [query] = useDebounce(text, 500)
-  const [searchBar, setSearchBar] = useState(false)
+  const [searchBar, setSearchBar] = useState(false);
   const handleSearchBar = () => {
-    setSearchBar(!searchBar)
-  }
+    setSearchBar(!searchBar);
+  };
 
   function handleSearch(term: string) {
-    const params = new URLSearchParams(searchParams)
+    const params = new URLSearchParams(searchParams);
     if (term) {
-      params.set('query', term)
+      params.set("query", term);
     } else {
-      params.delete('query')
+      params.delete("query");
     }
-    replace(`${pathname}?${params.toString()}`)
+    replace(`${pathname}?${params.toString()}`);
   }
 
   // useEffect(() => {
@@ -38,22 +38,22 @@ const Search = ({ placeholder }: { placeholder: string }) => {
     <div>
       <div
         onClick={handleSearchBar}
-        className={` ${searchBar ? 'hidden' : 'flex gap-1 cursor-pointer'}`}
+        className={` ${searchBar ? "hidden" : "flex gap-1 cursor-pointer"}`}
       >
         <SearchIcon />
-        <p className='text-slate-600'>Search...</p>
+        <p className="text-slate-600">Search...</p>
       </div>
       <input
         // value={text}
         placeholder={placeholder}
         onChange={(e) => handleSearch(e.target.value)}
-        defaultValue={searchParams.get('query')?.toString()}
+        defaultValue={searchParams.get("query")?.toString()}
         className={`${
-          searchBar ? 'inline p-2 rounded-full bg-slate-100' : 'hidden'
+          searchBar ? "inline p-2 rounded-full bg-slate-100" : "hidden"
         }`}
       />
     </div>
-  )
-}
+  );
+};
 
-export default Search
+export default Search;
