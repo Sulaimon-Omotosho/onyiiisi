@@ -68,10 +68,10 @@ export default function Navbar() {
   }
 
   return (
-    <header className="relative bg-[rgb(56,22,10)] text-slate-300 z-20">
+    <header className="relative bg-[rgb(56,22,10)] text-slate-300">
       {" "}
       <div
-        className={`absolute w-full md:hidden transition-all duration-500 h-[100vh] z-20 ${
+        className={`absolute w-full md:hidden transition-all duration-500 h-[100vh] z-40 ${
           sidebar ? "top-0 left-0" : "top-0 left-[-750px] shadow-none"
         }`}
       >
@@ -164,7 +164,8 @@ export default function Navbar() {
         </div>
 
         {/* Navbar Icons  */}
-        <div className="relative flex-1 flex gap-5 lg:scale-100 justify-end items-center">
+
+        <div className="flex-1 flex gap-5 lg:scale-100 justify-end items-center z-20">
           {isAdminUser && (
             <Link href={"/studio"} target="_blank" className="hidden md:inline">
               Studio
