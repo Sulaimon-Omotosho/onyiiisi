@@ -3,7 +3,7 @@ import Order from "@/models/Order";
 import User from "@/models/User";
 import dbConnect from "@/lib/db";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../auth/[...nextauth]/auth";
+import authOptions from "@/lib/config/auth/authOptions";
 
 interface ItemData {
   gram: string;
