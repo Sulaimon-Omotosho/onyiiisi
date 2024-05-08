@@ -1,18 +1,18 @@
 "use client";
 
-import { Heart, MoveDownRight, ShoppingCart, Trash } from 'lucide-react'
-import Image from 'next/image'
-import Link from 'next/link'
-import React from 'react'
-import { useEffect, useState } from 'react'
-import { StateProps } from '@/lib/types'
-import { addToCart } from '@/redux/cart-slice'
-import { deleteFromWishlist } from '@/redux/wishlist-slice'
-import { useSelector, useDispatch } from 'react-redux'
-import { urlFor } from '@/lib/sanity-client'
-import { toast } from 'sonner'
-import Loading from '@/components/Loading'
-import PopularItems from '@/components/PopularItems'
+import { Heart, MoveDownRight, ShoppingCart, Trash } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
+import { useEffect, useState } from "react";
+import { StateProps } from "@/lib/types";
+import { addToCart } from "@/redux/cart-slice";
+import { deleteFromWishlist } from "@/redux/wishlist-slice";
+import { useSelector, useDispatch } from "react-redux";
+import { urlFor } from "@/lib/sanity-client";
+import { toast } from "sonner";
+import Loading from "@/components/Loading";
+import PopularItems from "@/components/PopularItems";
 
 const WishListPage = () => {
   const { productData } = useSelector((state: StateProps) => state.wishlist);
@@ -70,7 +70,7 @@ const WishListPage = () => {
               >
                 Details |{' '}
               </Link> */}
-              <p className='font-semibold'> Wishlist</p>
+              <p className="font-semibold"> Wishlist</p>
             </div>
           </div>
 
@@ -101,8 +101,7 @@ const WishListPage = () => {
                     <div className="flex justify-between pb-10 md:pb-20">
                       <div className="">
                         <h3 className="md:text-lg lg:text-2xl text-gray-800 font-semibold capitalize lg:pb-2">
-                          {item?.title.substring(0, 20)}{" "}
-                          <span>{item?.description}</span>
+                          {item?.title} <span>{item?.description}</span>
                         </h3>
                         <p className="capitalize text-sm lg:text-lg text-gray-500">
                           {item.brand} | {item.size} grams
@@ -117,7 +116,7 @@ const WishListPage = () => {
                       <div className="flex justify-between items-center px-5">
                         <button
                           onClick={() => {
-                            dispatch(addToCart(item._id));
+                            dispatch(addToCart(item));
                             toast.success(
                               `${item?.title.substring(0, 12)}... added to cart`
                             );
@@ -130,7 +129,7 @@ const WishListPage = () => {
                         </button>
                         <button
                           onClick={() => {
-                            dispatch(deleteFromWishlist(item._id));
+                            dispatch(deleteFromWishlist(item));
                           }}
                           className="flex gap-1 text-gray-500 text-sm"
                         >
@@ -175,17 +174,17 @@ const WishListPage = () => {
           </div>
         </div>
         {/* Popular Products  */}
-        <div className='p-12 mb-10 bg-[rgb(56,22,10)]'>
+        <div className="p-12 mb-10 bg-[rgb(56,22,10)]">
           {/* Header */}
-          <div className=' flex justify-center text-white md:justify-between'>
-            <h3 className='uppercase text-3xl md:text-xl font-bold md:font-semibold'>
+          <div className=" flex justify-center text-white md:justify-between">
+            <h3 className="uppercase text-3xl md:text-xl font-bold md:font-semibold">
               Popular items
             </h3>
-            <Link href='/shop'>
-              <button className='hidden py-2 lg:py-3 w-[120px] lg:w-[150px] rounded-full uppercase font-thin text-xs md:flex items-center justify-center gap-1 lg:gap-2 border-2 border-white '>
+            <Link href="/shop">
+              <button className="hidden py-2 lg:py-3 w-[120px] lg:w-[150px] rounded-full uppercase font-thin text-xs md:flex items-center justify-center gap-1 lg:gap-2 border-2 border-white ">
                 learn more
                 <span>
-                  <MoveDownRight className='w-4 lg:w-5 h-4 lg:h-5 pt-1' />
+                  <MoveDownRight className="w-4 lg:w-5 h-4 lg:h-5 pt-1" />
                 </span>
               </button>
             </Link>

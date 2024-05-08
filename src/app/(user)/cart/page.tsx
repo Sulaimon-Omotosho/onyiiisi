@@ -106,21 +106,22 @@ const CartPage = () => {
             <Link className="text-gray-400 hover:text-gray-800" href="/shop">
               Shop |{" "}
             </Link>
-            {/* <Link
-                className='text-gray-400 hover:text-gray-800'
-                href='/shop/earrings'
-              <Link
-                className="text-gray-400 hover:text-gray-800"
-                href="/shop/earrings"
-              >
-                Earrings |{" "}
-              </Link>
-              <Link
-                className="text-gray-400 hover:text-gray-800"
-                href="/product/test123"
-              >
-                Details |{' '}
-              </Link> */}
+            <Link
+              className="text-gray-400 hover:text-gray-800"
+              href="/shop/earrings"
+            />
+            <Link
+              className="text-gray-400 hover:text-gray-800"
+              href="/shop/earrings"
+            >
+              Earrings |{" "}
+            </Link>
+            <Link
+              className="text-gray-400 hover:text-gray-800"
+              href="/product/test123"
+            >
+              Details |{" "}
+            </Link>
             <p className="font-semibold"> Cart</p>
           </div>
         </div>
@@ -200,12 +201,6 @@ const CartPage = () => {
                       <button
                         onClick={() => {
                           dispatch(deleteProduct(item._id));
-                          toast.success(
-                            `${item?.title.substring(
-                              0,
-                              12
-                            )}... removed from cart`
-                          );
                         }}
                         className="flex gap-1 text-gray-500 text-sm"
                       >
@@ -243,21 +238,21 @@ const CartPage = () => {
           >
             <span>proceed to checkout</span>
           </button>
-          <Link
+          {/* <Link
             href="/shop"
             className="uppercase font-semibold hover:underline py-5 underline-offset-8 text-gray-700"
           >
             continue shopping
-            {/* {item.image && (
-                <Image
-                  src={urlFor(item.image).url()}
-                  alt='Earring'
-                  fill
-                  objectFit='cover'
-                  className=' border-2 border-gray-600 rounded-md'
-                />
-              )} */}
-          </Link>
+            {item.image && (
+              <Image
+                src={urlFor(item.image).url()}
+                alt="Earring"
+                fill
+                objectFit="cover"
+                className=" border-2 border-gray-600 rounded-md"
+              />
+            )}
+          </Link> */}
         </div>
       </div>
     </>

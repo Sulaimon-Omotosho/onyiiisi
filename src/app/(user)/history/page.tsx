@@ -37,27 +37,30 @@ interface Order {
 
 const HistoryPage = () => {
   const [orders, setOrders] = useState([]);
+  const [id, setId] = useState("");
 
-  const fetchOrderDetails = async (orderId: string) => {
-    try {
-      const res = await fetch("/api/orders/details", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ orderId }),
-      });
-      if (res.ok) {
-        const data = await res.json();
-        // Handle the response data as needed (e.g., navigate to the order details page)
-        console.log(data);
-      } else {
-        console.error("Failed to fetch order details:", res.status);
-      }
-    } catch (error) {
-      console.error("Failed to fetch order details:", error);
-    }
-  };
+  // const fetchOrderDetails = async (orderId: string) => {
+  //   try {
+  //     const response = await fetch("/api/orders/details", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({ orderId }),
+  //     });
+
+  //     if (response.ok) {
+  //       const data = await response.json(); // Check if JSON data is valid
+  //       console.log("Order details fetched successfully:", data);
+  //     } else if (response.status === 400) {
+  //       console.error("Error: Invalid orderId.");
+  //     } else {
+  //       console.error(`Unexpected error: ${response.status}`);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error during fetchOrderDetails:", error);
+  //   }
+  // };
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -114,6 +117,7 @@ const HistoryPage = () => {
                   </p>
                   <Link
                     href={`/history/${order._id}`}
+                    onClick={() => {}}
                     className="hover:text-blue-500"
                   >
                     View Details

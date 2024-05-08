@@ -1,51 +1,34 @@
-import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import Order, { OrderDoc } from "@/models/Order";
 import dbConnect from "@/lib/db";
 
-interface OrderItem {
-  quantity: number;
-  price: number;
-  title: string;
-  brand?: string;
-  gram?: string;
-}
-
+// POST route that receives an order ID and does not return any order details.
 export const POST = async (request: NextRequest) => {
   try {
-    const { orderId } = await request.json();
-    console.log(orderId);
-    // Redirect the client to the route that fetches the order details
-    return NextResponse.redirect(`/api/orders/details/${orderId}`);
-  } catch (error) {
-    console.error("Failed to process order details request:", error);
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 }
-    );
-  }
-};
+    const body = await request.json();
+    const orderId = body.orderId;
 
-export const GET = async (
-  request: NextRequest,
-  { params }: { params: { _id: string } }
-) => {
-  try {
-    const { _id } = params;
-    // Connect to the database
-    await dbConnect();
-
-    // Find the order by ID
+    // This is the identifier passed in the POST request
+    if (!orderId) {
+      return NextResponse.json(
+        { error: "orderId is required" },
+        { status: 400 }
+      );
+    }
+    await dbConnect(); // Establish database connection
+    const _id = orderId;
+    // Find the order by _id
     const order: OrderDoc | null = await Order.findById(_id);
 
     if (!order) {
+      // If no order is found with the given _id
       return NextResponse.json({ error: "Order not found" }, { status: 404 });
     }
-
-    // Return the order details
+    console.log("Order object:", order);
+    // If the order is found, return the entire order object
     return NextResponse.json(order);
   } catch (error) {
-    console.error("Failed to fetch order details:", error);
+    console.error("Error processing order details:", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }
