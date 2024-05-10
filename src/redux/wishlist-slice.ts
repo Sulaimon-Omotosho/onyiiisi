@@ -15,16 +15,10 @@ export const wishlistSlice = createSlice({
   initialState,
   reducers: {
     addToWishlist: (state, action) => {
-      const existingProductIndex = state.productData.findIndex(
-        (item: ProductProps) => item._id === action.payload._id
-      );
-
-      if (existingProductIndex !== -1) {
-        state.productData[existingProductIndex].quantity +=
-          action.payload.quantity;
-      } else {
-        state.productData.push(action.payload);
-      }
+      return {
+        ...state,
+        productData: [...state.productData, action.payload],
+      };
     },
     deleteFromWishlist: (state, action) => {
       state.productData = state.productData.filter(

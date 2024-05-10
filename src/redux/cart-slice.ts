@@ -14,13 +14,27 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      const existingProduct = state?.productData.find(
-        (item: ProductProps) => item?._id === action?.payload?._id
+      const existingProductIndex = state.productData.findIndex(
+        (item: ProductProps) => item._id === action.payload._id
       );
-      if (existingProduct) {
-        existingProduct.productQuantity += action.payload.productQuantity;
+
+      if (existingProductIndex !== -1) {
+        return {
+          ...state,
+          productData: state.productData.map((item: ProductProps, index) =>
+            index === existingProductIndex
+              ? { ...item, productQuantity: item.productQuantity + 1 }
+              : item
+          ),
+        };
       } else {
-        state.productData.push(action.payload);
+        return {
+          ...state,
+          productData: [
+            ...state.productData,
+            { ...action.payload, productQuantity: 1 },
+          ],
+        };
       }
     },
     addToCartFromWishlist: (state, action) => {

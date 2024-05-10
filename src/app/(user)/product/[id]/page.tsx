@@ -218,7 +218,7 @@ const SingleProductPage = () => {
                   <div className="text-2xl flex w-14">
                     <button
                       onClick={() => {
-                        dispatch(decreaseQuantity({ _id: product?._id }));
+                        dispatch(decreaseQuantity({ product }));
                         toast.success("Product reduced successully");
                         console.log(product);
                       }}
@@ -230,7 +230,7 @@ const SingleProductPage = () => {
                     </p>{" "}
                     <button
                       onClick={() => {
-                        dispatch(increaseQuantity({ _id: product?._id }));
+                        dispatch(increaseQuantity({ product }));
                         toast.success("Product increased successully");
                       }}
                     >
@@ -241,8 +241,6 @@ const SingleProductPage = () => {
                 <button
                   onClick={() => {
                     dispatch(addToCart(product));
-                    dispatch(addToCart(product?._id));
-
                     toast.success(
                       `${product?.title.substring(0, 12)}... added to cart`
                     );

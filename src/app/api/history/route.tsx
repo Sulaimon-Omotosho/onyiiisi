@@ -3,7 +3,7 @@ import dbConnect from "@/lib/db";
 import Order from "@/models/Order";
 import User from "@/models/User";
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../auth/[...nextauth]/route";
+import authOptions from "../auth/[...nextauth]/authOptions";
 
 export const GET = async (request: NextRequest) => {
   try {
