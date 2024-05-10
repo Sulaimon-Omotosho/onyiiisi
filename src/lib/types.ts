@@ -110,3 +110,19 @@ export interface MetalPrices {
     USD: number
   }
 }
+
+export type OrderDetailsProps = {
+  _id: string
+  status: string
+  items: Array<any>
+  total: number
+  shippingFee: number
+  paymentMethod: string
+  shippingAddress: {
+    firstName: string
+    lastName: string
+    address: string
+    state: string
+    country: string
+  }
+}
