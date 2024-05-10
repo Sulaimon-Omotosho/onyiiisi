@@ -134,3 +134,25 @@ export const productsByLatest = async () => {
   const products: ProductProps = await client.fetch(latestProductsQuery);
   return products;
 };
+
+const getAllProductsQuery = groq`*[_type == "product"] {
+  _id,
+  title,
+  slug,
+  image,
+  brand,
+  price,
+  details,
+  quantity,
+  "category": category->{ _key, title }
+}`;
+
+export const getAllProducts = async () => {
+  try {
+    const products: ProductProps[] = await client.fetch(getAllProductsQuery);
+    return products;
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    return [];
+  }
+};

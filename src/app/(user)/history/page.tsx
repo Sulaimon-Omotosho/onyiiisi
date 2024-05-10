@@ -39,29 +39,6 @@ const HistoryPage = () => {
   const [orders, setOrders] = useState([]);
   const [id, setId] = useState("");
 
-  // const fetchOrderDetails = async (orderId: string) => {
-  //   try {
-  //     const response = await fetch("/api/orders/details", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({ orderId }),
-  //     });
-
-  //     if (response.ok) {
-  //       const data = await response.json(); // Check if JSON data is valid
-  //       console.log("Order details fetched successfully:", data);
-  //     } else if (response.status === 400) {
-  //       console.error("Error: Invalid orderId.");
-  //     } else {
-  //       console.error(`Unexpected error: ${response.status}`);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error during fetchOrderDetails:", error);
-  //   }
-  // };
-
   useEffect(() => {
     const fetchOrders = async () => {
       try {

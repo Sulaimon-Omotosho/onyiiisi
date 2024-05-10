@@ -35,7 +35,6 @@ const OrderDetailsPage = () => {
 
     fetchDetails();
   }, [orderId]);
-  console.log(orderDetails);
   const handlePopUp = () => {
     setShowPopUp(true);
   };

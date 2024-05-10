@@ -67,7 +67,7 @@ const CheckOutPage = () => {
     public_key: `${process.env.FLUTTERWAVE_PUBLIC_KEY}`,
     tx_ref: `${Date.now()}`,
     amount: totalPrice, // Set the correct amount
-    currency: "NGN", // Set the correct currency code
+    currency: "USD", // Set the correct currency code
     payment_options: "card,mobilemoney,ussd",
     customer: {
       email: formData.email,
