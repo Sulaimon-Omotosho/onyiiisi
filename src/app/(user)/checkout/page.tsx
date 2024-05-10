@@ -409,7 +409,8 @@ const CheckOutPage = () => {
               </div>
               <div className="mt-[50px] lg:mt-[100px]">
                 <p className="flex justify-between uppercase text-xl font-semibold text-slate-400">
-                  subtotal <span className="text-black">${totalPrice}</span>
+                  subtotal{" "}
+                  <span className="text-black">${totalPrice.toFixed(2)}</span>
                 </p>
                 <p className="flex justify-between uppercase text-xl font-semibold text-slate-400">
                   shipping <span className="text-black">$340</span>

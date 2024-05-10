@@ -235,7 +235,7 @@ const CategoryPage = () => {
                       </div>
                       <div
                         onClick={() => {
-                          dispatch(addToCart(product?._id));
+                          dispatch(addToCart(product));
                           toast.success(
                             `${product?.title.substring(0, 12)}... added to cart
                       `
