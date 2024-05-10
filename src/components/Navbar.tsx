@@ -20,14 +20,15 @@ import { signOut, useSession } from "next-auth/react";
 import { Button } from "./ui/button";
 import { isAdmin } from "@/lib/use-check";
 import { usePathname } from "next/navigation";
+import { getSession } from "next-auth/react";
 
 const georgia = Noto_Sans_Georgian({ subsets: ["latin"] });
 
 export default function Navbar() {
   const { data: session } = useSession();
-
   const [shopDropDown, setShopDropDown] = useState(false);
   // const [salesDropDown, setSalesDropDown] = useState(false)
+  const [isAdminUser, setIsAdminUser] = useState<boolean>(false);
 
   const toggleShopDropdown = () => {
     setShopDropDown(!shopDropDown);
@@ -38,17 +39,33 @@ export default function Navbar() {
   //   setShopDropDown(false)
   // }
   useEffect(() => {
-    const checkAdmin = async () => {
-      const admin = await isAdmin();
-      setIsAdminUser(admin);
+    const fetchUserInfo = async () => {
+      try {
+        const session = await getSession();
+        if (session) {
+          console.log("Fetching admin status...");
+          const response = await fetch("/api/admin", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          const data = await response.json();
+          setIsAdminUser(data.isAdmin);
+        }
+      } catch (error) {
+        console.error("Error fetching admin status", error);
+      }
     };
 
-    checkAdmin();
+    fetchUserInfo();
   }, []);
 
   // Sidebar function
   const [sidebar, setSidebar] = useState(false);
-  const [isAdminUser, setIsAdminUser] = useState<boolean>(false);
 
   const handleSidebar = () => {
     setSidebar(!sidebar);
