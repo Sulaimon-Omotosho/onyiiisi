@@ -132,7 +132,7 @@ const OrderDetailsPage = () => {
                 <span className='text-black font-bold'>
                   $
                   {(
-                    orderDetails?.total + (orderDetails?.shippingFee || 0)
+                    orderDetails?.total || 0 + (orderDetails?.shippingFee || 0)
                   )?.toFixed(2)}
                 </span>
               </p>
