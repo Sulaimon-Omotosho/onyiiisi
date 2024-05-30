@@ -6,9 +6,9 @@ import { countries } from "@/constants";
 import { checkouts } from "@/constants";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import Loading from "@/components/Loading";
 import { urlFor } from "@/lib/sanity-client";
 import { useSearchParams } from "next/navigation";
-import axios from "axios";
 import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
 
 interface ProductData {
@@ -34,11 +34,11 @@ const CheckOutPage = () => {
   //   ? JSON.parse(order as string)
   //   : { updatedItems: [] };
   const parsedItems: CheckoutItem[] = order ? JSON.parse(order as string) : [];
-  console.log("ParsedItems:", parsedItems);
   const [userEmail, setUserEmail] = useState("");
   // const updatedItems: CheckoutItem[] = parsedItems.updatedItems || [];
   // console.log("updatedItems:", updatedItems);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -55,6 +55,49 @@ const CheckOutPage = () => {
 
   const handleFormChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleAddressSubmission = async () => {
+    const { address, state, city, country, phoneNumber, firstName } = formData;
+
+    if (!address || !state || !city || !country || !phoneNumber || !firstName) {
+      toast("Please fill in all required address fields");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const addressData = {
+        address: formData.address,
+        state: formData.state,
+        city: formData.city,
+        country: formData.country,
+        phoneNumber: formData.phoneNumber,
+        firstName: formData.firstName,
+      };
+
+      const response = await fetch("/api/gig-prices", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ addressData, parsedItems }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        // Handle the response data from GIGGetStations
+        console.log(data);
+      } else {
+        // Handle error
+        console.error("Error fetching stations");
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+      toast("An unexpected error occured");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handlePaymentMethodChange = (
@@ -168,7 +211,10 @@ const CheckOutPage = () => {
       <div className="flex flex-col-reverse md:flex-row gap-8 md:gap-2 lg:pt-20">
         <div className="flex-1 xl:px-20">
           <h1 className="uppercase text-3xl font-bold">Billing Information</h1>
-          <form className=" flex flex-col gap-3 mt-3 w-full">
+          <form
+            className=" flex flex-col gap-3 mt-3 w-full"
+            onSubmit={handleAddressSubmission}
+          >
             <div className="relative py-[10px]">
               <label
                 htmlFor="firstName"
@@ -344,6 +390,13 @@ const CheckOutPage = () => {
               />
             </div>
           </form>
+          <button
+            type="submit"
+            onClick={handleAddressSubmission}
+            className="text-white bg-[rgb(95,40,74)] py-1 lg:py-2 w-[250px] rounded-full uppercase font-thin justify-center gap-1 lg:gap-2 cursor-pointer mb-10"
+          >
+            Confirm Address
+          </button>
         </div>
         <div className="relative flex-1 border-2 p-5 border-gray-400 rounded-lg h-[1000px]">
           <div className="">
@@ -412,9 +465,15 @@ const CheckOutPage = () => {
                   subtotal{" "}
                   <span className="text-black">${totalPrice.toFixed(2)}</span>
                 </p>
-                <p className="flex justify-between uppercase text-xl font-semibold text-slate-400">
-                  shipping <span className="text-black">$340</span>
-                </p>
+                {isLoading ? (
+                  <Loading />
+                ) : (
+                  <div>
+                    <p className="flex justify-between uppercase text-xl font-semibold text-slate-400">
+                      shipping <span className="text-black">$340</span>
+                    </p>
+                  </div>
+                )}
                 <hr className="my-2" />
                 <p className="flex justify-between uppercase text-xl font-semibold text-slate-400 mt-4">
                   total <span className="text-black">${totalPrice + 340}</span>

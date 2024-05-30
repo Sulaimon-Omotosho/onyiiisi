@@ -4,6 +4,12 @@ import User from "@/models/User";
 import dbConnect from "@/lib/db";
 import { getServerSession } from "next-auth/next";
 import authOptions from "../auth/[...nextauth]/authOptions";
+import {
+  GIGData,
+  GIGLogin,
+  GIGGetStations,
+  GIGCaptureShipment,
+} from "@/lib/gig-service";
 
 interface ItemData {
   gram: string;
@@ -54,6 +60,11 @@ export const POST = async (request: NextRequest) => {
         { status: 400 }
       );
     }
+
+    // const loginResponse = await GIGLogin(GIGData);
+    // const accessToken = loginResponse.Object.access_token;
+
+    // console.log("Access token:", accessToken);
 
     // Ensure each item has the necessary fields without productId
     const orderItems = items.map((item) => ({

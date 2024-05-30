@@ -156,3 +156,25 @@ export const getAllProducts = async () => {
     return [];
   }
 };
+
+const productsByDetailsQuery = groq`
+  *[_type == 'product' &&
+    (gram == $gram ||
+     price == $price ||
+     ratings == $ratings)]
+  {...}
+  | order(createdAt desc)
+`;
+
+export const productsByDetails = async (
+  gram: number,
+  price: number,
+  ratings: number
+) => {
+  const products: ProductProps[] = await client.fetch(productsByDetailsQuery, {
+    gram,
+    price,
+    ratings,
+  });
+  return products;
+};

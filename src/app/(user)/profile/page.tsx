@@ -8,9 +8,11 @@ import { getSession } from "next-auth/react";
 interface UserInfo {
   name: string;
   gender: string;
-  dateOfBirth: string;
+  dateOfBirth: Date;
+  dateOfBirthDay: number;
+  dateOfBirthMonth: number;
+  dateOfBirthYear: number;
   email: string;
-  image?: string;
 }
 
 const ProfilePage = () => {
@@ -24,8 +26,19 @@ const ProfilePage = () => {
         if (session) {
           const response = await fetch("/api/user/");
           const data = await response.json();
-          setUserInfo(data);
-          console.log(data);
+          const { dateOfBirth, ...rest } = data;
+          const parsedDateOfBirth = dateOfBirth ? new Date(dateOfBirth) : null;
+          setUserInfo({
+            ...rest,
+            dateOfBirth: parsedDateOfBirth,
+            dateOfBirthDay: parsedDateOfBirth ? parsedDateOfBirth.getDate() : 0,
+            dateOfBirthMonth: parsedDateOfBirth
+              ? parsedDateOfBirth.getMonth() + 1
+              : 0,
+            dateOfBirthYear: parsedDateOfBirth
+              ? parsedDateOfBirth.getFullYear()
+              : 0,
+          });
         }
       } catch (error) {
         console.error("Error fetching user information");
@@ -33,30 +46,19 @@ const ProfilePage = () => {
     };
     fetchUserInfo();
   }, []);
-  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    // Example: Uploading to an API endpoint
-    const formData = new FormData();
-    formData.append("image", file);
-
-    try {
-      const response = await fetch("/api/user/upload-image", {
-        method: "POST",
-        body: formData,
-      });
-      if (response.ok) {
-        const data = await response.json();
-        handleValueChange("image", data.imageUrl);
-      }
-    } catch (error) {
-      console.error("Error uploading image:", error);
-    }
-  };
 
   const handleValueChange = (field: keyof UserInfo, value: any) => {
     if (userInfo) {
+      if (
+        (field === "dateOfBirthDay" ||
+          field === "dateOfBirthMonth" ||
+          field === "dateOfBirthYear") &&
+        userInfo.dateOfBirth !== null
+      ) {
+        // If dateOfBirth is not null, do not update the corresponding field
+        return;
+      }
+
       setUserInfo({
         ...userInfo,
         [field]: value,
@@ -66,23 +68,61 @@ const ProfilePage = () => {
   };
 
   const handleSaveChanges = async () => {
-    try {
-      const response = await fetch("/api/user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userInfo),
-      });
-      if (response.ok) {
-        console.log("Changes saved successfully");
-        setHasChanges(false);
-      } else {
-        console.error("Failed to save changes");
+    if (userInfo) {
+      try {
+        const formData = new FormData();
+        formData.append("name", userInfo.name);
+        formData.append("gender", userInfo.gender);
+
+        // Create the dateOfBirth object
+        const dateOfBirth = new Date(
+          userInfo.dateOfBirthYear,
+          userInfo.dateOfBirthMonth - 1, // Subtract 1 from the month for the Date constructor
+          userInfo.dateOfBirthDay
+        );
+        // Update the userInfo object with the dateOfBirth
+        const updatedUserInfo: UserInfo = {
+          ...userInfo,
+          dateOfBirth,
+        };
+        formData.append("dateOfBirth", dateOfBirth.toISOString());
+
+        const response = await fetch("/api/user", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Changes saved successfully");
+          setUserInfo(data);
+          setHasChanges(false);
+        } else {
+          console.error("Failed to save changes");
+        }
+      } catch (error) {
+        console.error("Error saving changes:", error);
       }
-    } catch (error) {
-      console.error("Error saving changes:", error);
     }
+  };
+
+  const getInitials = (name: string | undefined) => {
+    if (!name) {
+      return "";
+    }
+
+    const names = name.trim().split(" ");
+    let initials = "";
+
+    if (names.length === 2) {
+      initials = `${names[0][0]}${names[1][0]}`;
+    } else if (names.length >= 3) {
+      initials = `${names[0][0]}${names[names.length - 1][0]}`;
+    } else {
+      initials = names[0][0];
+    }
+
+    return initials.toUpperCase();
   };
 
   // Minimum Number Of Years
@@ -96,23 +136,10 @@ const ProfilePage = () => {
       </h1>
       <div className="relative flex flex-col  items-center justify-around">
         <div className="md:absolute top-0 md:left-5 lg:left-10 ">
-          <div className="relative rounded-full h-28 lg:h-36 xl:h-48 w-28 lg:w-36 xl:w-48">
-            {userInfo?.image ? (
-              <Image
-                src={userInfo.image}
-                alt="user"
-                fill
-                className="object-cover rounded-full"
-              />
-            ) : (
-              <div className="bg-gray-200 rounded-full h-full w-full"></div>
-            )}
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleImageChange}
-              className="absolute inset-0 opacity-0 cursor-pointer"
-            />
+          <div className="relative rounded-full h-28 lg:h-36 xl:h-48 w-28 lg:w-36 xl:w-48  flex items-center justify-center bg-gray-200">
+            <span className="text-3xl font-bold rounded-full">
+              {getInitials(userInfo?.name)}
+            </span>
           </div>
         </div>
         <form
@@ -146,7 +173,7 @@ const ProfilePage = () => {
                   value="male"
                   className="h-5 w-5"
                   checked={userInfo?.gender === "male"}
-                  onChange={(e) => handleValueChange("gender", "male")}
+                  onChange={() => handleValueChange("gender", "male")}
                 />
                 <label htmlFor="male" className="text-sm">
                   Male
@@ -160,7 +187,7 @@ const ProfilePage = () => {
                   value="female"
                   className="h-5 w-5"
                   checked={userInfo?.gender === "female"}
-                  onChange={(e) => handleValueChange("gender", "female")}
+                  onChange={() => handleValueChange("gender", "female")}
                 />
                 <label htmlFor="female" className="text-sm">
                   Female
@@ -173,66 +200,72 @@ const ProfilePage = () => {
             <div className="flex gap-3 pt-3">
               <div className="relative py-[10px] w-1/3">
                 <label
-                  htmlFor="dob.month"
+                  htmlFor="dateOfBirthMonth"
                   className="font-semibold text-sm absolute bg-white left-6 top-0 capitalize px-2 rounded-full"
                 >
                   month
                 </label>
                 <input
                   type="number"
-                  name="dob.month"
-                  id="dob.month"
+                  name="dateOfBirthMonth"
+                  id="dateOfBirthMonth"
                   min={1}
                   max={12}
                   className="border-[1px] w-full border-gray-300 rounded-sm p-3"
-                  value={
-                    userInfo?.dateOfBirth
-                      ? new Date(userInfo.dateOfBirth).getMonth() + 1
-                      : ""
+                  value={userInfo?.dateOfBirthMonth || ""}
+                  //disabled={true}
+                  onChange={(e) =>
+                    handleValueChange(
+                      "dateOfBirthMonth",
+                      parseInt(e.target.value)
+                    )
                   }
                 />
               </div>
               <div className="relative py-[10px] w-1/3">
                 <label
-                  htmlFor="dob.day"
+                  htmlFor="dateOfBirthDay"
                   className="font-semibold text-sm absolute bg-white left-6 top-0 capitalize px-2 rounded-full"
                 >
                   day
                 </label>
                 <input
                   type="number"
-                  name="day"
-                  id="dob.day"
+                  name="dateOfBirthDay"
+                  id="dateOfBirthDay"
                   min={1}
                   max={31}
                   className="border-[1px] w-full border-gray-300 rounded-sm p-3"
-                  value={
-                    userInfo?.dateOfBirth
-                      ? new Date(userInfo.dateOfBirth).getDate()
-                      : ""
+                  value={userInfo?.dateOfBirthDay || ""}
+                  onChange={(e) =>
+                    handleValueChange(
+                      "dateOfBirthDay",
+                      parseInt(e.target.value)
+                    )
                   }
                 />
               </div>
               <div className="relative py-[10px] w-1/3">
                 <label
-                  htmlFor="dob.year"
+                  htmlFor="dateOfBirthYear"
                   className="font-semibold text-sm absolute bg-white left-6 capitalize top-0 px-2 rounded-full"
                 >
                   year
                 </label>
                 <input
                   type="number"
-                  name="year"
-                  id="dob.year"
+                  name="dateOfBirthYear"
+                  id="dateOfBirthYear"
                   min={minYear}
                   max={maxYear}
                   className="border-[1px] w-full border-gray-300 rounded-sm p-3"
-                  value={
-                    userInfo?.dateOfBirth
-                      ? new Date(userInfo.dateOfBirth).getFullYear()
-                      : ""
+                  value={userInfo?.dateOfBirthYear || ""}
+                  onChange={(e) =>
+                    handleValueChange(
+                      "dateOfBirthYear",
+                      parseInt(e.target.value)
+                    )
                   }
-                  // onChange={(e) => handleValueChange("dateOfBirth", e.target.value)}
                 />
               </div>
             </div>
@@ -274,7 +307,6 @@ const ProfilePage = () => {
               />
             </div>
           </div>
-          <h2 className="capitalize font-semibold text-xl">payment info</h2>
         </form>
         {hasChanges && (
           <button
