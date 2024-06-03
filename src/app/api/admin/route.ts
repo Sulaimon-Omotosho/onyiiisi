@@ -1,10 +1,10 @@
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { getServerSession } from "next-auth/next";
 import authOptions from "../auth/[...nextauth]/authOptions";
 import User from "@/models/User";
 import dbConnect from "@/lib/db";
 
-export const GET = async (request: NextResponse) => {
+export async function GET(req: NextRequest) {
   try {
     await dbConnect();
 
@@ -25,4 +25,4 @@ export const GET = async (request: NextResponse) => {
       { status: 500 }
     );
   }
-};
+}
