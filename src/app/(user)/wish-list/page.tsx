@@ -129,7 +129,7 @@ const WishListPage = () => {
                         </button>
                         <button
                           onClick={() => {
-                            dispatch(deleteFromWishlist(item));
+                            dispatch(deleteFromWishlist(item._id));
                           }}
                           className="flex gap-1 text-gray-500 text-sm"
                         >
@@ -161,16 +161,16 @@ const WishListPage = () => {
               <p className="text-xl">${totalAmt.toFixed(2)}</p>
             </div>
             {/* <button
-                onClick={() => {
-                  dispatch(addToCart(product));
-                  toast.success(
-                    `${item?.title.substring(0, 12)}... added to cart`
-                  );
-                }}
-                className="text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[50%] lg:w-[30%] rounded-full uppercase font-bold text-md flex items-center justify-center gap-1 lg:gap-2 "
-              >
-                add all to cart
-              </button> */}
+              onClick={() => {
+                dispatch(addToCart(product));
+                toast.success(
+                  `${item?.title.substring(0, 12)}... added to cart`
+                );
+              }}
+              className="text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[50%] lg:w-[30%] rounded-full uppercase font-bold text-md flex items-center justify-center gap-1 lg:gap-2 "
+            >
+              add all to cart
+            </button> */}
           </div>
         </div>
         {/* Popular Products  */}

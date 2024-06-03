@@ -14,7 +14,7 @@ import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
 interface ProductData {
   name: string;
   description: string;
-  image: any;
+  placeholder: any;
 }
 
 interface CheckoutItem {
@@ -34,9 +34,9 @@ const CheckOutPage = () => {
   //   ? JSON.parse(order as string)
   //   : { updatedItems: [] };
   const parsedItems: CheckoutItem[] = order ? JSON.parse(order as string) : [];
+  console.log(parsedItems);
   const [userEmail, setUserEmail] = useState("");
   // const updatedItems: CheckoutItem[] = parsedItems.updatedItems || [];
-  // console.log("updatedItems:", updatedItems);
   const [totalPrice, setTotalPrice] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -411,7 +411,7 @@ const CheckOutPage = () => {
                     <div className="w-1/4">
                       <div className="relative h-[100px] xl:h-[130px] w-[100px] xl:w-[150px] rounded-md overflow-hidden border-2 border-slate-400">
                         <Image
-                          src={item?.product_data.image}
+                          src={urlFor(item?.product_data.placeholder).url()}
                           alt={item.product_data.name}
                           fill
                           // height={150}
@@ -476,7 +476,10 @@ const CheckOutPage = () => {
                 )}
                 <hr className="my-2" />
                 <p className="flex justify-between uppercase text-xl font-semibold text-slate-400 mt-4">
-                  total <span className="text-black">${totalPrice + 340}</span>
+                  total{" "}
+                  <span className="text-black">
+                    ${(totalPrice + 340).toFixed(2)}
+                  </span>
                 </p>
                 <hr className="my-2" />
               </div>

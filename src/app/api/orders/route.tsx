@@ -14,7 +14,7 @@ import {
 interface ItemData {
   gram: string;
   price: number;
-  product_data: { name: string; description: string };
+  product_data: { name: string; description: string; placeholder: any };
   quantity: number;
 }
 
@@ -68,11 +68,11 @@ export const POST = async (request: NextRequest) => {
 
     // Ensure each item has the necessary fields without productId
     const orderItems = items.map((item) => ({
-      title: item.product_data.name, // Assuming the 'title' comes from product_data.name
+      title: item.product_data.name,
       quantity: item.quantity,
       price: item.price,
       gram: item.gram,
-      brand: item.product_data.name,
+      placeholder: item.product_data.placeholder,
     }));
 
     // Create a new Order instance with proper structure

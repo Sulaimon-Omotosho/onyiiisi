@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { CheckCircle } from "lucide-react";
+import { urlFor } from "@/lib/sanity-client";
 import { usePathname, useSearchParams } from "next/navigation";
 import { OrderDetailsProps } from "@/lib/types";
 
@@ -40,6 +41,8 @@ const OrderDetailsPage = () => {
   const handlePopUp = () => {
     setShowPopUp(true);
   };
+
+  console.log(orderDetails);
 
   return (
     <div className="lg:py-20">
@@ -80,12 +83,12 @@ const OrderDetailsPage = () => {
                 key={idx}
                 className="relative h-[100px] w-[100px] overflow-hidden border-2 border-slate-500 rounded-md"
               >
-                <Image
-                  src="/Details Earring.jpg"
+                {/* <Image
+                  src=
                   alt="order item"
                   fill
                   objectFit="cover"
-                />
+                /> */}
               </Link>
             ))}
           </div>

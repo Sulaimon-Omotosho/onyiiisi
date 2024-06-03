@@ -50,13 +50,6 @@ const CartPage = () => {
     return () => clearTimeout(loadingTimer);
   }, [productData]);
 
-  // useEffect(() => {
-  //   const loadingTimer = setTimeout(() => {
-  //     setLoading(false);
-  //   }, 4000);
-  //   return () => clearTimeout(loadingTimer);
-  // }, [productData]);
-
   const createCheckout = async () => {
     if (session?.user) {
       try {
@@ -165,7 +158,7 @@ const CartPage = () => {
                       ${item.price}
                     </p>
                   </div>
-                  <div className="flex gap-5 px-3 items-center justify-between border-[1px] rounded-md border-gray-500 z-20 w-fit h-fit text-2xl text-gray-500">
+                  <div className="flex gap-5 px-3 items-center justify-between border-[1px] rounded-md border-gray-500 w-fit h-fit text-2xl text-gray-500">
                     <button
                       onClick={() => {
                         dispatch(decreaseQuantity({ _id: item?._id }));

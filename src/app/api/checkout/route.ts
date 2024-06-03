@@ -1,6 +1,5 @@
 import { NextResponse, NextRequest } from "next/server";
 import { ProductProps } from "@/lib/types";
-import { v4 as uuidv4 } from "uuid";
 
 export const POST = async (request: NextRequest) => {
   try {
@@ -14,7 +13,7 @@ export const POST = async (request: NextRequest) => {
       product_data: {
         name: item.title,
         description: item.description,
-        image: item.image,
+        placeholder: item.placeholder,
       },
     }));
     return NextResponse.json({ updatedItems });
