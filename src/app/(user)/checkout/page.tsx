@@ -6,15 +6,15 @@ import { countries } from "@/constants";
 import { checkouts } from "@/constants";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import Loading from "@/components/Loading";
 import { urlFor } from "@/lib/sanity-client";
 import { useSearchParams } from "next/navigation";
-import axios from "axios";
 import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
 
 interface ProductData {
   name: string;
   description: string;
-  image: any;
+  placeholder: any;
 }
 
 interface CheckoutItem {
@@ -34,11 +34,11 @@ const CheckOutPage = () => {
   //   ? JSON.parse(order as string)
   //   : { updatedItems: [] };
   const parsedItems: CheckoutItem[] = order ? JSON.parse(order as string) : [];
-  console.log("ParsedItems:", parsedItems);
+  console.log(parsedItems);
   const [userEmail, setUserEmail] = useState("");
   // const updatedItems: CheckoutItem[] = parsedItems.updatedItems || [];
-  // console.log("updatedItems:", updatedItems);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -57,6 +57,49 @@ const CheckOutPage = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleAddressSubmission = async () => {
+    const { address, state, city, country, phoneNumber, firstName } = formData;
+
+    if (!address || !state || !city || !country || !phoneNumber || !firstName) {
+      toast("Please fill in all required address fields");
+      return;
+    }
+
+    try {
+      setIsLoading(true);
+      const addressData = {
+        address: formData.address,
+        state: formData.state,
+        city: formData.city,
+        country: formData.country,
+        phoneNumber: formData.phoneNumber,
+        firstName: formData.firstName,
+      };
+
+      const response = await fetch("/api/gig-prices", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ addressData, parsedItems }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        // Handle the response data from GIGGetStations
+        console.log(data);
+      } else {
+        // Handle error
+        console.error("Error fetching stations");
+      }
+    } catch (error) {
+      console.error("An error occurred:", error);
+      toast("An unexpected error occured");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handlePaymentMethodChange = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -67,7 +110,7 @@ const CheckOutPage = () => {
     public_key: `${process.env.FLUTTERWAVE_PUBLIC_KEY}`,
     tx_ref: `${Date.now()}`,
     amount: totalPrice, // Set the correct amount
-    currency: "NGN", // Set the correct currency code
+    currency: "USD", // Set the correct currency code
     payment_options: "card,mobilemoney,ussd",
     customer: {
       email: formData.email,
@@ -168,7 +211,10 @@ const CheckOutPage = () => {
       <div className="flex flex-col-reverse md:flex-row gap-8 md:gap-2 lg:pt-20">
         <div className="flex-1 xl:px-20">
           <h1 className="uppercase text-3xl font-bold">Billing Information</h1>
-          <form className=" flex flex-col gap-3 mt-3 w-full">
+          <form
+            className=" flex flex-col gap-3 mt-3 w-full"
+            onSubmit={handleAddressSubmission}
+          >
             <div className="relative py-[10px]">
               <label
                 htmlFor="firstName"
@@ -344,6 +390,13 @@ const CheckOutPage = () => {
               />
             </div>
           </form>
+          <button
+            type="submit"
+            onClick={handleAddressSubmission}
+            className="text-white bg-[rgb(95,40,74)] py-1 lg:py-2 w-[250px] rounded-full uppercase font-thin justify-center gap-1 lg:gap-2 cursor-pointer mb-10"
+          >
+            Confirm Address
+          </button>
         </div>
         <div className="relative flex-1 border-2 p-5 border-gray-400 rounded-lg h-[1000px]">
           <div className="">
@@ -358,7 +411,7 @@ const CheckOutPage = () => {
                     <div className="w-1/4">
                       <div className="relative h-[100px] xl:h-[130px] w-[100px] xl:w-[150px] rounded-md overflow-hidden border-2 border-slate-400">
                         <Image
-                          src={item?.product_data.image}
+                          src={urlFor(item?.product_data.placeholder).url()}
                           alt={item.product_data.name}
                           fill
                           // height={150}
@@ -412,12 +465,21 @@ const CheckOutPage = () => {
                   subtotal{" "}
                   <span className="text-black">${totalPrice.toFixed(2)}</span>
                 </p>
-                <p className="flex justify-between uppercase text-xl font-semibold text-slate-400">
-                  shipping <span className="text-black">$340</span>
-                </p>
+                {isLoading ? (
+                  <Loading />
+                ) : (
+                  <div>
+                    <p className="flex justify-between uppercase text-xl font-semibold text-slate-400">
+                      shipping <span className="text-black">$340</span>
+                    </p>
+                  </div>
+                )}
                 <hr className="my-2" />
                 <p className="flex justify-between uppercase text-xl font-semibold text-slate-400 mt-4">
-                  total <span className="text-black">${totalPrice + 340}</span>
+                  total{" "}
+                  <span className="text-black">
+                    ${(totalPrice + 340).toFixed(2)}
+                  </span>
                 </p>
                 <hr className="my-2" />
               </div>

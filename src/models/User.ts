@@ -11,6 +11,12 @@ const UserSchema = new mongoose.Schema(
     password: {
       type: String,
     },
+    dateOfBirth: {
+      type: Date,
+    },
+    gender: {
+      type: String,
+    },
     uid: {
       type: String,
       // unique: true,
@@ -44,9 +50,7 @@ const UserSchema = new mongoose.Schema(
     city: String,
     state: String,
     country: String,
-
     phoneNumber: String,
-
     forgotPasswordToken: String,
     forgotPasswordTokenExpiry: Date,
     verifyToken: String,
