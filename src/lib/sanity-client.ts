@@ -148,6 +148,6 @@ export const productsByLatest = async () => {
 const newInQuery = groq`*[_type == 'product']{...} | order(_createdAt desc)`
 
 export const newInProducts = async () => {
-  const products: ProductProps = await client.fetch(newInQuery)
+  const products: ProductProps[] = await client.fetch(newInQuery)
   return products
 }
