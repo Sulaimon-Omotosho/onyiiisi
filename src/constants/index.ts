@@ -73,8 +73,8 @@ export const guarantees = [
 // Top Categories
 
 export const topCategories = [
-  { image: '/Trending.jpg', title: 'trending', slug: 'shop/specials/trending' },
-  { image: '/Limited.jpg', title: 'Limited', slug: 'shop/specials/limited' },
+  { image: '/Trending.jpg', title: 'trending', slug: 'shop/sales/trending' },
+  { image: '/Limited.jpg', title: 'Limited', slug: 'shop/sales/limited' },
 ]
 
 // Sales Carousel
