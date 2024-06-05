@@ -63,7 +63,7 @@ export default function DropdownShop() {
         <div className='flex-1 flex items-center gap-6 lg:gap-10 '>
           <div className='flex flex-col justify-center items-center gap-3'>
             <Link
-              href='/shop'
+              href='/shop/latest'
               className='uppercase underline underline-offset-4 pr-[70px]'
             >
               new in
