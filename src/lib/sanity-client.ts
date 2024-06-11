@@ -145,6 +145,49 @@ export const productsByLatest = async () => {
   return products
 }
 
+const getAllProductsQuery = groq`*[_type == "product"] {
+  _id,
+  title,
+  slug,
+  image,
+  brand,
+  price,
+  details,
+  quantity,
+  "category": category->{ _key, title }
+}`
+
+export const getAllProducts = async () => {
+  try {
+    const products: ProductProps[] = await client.fetch(getAllProductsQuery)
+    return products
+  } catch (error) {
+    console.error('Error fetching products:', error)
+    return []
+  }
+}
+
+const productsByDetailsQuery = groq`
+  *[_type == 'product' &&
+    (gram == $gram ||
+     price == $price ||
+     ratings == $ratings)]
+  {...}
+  | order(createdAt desc) [0..2]`
+
+export const productsByDetails = async (
+  gram: number,
+  price: number,
+  ratings: number
+) => {
+  const products: ProductProps[] = await client.fetch(productsByDetailsQuery, {
+    gram,
+    price,
+    ratings,
+  })
+  return products
+}
+
 const newInQuery = groq`*[_type == 'product']{...} | order(_createdAt desc)`
 
 export const newInProducts = async () => {

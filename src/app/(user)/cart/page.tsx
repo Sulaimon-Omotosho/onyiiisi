@@ -50,13 +50,6 @@ const CartPage = () => {
     return () => clearTimeout(loadingTimer)
   }, [productData])
 
-  // useEffect(() => {
-  //   const loadingTimer = setTimeout(() => {
-  //     setLoading(false);
-  //   }, 4000);
-  //   return () => clearTimeout(loadingTimer);
-  // }, [productData]);
-
   const createCheckout = async () => {
     if (session?.user) {
       try {
