@@ -141,9 +141,9 @@ export const productById = async (_id: string) => {
 const latestProductsQuery = groq`*[_type == 'product']{...} | order(_createdAt desc) [0..7]`
 
 export const productsByLatest = async () => {
-  const products: ProductProps = await client.fetch(latestProductsQuery);
-  return products;
-};
+  const products: ProductProps = await client.fetch(latestProductsQuery)
+  return products
+}
 
 const getAllProductsQuery = groq`*[_type == "product"] {
   _id,
@@ -155,17 +155,17 @@ const getAllProductsQuery = groq`*[_type == "product"] {
   details,
   quantity,
   "category": category->{ _key, title }
-}`;
+}`
 
 export const getAllProducts = async () => {
   try {
-    const products: ProductProps[] = await client.fetch(getAllProductsQuery);
-    return products;
+    const products: ProductProps[] = await client.fetch(getAllProductsQuery)
+    return products
   } catch (error) {
-    console.error("Error fetching products:", error);
-    return [];
+    console.error('Error fetching products:', error)
+    return []
   }
-};
+}
 
 const productsByDetailsQuery = groq`
   *[_type == 'product' &&
@@ -173,8 +173,7 @@ const productsByDetailsQuery = groq`
      price == $price ||
      ratings == $ratings)]
   {...}
-  | order(createdAt desc)
-`;
+  | order(createdAt desc) [0..2]`
 
 export const productsByDetails = async (
   gram: number,
@@ -185,9 +184,9 @@ export const productsByDetails = async (
     gram,
     price,
     ratings,
-  });
-  return products;
-};
+  })
+  return products
+}
 
 const newInQuery = groq`*[_type == 'product']{...} | order(_createdAt desc)`
 

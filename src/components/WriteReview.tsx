@@ -1,6 +1,6 @@
 'use client'
 
-import { CheckCircle, Star } from 'lucide-react'
+import { CheckCircle, Star, X } from 'lucide-react'
 import React, { useState } from 'react'
 
 const WriteReview = ({ closeReview }: { closeReview: () => void }) => {
@@ -12,7 +12,11 @@ const WriteReview = ({ closeReview }: { closeReview: () => void }) => {
 
   return (
     <div className='fixed bg-gray-700 bg-opacity-50 flex justify-center items-center w-full h-full'>
-      <div className='bg-white p-6 rounded-md flex flex-col justify-center items-center gap-8 w-full md:w-[85%] lg:w-[50%]'>
+      <div className='bg-white p-6 rounded-md flex flex-col justify-center items-center gap-8 w-full md:w-[85%] lg:w-[50%] relative'>
+        <X
+          onClick={closeReview}
+          className='absolute right-4 top-4 cursor-pointer'
+        />
         <div className='w-full md:px-10'>
           <p className='font-bold capitalize text-2xl'>write a review</p>
         </div>
