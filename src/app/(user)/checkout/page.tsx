@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import Loading from "@/components/Loading";
 import { urlFor } from "@/lib/sanity-client";
 import { useSearchParams } from "next/navigation";
-import { useFlutterwave, closePaymentModal } from "flutterwave-react-v3";
+import { usePaystackPayment } from "react-paystack";
 
 interface ProductData {
   name: string;
@@ -106,25 +106,25 @@ const CheckOutPage = () => {
     setPaymentMethod(e.target.value);
   };
 
+  // const passkey = process.env.PAYSTACK_PUBLIC_KEY;
+
   const config = {
-    public_key: `${process.env.FLUTTERWAVE_PUBLIC_KEY}`,
-    tx_ref: `${Date.now()}`,
-    amount: totalPrice, // Set the correct amount
-    currency: "USD", // Set the correct currency code
-    payment_options: "card,mobilemoney,ussd",
-    customer: {
-      email: formData.email,
-      phone_number: formData.phoneNumber,
-      name: `${formData.firstName} ${formData.lastName}`,
-    },
-    customizations: {
-      title: "Order Payment",
-      description: "Payment for Checkout Items",
-      logo: "YOUR_LOGO_URL",
-    },
+    reference: new Date().getTime().toString(),
+    email: formData.email,
+    amount: totalPrice * 100,
+    publicKey: "pk_test_7d92f0acb00cc2e0c4eef615d0c4b3418542cbef",
+  };
+  console.log("Paystack Public Key:", config.publicKey);
+
+  const onSuccess = (reference: any) => {
+    console.log("Payment successful:", reference);
   };
 
-  const handleFlutterPayment = useFlutterwave(config);
+  const onClose = () => {
+    console.log("Payment modal closed");
+  };
+
+  const initializePayment = usePaystackPayment(config);
 
   const isFormFilled = () => {
     const {
@@ -175,16 +175,8 @@ const CheckOutPage = () => {
       if (response.ok) {
         const { order } = await response.json();
         toast("Order created successfully");
-        // Trigger Flutterwave payment
-        handleFlutterPayment({
-          callback: (paymentResponse) => {
-            console.log("Payment successful:", paymentResponse);
-            closePaymentModal(); // Close the payment modal after success
-          },
-          onClose: () => {
-            console.log("Payment modal closed");
-          },
-        });
+        // Trigger Paystack payment
+        initializePayment({ onSuccess, onClose });
       } else {
         toast("Error placing order.");
       }
@@ -516,17 +508,17 @@ const CheckOutPage = () => {
                   <input
                     type="radio"
                     name="paymentMethod"
-                    id="transfer"
-                    value="flutterwave"
+                    id="paystack"
+                    value="paystack"
                     className="h-5 w-5"
-                    checked={paymentMethod === "flutterwave"}
+                    checked={paymentMethod === "paystack"}
                     onChange={handlePaymentMethodChange}
                   />
                   <label
-                    htmlFor="transfer"
+                    htmlFor="paystack"
                     className="capitalize text-slate-600"
                   >
-                    Flutterwave
+                    Paystack
                   </label>
                 </div>
               </form>
