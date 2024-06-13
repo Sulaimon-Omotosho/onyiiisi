@@ -21,29 +21,41 @@ export async function POST(req: NextRequest) {
 
     // Create a Nodemailer transporter
     const transporter = nodemailer.createTransport({
-      // Configure your email service provider here
-      host: "smtp.gmail.com",
-      port: 587,
-      secure: false,
+      service: "gmail",
       auth: {
         user: process.env.MAIL_USER,
         pass: process.env.MAIL_PASSWORD,
       },
+      tls: { rejectUnauthorized: false },
     });
 
     const resetToken = "dummy-reset-token";
     const resetLink = `${process.env.BASE_URL}/reset-password?token=${resetToken}`;
 
-    const mailOptions = {
-      from: process.env.MAIL_USER,
-      to: email,
-      subject: "Password Reset Request",
-      html: `<p>You requested a password reset. Input the otp below to reset your password:</p>
-             <p>0234</p>`,
-    };
-    await transporter.sendMail(mailOptions);
+    // const mailOptions = {
+    //   from: process.env.MAIL_USER,
+    //   to: email,
+    //   subject: "Password Reset Request",
+    //   html: `<p>You requested a password reset. Input the otp below to reset your password:</p>
+    //          <p>0234</p>`,
+    // };
+    // await transporter.sendMail(mailOptions);
 
-    return NextResponse.json({ message: "Password reset email sent" });
+    await transporter.sendMail({
+      from: `"Onyiisi" <${process.env.MAIL_USER}>`,
+      to: email,
+      subject: "Reset Password Request",
+      text: `
+      <p>You requested a password reset. Input the otp below to reset your password:</p>
+                <p>0234</p>
+      `,
+    });
+    return new Response(
+      JSON.stringify({ message: "Password reset mail successfully sent" }),
+      {
+        status: 200,
+      }
+    );
   } catch (error) {
     console.error("Error sending password reset email:", error);
     return NextResponse.json(
