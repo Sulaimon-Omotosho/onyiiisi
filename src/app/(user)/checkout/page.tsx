@@ -112,15 +112,16 @@ const CheckOutPage = () => {
     reference: new Date().getTime().toString(),
     email: formData.email,
     amount: totalPrice * 100,
-    publicKey: "pk_test_7d92f0acb00cc2e0c4eef615d0c4b3418542cbef",
+    publicKey: `${process.env.PAYSTACK_KEY}`,
   };
-  console.log("Paystack Public Key:", config.publicKey);
 
   const onSuccess = (reference: any) => {
-    console.log("Payment successful:", reference);
+    const trxref = reference.trxref;
+    router.push("/history");
   };
 
   const onClose = () => {
+    router.push("/history");
     console.log("Payment modal closed");
   };
 
