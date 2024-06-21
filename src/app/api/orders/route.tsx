@@ -4,12 +4,6 @@ import User from "@/models/User";
 import dbConnect from "@/lib/db";
 import { getServerSession } from "next-auth/next";
 import authOptions from "../auth/[...nextauth]/authOptions";
-import {
-  GIGData,
-  GIGLogin,
-  GIGGetStations,
-  GIGCaptureShipment,
-} from "@/lib/gig-service";
 
 interface ItemData {
   gram: string;
@@ -26,18 +20,14 @@ interface OrderRequestBody {
 
 export const POST = async (request: NextRequest) => {
   try {
-    // Get the user session
     const session = await getServerSession(authOptions);
 
-    // Check if the user is authenticated
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Establish database connection
     await dbConnect();
 
-    // Find the user document based on the session.user.name
     const user = await User.findOne({ name: session?.user?.name });
 
     if (!user) {
@@ -46,11 +36,9 @@ export const POST = async (request: NextRequest) => {
 
     const userId = user._id;
 
-    // Parse request body to extract items, billing information, and payment method
     const { items, billingInfo, paymentMethod }: OrderRequestBody =
       await request.json();
 
-    // Validate required fields
     if (!items || items.length === 0) {
       return NextResponse.json({ error: "No items provided" }, { status: 400 });
     }
@@ -61,45 +49,67 @@ export const POST = async (request: NextRequest) => {
       );
     }
 
-    // const loginResponse = await GIGLogin(GIGData);
-    // const accessToken = loginResponse.Object.access_token;
+    // Validate each item
+    for (const item of items) {
+      const { product_data } = item;
+      if (
+        !product_data.placeholder ||
+        !product_data.placeholder._type ||
+        !product_data.placeholder.asset ||
+        !product_data.placeholder.asset._ref ||
+        !product_data.placeholder.asset._type
+      ) {
+        console.log(
+          "Invalid or missing placeholder:",
+          product_data.placeholder
+        ); // Log the placeholder
+        return NextResponse.json(
+          {
+            error: `Invalid or missing placeholder in product data for item: ${product_data.name}`,
+          },
+          { status: 400 }
+        );
+      } else {
+        console.log("Valid placeholder:", product_data.placeholder);
+      }
+    }
 
-    // console.log("Access token:", accessToken);
-
-    // Ensure each item has the necessary fields without productId
-    const orderItems = items.map((item) => ({
-      title: item.product_data.name,
-      quantity: item.quantity,
-      price: item.price,
-      gram: item.gram,
-      placeholder: item.product_data.placeholder,
-    }));
+    // If validation passes, create the order items array
+    const orderItems = items.map((item) => {
+      const { product_data, quantity, price, gram } = item;
+      return {
+        title: product_data.name,
+        quantity,
+        price,
+        gram,
+        placeholder: product_data.placeholder,
+      };
+    });
 
     // Create a new Order instance with proper structure
     const newOrder = new Order({
-      user: userId, // Associate the order with the user's _id
+      user: userId,
       items: orderItems,
       total: orderItems.reduce(
         (acc, item) => acc + item.price * item.quantity,
         0
       ),
       paymentMethod,
-      email: billingInfo.email, // Extract email from billingInfo
-      status: "pending", // Set default order status
+      email: billingInfo.email,
+      status: "pending",
       shippingAddress: {
         firstName: billingInfo.firstName,
         lastName: billingInfo.lastName,
-        phoneNumber: billingInfo.phoneNumber.toString(), // Convert phone number to string
+        phoneNumber: billingInfo.phoneNumber.toString(),
         address: billingInfo.address,
         city: billingInfo.city,
         state: billingInfo.state,
         postalCode: billingInfo.postalCode,
         country: billingInfo.country,
-        deliveryNotes: billingInfo.deliveryNotes, // If delivery notes exist
+        deliveryNotes: billingInfo.deliveryNotes,
       },
     });
 
-    // Save the new order and return a success response
     await newOrder.save();
     return NextResponse.json({
       message: "Order created successfully",

@@ -106,13 +106,11 @@ const CheckOutPage = () => {
     setPaymentMethod(e.target.value);
   };
 
-  // const passkey = process.env.PAYSTACK_PUBLIC_KEY;
-
   const config = {
     reference: new Date().getTime().toString(),
     email: formData.email,
     amount: totalPrice * 100,
-    publicKey: `${process.env.PAYSTACK_KEY}`,
+    publicKey: `${process.env.NEXT_PUBLIC_PAYSTACK_KEY}`,
   };
 
   const onSuccess = (reference: any) => {
@@ -121,7 +119,7 @@ const CheckOutPage = () => {
   };
 
   const onClose = () => {
-    router.push("/history");
+    // router.push("/history");
     console.log("Payment modal closed");
   };
 

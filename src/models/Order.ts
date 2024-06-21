@@ -11,6 +11,13 @@ interface OrderItem {
   product_data?: {
     name: string;
     description: string;
+    placeholder: {
+      _type: string;
+      asset: {
+        _ref: string;
+        _type: string;
+      };
+    };
   };
 }
 
@@ -34,8 +41,15 @@ const OrderItemSchema = new Schema<OrderItem>({
     type: String,
   },
   product_data: {
-    name: String,
-    description: String,
+    name: { type: String, required: true },
+    description: { type: String, required: true },
+    placeholder: {
+      _type: { type: String, required: true },
+      asset: {
+        _ref: { type: String, required: true },
+        _type: { type: String, required: true },
+      },
+    },
   },
 });
 
