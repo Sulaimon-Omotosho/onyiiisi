@@ -9,6 +9,7 @@ interface OrderItem {
   title: string;
   brand?: string;
   gram?: string;
+  product_data: { name: string; description: string; placeholder: any };
 }
 
 interface Order {

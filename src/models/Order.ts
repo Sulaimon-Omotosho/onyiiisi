@@ -11,13 +11,6 @@ interface OrderItem {
   product_data?: {
     name: string;
     description: string;
-    placeholder: {
-      _type: string;
-      asset: {
-        _ref: string;
-        _type: string;
-      };
-    };
   };
 }
 
@@ -44,15 +37,14 @@ const OrderItemSchema = new Schema<OrderItem>({
     name: { type: String, required: true },
     description: { type: String, required: true },
     placeholder: {
-      _type: { type: String, required: true },
       asset: {
         _ref: { type: String, required: true },
         _type: { type: String, required: true },
       },
+      _type: { type: String, required: true },
     },
   },
 });
-
 // Define the Order interface and schema
 export interface OrderDoc extends Document {
   user: mongoose.Types.ObjectId;

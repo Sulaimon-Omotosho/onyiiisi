@@ -20,14 +20,18 @@ interface OrderRequestBody {
 
 export const POST = async (request: NextRequest) => {
   try {
+    // Get the user session
     const session = await getServerSession(authOptions);
 
+    // Check if the user is authenticated
     if (!session) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    // Establish database connection
     await dbConnect();
 
+    // Find the user document based on the session.user.name
     const user = await User.findOne({ name: session?.user?.name });
 
     if (!user) {
@@ -35,10 +39,10 @@ export const POST = async (request: NextRequest) => {
     }
 
     const userId = user._id;
-
     const { items, billingInfo, paymentMethod }: OrderRequestBody =
       await request.json();
 
+    // Validate required fields
     if (!items || items.length === 0) {
       return NextResponse.json({ error: "No items provided" }, { status: 400 });
     }
@@ -49,43 +53,23 @@ export const POST = async (request: NextRequest) => {
       );
     }
 
-    // Validate each item
-    for (const item of items) {
-      const { product_data } = item;
-      if (
-        !product_data.placeholder ||
-        !product_data.placeholder._type ||
-        !product_data.placeholder.asset ||
-        !product_data.placeholder.asset._ref ||
-        !product_data.placeholder.asset._type
-      ) {
-        console.log(
-          "Invalid or missing placeholder:",
-          product_data.placeholder
-        ); // Log the placeholder
-        return NextResponse.json(
-          {
-            error: `Invalid or missing placeholder in product data for item: ${product_data.name}`,
+    const orderItems = items.map((item) => ({
+      title: item.product_data.name,
+      quantity: item.quantity,
+      price: item.price,
+      gram: item.gram,
+      product_data: {
+        name: item.product_data.name,
+        description: item.product_data.description,
+        placeholder: {
+          asset: {
+            _ref: item.product_data.placeholder.asset._ref,
+            _type: item.product_data.placeholder.asset._type,
           },
-          { status: 400 }
-        );
-      } else {
-        console.log("Valid placeholder:", product_data.placeholder);
-      }
-    }
-
-    // If validation passes, create the order items array
-    const orderItems = items.map((item) => {
-      const { product_data, quantity, price, gram } = item;
-      return {
-        title: product_data.name,
-        quantity,
-        price,
-        gram,
-        placeholder: product_data.placeholder,
-      };
-    });
-
+          _type: item.product_data.placeholder._type,
+        },
+      },
+    }));
     // Create a new Order instance with proper structure
     const newOrder = new Order({
       user: userId,
@@ -106,14 +90,16 @@ export const POST = async (request: NextRequest) => {
         state: billingInfo.state,
         postalCode: billingInfo.postalCode,
         country: billingInfo.country,
-        deliveryNotes: billingInfo.deliveryNotes,
+        deliveryNotes: billingInfo.deliveryNotes, // If delivery notes exist
       },
     });
 
+    // Save the new order and return a success response
     await newOrder.save();
     return NextResponse.json({
       message: "Order created successfully",
       order: newOrder,
+      orderId: newOrder._id,
     });
   } catch (error: any) {
     console.error("Error:", error);

@@ -39,6 +39,7 @@ const CheckOutPage = () => {
   // const updatedItems: CheckoutItem[] = parsedItems.updatedItems || [];
   const [totalPrice, setTotalPrice] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [shippingFee, setShippingFee] = useState(0);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -58,9 +59,29 @@ const CheckOutPage = () => {
   };
 
   const handleAddressSubmission = async () => {
-    const { address, state, city, country, phoneNumber, firstName } = formData;
+    const {
+      address,
+      state,
+      city,
+      country,
+      phoneNumber,
+      firstName,
+      lastName,
+      email,
+      deliveryNotes,
+    } = formData;
 
-    if (!address || !state || !city || !country || !phoneNumber || !firstName) {
+    if (
+      !address ||
+      !state ||
+      !city ||
+      !country ||
+      !phoneNumber ||
+      !firstName ||
+      !lastName ||
+      !email ||
+      !deliveryNotes
+    ) {
       toast("Please fill in all required address fields");
       return;
     }
@@ -74,9 +95,12 @@ const CheckOutPage = () => {
         country: formData.country,
         phoneNumber: formData.phoneNumber,
         firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        deliveryNotes: formData.deliveryNotes,
       };
 
-      const response = await fetch("/api/gig-prices", {
+      const response = await fetch("/api/shipbubble", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -86,10 +110,9 @@ const CheckOutPage = () => {
 
       if (response.ok) {
         const data = await response.json();
-        // Handle the response data from GIGGetStations
-        console.log(data);
+        const { shipping_fee } = data;
+        setShippingFee(shipping_fee);
       } else {
-        // Handle error
         console.error("Error fetching stations");
       }
     } catch (error) {
@@ -109,12 +132,12 @@ const CheckOutPage = () => {
   const config = {
     reference: new Date().getTime().toString(),
     email: formData.email,
-    amount: totalPrice * 100,
+    amount: Math.round(totalPrice * 100),
     publicKey: `${process.env.NEXT_PUBLIC_PAYSTACK_KEY}`,
   };
 
   const onSuccess = (reference: any) => {
-    const trxref = reference.trxref;
+    console.log(reference, "paid successfully");
     router.push("/history");
   };
 
@@ -177,7 +200,9 @@ const CheckOutPage = () => {
         // Trigger Paystack payment
         initializePayment({ onSuccess, onClose });
       } else {
-        toast("Error placing order.");
+        const errorData = await response.json();
+        toast(`Error placing order: ${errorData.error}`);
+        console.error(`Error placing order: ${errorData.error}`);
       }
     } catch (error) {
       console.error("An error occurred:", error);
@@ -461,7 +486,8 @@ const CheckOutPage = () => {
                 ) : (
                   <div>
                     <p className="flex justify-between uppercase text-xl font-semibold text-slate-400">
-                      shipping <span className="text-black">$340</span>
+                      shipping{" "}
+                      <span className="text-black">${shippingFee}</span>
                     </p>
                   </div>
                 )}
@@ -469,7 +495,7 @@ const CheckOutPage = () => {
                 <p className="flex justify-between uppercase text-xl font-semibold text-slate-400 mt-4">
                   total{" "}
                   <span className="text-black">
-                    ${(totalPrice + 340).toFixed(2)}
+                    ${(totalPrice + shippingFee).toFixed(2)}
                   </span>
                 </p>
                 <hr className="my-2" />
