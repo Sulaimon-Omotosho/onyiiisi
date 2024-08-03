@@ -12,13 +12,13 @@ export async function POST(req: NextRequest) {
 
   const validateApiUrl = `${process.env.SB_BASE_URL}/shipping/address/validate`;
   const fetchRatesApiUrl = `${process.env.SB_BASE_URL}/shipping/fetch_rates`;
-  const createLabelApiUrl = `${process.env.SB_BASE_URL}/shipping/labels`;
+  const checkWalletBudgetUrl = `${process.env.SB_BASE_URL}/shipping/wallet/balance`;
   const bearerToken = process.env.SB_PASSKEY;
 
   if (
     !validateApiUrl ||
     !fetchRatesApiUrl ||
-    !createLabelApiUrl ||
+    !checkWalletBudgetUrl ||
     !bearerToken
   ) {
     return NextResponse.json(
@@ -37,6 +37,30 @@ export async function POST(req: NextRequest) {
   }));
 
   try {
+    // First API call to check wallet balance
+    const walletResponse = await fetch(checkWalletBudgetUrl, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${bearerToken}`,
+      },
+    });
+
+    if (!walletResponse.ok) {
+      throw new Error("Wallet balance API request failed");
+    }
+
+    const walletData = await walletResponse.json();
+    const walletBalance = walletData.data.balance;
+
+    if (walletBalance < 0) {
+      // You can set a minimum balance threshold here
+      return NextResponse.json(
+        { message: "Insufficient wallet balance" },
+        { status: 400 }
+      );
+    }
+
     // First API call to validate address
     const validateResponse = await fetch(validateApiUrl, {
       method: "POST",
@@ -58,6 +82,7 @@ export async function POST(req: NextRequest) {
 
     const validateData = await validateResponse.json();
     const receiverAddressCode = validateData.data.address_code;
+    console.log(receiverAddressCode);
 
     const currentDate = new Date().toISOString().split("T")[0];
 
@@ -69,7 +94,7 @@ export async function POST(req: NextRequest) {
         Authorization: `Bearer ${bearerToken}`,
       },
       body: JSON.stringify({
-        sender_address_code: 11398720,
+        sender_address_code: 30512922,
         reciever_address_code: receiverAddressCode,
         pickup_date: currentDate,
         category_id: 74794423,
@@ -102,71 +127,22 @@ export async function POST(req: NextRequest) {
     const fastestCourier = fetchRatesData.data.fastest_courier;
     const cheapestCourier = fetchRatesData.data.cheapest_courier;
 
-    // console.log("Request Token:", requestToken);
-    // console.log("Fastest Courier:", JSON.stringify(fastestCourier, null, 2));
-    // console.log("Cheapest Courier:", JSON.stringify(cheapestCourier, null, 2));
-
     // Function to choose between fastest and cheapest courier
     const chosenCourier = () => {
       return Math.random() > 0.5 ? fastestCourier : cheapestCourier;
     };
 
-    const { service_code, courier_id } = chosenCourier();
+    const { service_code, courier_id, total } = chosenCourier();
 
-    // Third API call to create shipping label
-    const createLabelResponse = await fetch(createLabelApiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${bearerToken}`,
-      },
-      body: JSON.stringify({
-        request_token: requestToken,
-        service_code: service_code,
-        courier_id: courier_id,
-      }),
+    // Return the total from the chosen courier
+    return NextResponse.json({
+      validateData,
+      fetchRatesData,
+      requestToken,
+      service_code,
+      courier_id,
+      total,
     });
-
-    const createLabelData = await createLabelResponse.json();
-
-    if (!createLabelResponse.ok) {
-      console.error(
-        "Create Label API Error:",
-        JSON.stringify(createLabelData, null, 2)
-      );
-      throw new Error(
-        `Create label API request failed: ${
-          createLabelData.message || "Unknown error"
-        }`
-      );
-    }
-
-    if (createLabelData.status === "success") {
-      const { shipping_fee, tracking_url, order_id, status } =
-        createLabelData.data.payment;
-
-      // Return both validate and fetch rates data along with the label data
-      return NextResponse.json({
-        validateData,
-        fetchRatesData,
-        requestToken,
-        fastestCourier,
-        cheapestCourier,
-        shipping_fee,
-        tracking_url,
-        order_id,
-        status,
-      });
-    } else {
-      console.error(
-        "Create Label API Error:",
-        JSON.stringify(createLabelData, null, 2)
-      );
-      return NextResponse.json(
-        { message: "Failed to create label", error: createLabelData.message },
-        { status: 500 }
-      );
-    }
   } catch (error) {
     console.error("Error:", error);
     return NextResponse.json(

@@ -96,6 +96,7 @@ export const POST = async (request: NextRequest) => {
 
     // Save the new order and return a success response
     await newOrder.save();
+    console.log("Order ID:", newOrder._id);
     return NextResponse.json({
       message: "Order created successfully",
       order: newOrder,

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { getSession } from "next-auth/react";
 import { countries } from "@/constants";
@@ -28,18 +28,20 @@ interface CheckoutItem {
 const CheckOutPage = () => {
   const [paymentMethod, setPaymentMethod] = useState("");
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const order = searchParams.get("order");
-  // const parsedItems: { updatedItems: CheckoutItem[] } = order
-  //   ? JSON.parse(order as string)
-  //   : { updatedItems: [] };
-  const parsedItems: CheckoutItem[] = order ? JSON.parse(order as string) : [];
-  console.log(parsedItems);
+  const order =
+    typeof window !== "undefined"
+      ? sessionStorage.getItem("checkoutData")
+      : null;
+  const parsedItems: CheckoutItem[] = order ? JSON.parse(order) : [];
   const [userEmail, setUserEmail] = useState("");
-  // const updatedItems: CheckoutItem[] = parsedItems.updatedItems || [];
+  const [orderId, setOrderId] = useState("");
+  const orderIdRef = useRef(orderId);
   const [totalPrice, setTotalPrice] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [shippingFee, setShippingFee] = useState(0);
+  const [servCode, setServCode] = useState("");
+  const [rToken, setRToken] = useState("");
+  const [cId, setCId] = useState("");
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -57,6 +59,22 @@ const CheckOutPage = () => {
   const handleFormChange = (e: any) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  useEffect(() => {
+    const calculateTotalPrice = () => {
+      const total = parsedItems.reduce(
+        (acc, item) => acc + item.price * item.quantity,
+        0
+      );
+      setTotalPrice(total);
+    };
+
+    calculateTotalPrice();
+  }, [parsedItems]);
+
+  useEffect(() => {
+    orderIdRef.current = orderId;
+  }, [orderId]);
 
   const handleAddressSubmission = async () => {
     const {
@@ -110,8 +128,11 @@ const CheckOutPage = () => {
 
       if (response.ok) {
         const data = await response.json();
-        const { shipping_fee } = data;
-        setShippingFee(shipping_fee);
+        const { total, service_code, requestToken, courier_id } = data;
+        setShippingFee(total);
+        setCId(courier_id);
+        setRToken(requestToken);
+        setServCode(service_code);
       } else {
         console.error("Error fetching stations");
       }
@@ -129,24 +150,7 @@ const CheckOutPage = () => {
     setPaymentMethod(e.target.value);
   };
 
-  const config = {
-    reference: new Date().getTime().toString(),
-    email: formData.email,
-    amount: Math.round(totalPrice * 100),
-    publicKey: `${process.env.NEXT_PUBLIC_PAYSTACK_KEY}`,
-  };
-
-  const onSuccess = (reference: any) => {
-    console.log(reference, "paid successfully");
-    router.push("/history");
-  };
-
-  const onClose = () => {
-    // router.push("/history");
-    console.log("Payment modal closed");
-  };
-
-  const initializePayment = usePaystackPayment(config);
+  const totalAmount = (totalPrice + shippingFee).toFixed(2);
 
   const isFormFilled = () => {
     const {
@@ -175,6 +179,26 @@ const CheckOutPage = () => {
     );
   };
 
+  const config = {
+    reference: new Date().getTime().toString(),
+    email: formData.email,
+    amount: Math.round(parseFloat(totalAmount) * 100),
+    publicKey: `${process.env.NEXT_PUBLIC_PAYSTACK_KEY}`,
+  };
+
+  const onSuccess = (reference: any) => {
+    // sessionStorage.clear();
+    createShipment(servCode, rToken, cId);
+    updateOrder(orderIdRef.current);
+    // router.push("/history");
+  };
+
+  const onClose = () => {
+    console.log("Payment modal closed");
+  };
+
+  const initializePayment = usePaystackPayment(config);
+
   const handlePlaceOrder = async () => {
     if (!isFormFilled()) {
       toast("Please fill the shipping address form.");
@@ -195,8 +219,9 @@ const CheckOutPage = () => {
       });
 
       if (response.ok) {
-        const { order } = await response.json();
+        const { order, orderId } = await response.json();
         toast("Order created successfully");
+        setOrderId(orderId);
         // Trigger Paystack payment
         initializePayment({ onSuccess, onClose });
       } else {
@@ -210,17 +235,54 @@ const CheckOutPage = () => {
     }
   };
 
-  useEffect(() => {
-    const calculateTotalPrice = () => {
-      const total = parsedItems.reduce(
-        (acc, item) => acc + item.price * item.quantity,
-        0
-      );
-      setTotalPrice(total);
-    };
+  const createShipment = async (
+    servCode: string,
+    rToken: string,
+    cId: string
+  ) => {
+    try {
+      const response = await fetch("/api/shipbubble/update", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          servCode,
+          rToken,
+          cId,
+        }),
+      });
 
-    calculateTotalPrice();
-  }, [parsedItems]);
+      if (!response.ok) {
+        console.error("Error pushing data to new API");
+      }
+    } catch (error) {
+      console.error("An error occurred while pushing data to new API:", error);
+    }
+  };
+
+  const updateOrder = async (orderId: any) => {
+    try {
+      const response = await fetch("/api/orders/update", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ orderId }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error(`Error updating order: ${errorData.error}`);
+        toast(`Error updating order: ${errorData.error}`);
+      } else {
+        console.log("Order ID successfully pushed to new API");
+      }
+    } catch (error) {
+      console.error("An error occurred while updating order:", error);
+      toast("An unexpected error occurred while updating order.");
+    }
+  };
 
   return (
     <div className="pt-5 md:pt-20 px-5 xl:px-10">
@@ -493,10 +555,7 @@ const CheckOutPage = () => {
                 )}
                 <hr className="my-2" />
                 <p className="flex justify-between uppercase text-xl font-semibold text-slate-400 mt-4">
-                  total{" "}
-                  <span className="text-black">
-                    ${(totalPrice + shippingFee).toFixed(2)}
-                  </span>
+                  total <span className="text-black">${totalAmount}</span>
                 </p>
                 <hr className="my-2" />
               </div>
