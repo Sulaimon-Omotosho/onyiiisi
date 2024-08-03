@@ -187,10 +187,10 @@ const CheckOutPage = () => {
   };
 
   const onSuccess = (reference: any) => {
-    // sessionStorage.clear();
+    sessionStorage.clear();
     createShipment(servCode, rToken, cId);
     updateOrder(orderIdRef.current);
-    // router.push("/history");
+    router.push("/history");
   };
 
   const onClose = () => {
