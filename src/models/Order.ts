@@ -34,11 +34,17 @@ const OrderItemSchema = new Schema<OrderItem>({
     type: String,
   },
   product_data: {
-    name: String,
-    description: String,
+    name: { type: String, required: true },
+    description: { type: String, required: true },
+    placeholder: {
+      asset: {
+        _ref: { type: String, required: true },
+        _type: { type: String, required: true },
+      },
+      _type: { type: String, required: true },
+    },
   },
 });
-
 // Define the Order interface and schema
 export interface OrderDoc extends Document {
   user: mongoose.Types.ObjectId;
