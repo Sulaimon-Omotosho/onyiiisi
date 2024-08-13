@@ -83,12 +83,12 @@ const OrderDetailsPage = () => {
                 key={idx}
                 className="relative h-[100px] w-[100px] overflow-hidden border-2 border-slate-500 rounded-md"
               >
-                {/* <Image
-                  src=
+                <Image
+                  src={urlFor(item?.product_data.placeholder).url()}
                   alt="order item"
                   fill
                   objectFit="cover"
-                /> */}
+                />
               </Link>
             ))}
           </div>

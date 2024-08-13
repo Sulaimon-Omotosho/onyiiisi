@@ -4,7 +4,7 @@ import { ProductProps } from "@/lib/types";
 export const POST = async (request: NextRequest) => {
   try {
     const reqBody = await request.json();
-    const { items, email } = reqBody;
+    const { items } = reqBody;
     const updatedItems = await items.map((item: ProductProps) => ({
       quantity: item.productQuantity,
       price: item.price,

@@ -4,12 +4,6 @@ import User from "@/models/User";
 import dbConnect from "@/lib/db";
 import { getServerSession } from "next-auth/next";
 import authOptions from "../auth/[...nextauth]/authOptions";
-import {
-  GIGData,
-  GIGLogin,
-  GIGGetStations,
-  GIGCaptureShipment,
-} from "@/lib/gig-service";
 
 interface ItemData {
   gram: string;
@@ -45,8 +39,6 @@ export const POST = async (request: NextRequest) => {
     }
 
     const userId = user._id;
-
-    // Parse request body to extract items, billing information, and payment method
     const { items, billingInfo, paymentMethod }: OrderRequestBody =
       await request.json();
 
@@ -61,35 +53,38 @@ export const POST = async (request: NextRequest) => {
       );
     }
 
-    // const loginResponse = await GIGLogin(GIGData);
-    // const accessToken = loginResponse.Object.access_token;
-
-    // console.log("Access token:", accessToken);
-
-    // Ensure each item has the necessary fields without productId
     const orderItems = items.map((item) => ({
       title: item.product_data.name,
       quantity: item.quantity,
       price: item.price,
       gram: item.gram,
-      placeholder: item.product_data.placeholder,
+      product_data: {
+        name: item.product_data.name,
+        description: item.product_data.description,
+        placeholder: {
+          asset: {
+            _ref: item.product_data.placeholder.asset._ref,
+            _type: item.product_data.placeholder.asset._type,
+          },
+          _type: item.product_data.placeholder._type,
+        },
+      },
     }));
-
     // Create a new Order instance with proper structure
     const newOrder = new Order({
-      user: userId, // Associate the order with the user's _id
+      user: userId,
       items: orderItems,
       total: orderItems.reduce(
         (acc, item) => acc + item.price * item.quantity,
         0
       ),
       paymentMethod,
-      email: billingInfo.email, // Extract email from billingInfo
-      status: "pending", // Set default order status
+      email: billingInfo.email,
+      status: "pending",
       shippingAddress: {
         firstName: billingInfo.firstName,
         lastName: billingInfo.lastName,
-        phoneNumber: billingInfo.phoneNumber.toString(), // Convert phone number to string
+        phoneNumber: billingInfo.phoneNumber.toString(),
         address: billingInfo.address,
         city: billingInfo.city,
         state: billingInfo.state,
@@ -101,9 +96,11 @@ export const POST = async (request: NextRequest) => {
 
     // Save the new order and return a success response
     await newOrder.save();
+    console.log("Order ID:", newOrder._id);
     return NextResponse.json({
       message: "Order created successfully",
       order: newOrder,
+      orderId: newOrder._id,
     });
   } catch (error: any) {
     console.error("Error:", error);
