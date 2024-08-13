@@ -33,8 +33,6 @@ const PopularProducts = () => {
     fetchProducts()
   }, [])
 
-  console.log(products)
-
   return (
     <>
       {/* <div>

@@ -41,8 +41,6 @@ const SpecialsPage = () => {
     fetchProducts()
   }, [])
 
-  console.log(products)
-
   // Products Display & Infinte Scrolling
 
   const handleProductsPerPage = (value: number) => {
@@ -97,10 +95,7 @@ const SpecialsPage = () => {
   //   fetchPrices();
   // }, []);
 
-  // // console.log(metalPrices?.rates.XAU)
   // const calcProductPrice = (product: any) => {
-  //   // console.log('Product gram:', product.gram)
-  //   // console.log('Metal price:', metalPrices?.rates?.USD)
   //   if (metalPrices && metalPrices?.rates?.USD) {
   //     const ounces = parseFloat(product.gram) / 31.1035;
   //     const newPrice = metalPrices?.rates?.USD * ounces;

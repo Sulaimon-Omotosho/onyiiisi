@@ -22,7 +22,7 @@ const MiniSidebar = ({
         const categoryData = await categories()
         setCategoryData(categoryData)
       } catch (err) {
-        console.log(console.error('Error fetching category data:', err))
+        console.error('Error fetching category data:', err)
       }
     }
     fetchCategories()
@@ -37,7 +37,7 @@ const MiniSidebar = ({
         const specialData = await specials()
         setSpecialData(specialData)
       } catch (err) {
-        console.log(console.error('Error fetching Specials Data:', err))
+        console.error('Error fetching Specials Data:', err)
       }
     }
     fetchSpecials()
@@ -52,7 +52,7 @@ const MiniSidebar = ({
         const collectionData = await collection()
         setCollectionData(collectionData)
       } catch (err) {
-        console.log(console.error('Error fetching Collections Data:', err))
+        console.error('Error fetching Collections Data:', err)
       }
     }
     fetchCollections()

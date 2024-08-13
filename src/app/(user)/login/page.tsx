@@ -10,10 +10,6 @@ const LoginPage = async () => {
   if (session) {
     redirect('/')
   }
-  // const handleClick = () => {
-  //   // Perform any additional actions you want when the component is clicked
-  //   console.log("Component clicked");
-  // };
   return (
     <div
       className='bg-image m-auto flex items-center justify-center'

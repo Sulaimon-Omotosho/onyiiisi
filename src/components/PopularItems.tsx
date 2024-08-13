@@ -33,8 +33,6 @@ export default function PopularItems() {
     fetchProducts()
   }, [])
 
-  console.log(products)
-
   return (
     <div>
       {' '}

@@ -19,9 +19,7 @@ const guaranteesQuery = groq`*[_type == 'guarantees']{
 
 export default async function Home() {
   const banners: BannerProps[] = await client.fetch(bannerQuery)
-  // console.log(banners)
   const guarantees: GuaranteesProps[] = await client.fetch(guaranteesQuery)
-  // console.log(guarantees)
 
   return (
     <main>

@@ -33,8 +33,6 @@ const LatestProducts = () => {
     fetchProducts()
   }, [])
 
-  // console.log(products)
-
   return (
     <div>
       {' '}

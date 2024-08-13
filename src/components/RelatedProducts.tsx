@@ -31,7 +31,6 @@ export default function RelatedProducts({
           productDetails.price,
           productDetails.ratings
         )
-        // console.log('Related Products:', related)
         setRelatedProducts(related)
         setLoading(false)
       } catch (err) {
@@ -41,8 +40,6 @@ export default function RelatedProducts({
     }
     fetchRelatedProducts()
   }, [productDetails])
-
-  // console.log(relatedProducts)
 
   const prevSaleMob = () => {
     const isFirstSale = currentIndex === 0

@@ -21,7 +21,7 @@ export default function DropdownShop() {
         const categoryData = await categories()
         setCategoryData(categoryData)
       } catch (error) {
-        console.log(console.error('Error fetching category data:', error))
+        console.error('Error fetching category data:', error)
       }
     }
     fetchCategories()
@@ -36,7 +36,7 @@ export default function DropdownShop() {
         const specialData = await specials()
         setSpecialData(specialData)
       } catch (error) {
-        console.log(console.error('error fetching specials data:', error))
+        console.error('error fetching specials data:', error)
       }
     }
     fetchSpecials()
@@ -51,7 +51,7 @@ export default function DropdownShop() {
         const collectionData = await collection()
         setCollectionData(collectionData)
       } catch (err) {
-        console.log(console.error('error fetching collection data:', err))
+        console.error('error fetching collection data:', err)
       }
     }
     fetchCollections()
