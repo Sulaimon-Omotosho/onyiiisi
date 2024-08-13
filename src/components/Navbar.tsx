@@ -21,6 +21,7 @@ import { Button } from "./ui/button";
 import { isAdmin } from "@/lib/use-check";
 import { usePathname } from "next/navigation";
 import { getSession } from "next-auth/react";
+import { useSelector } from "react-redux";
 
 const georgia = Noto_Sans_Georgian({ subsets: ["latin"] });
 
@@ -29,6 +30,20 @@ export default function Navbar() {
   const [shopDropDown, setShopDropDown] = useState(false);
   // const [salesDropDown, setSalesDropDown] = useState(false)
   const [isAdminUser, setIsAdminUser] = useState<boolean>(false);
+
+  const cartItemCount = useSelector((state: any) =>
+    state.cart.productData.reduce(
+      (acc: any, item: any) => acc + item.productQuantity,
+      0
+    )
+  );
+
+  const wishlistItemCount = useSelector((state: any) =>
+    state.wishlist.productData.reduce(
+      (acc: any, item: any) => acc + item.productQuantity,
+      0
+    )
+  );
 
   const toggleShopDropdown = () => {
     setShopDropDown(!shopDropDown);
@@ -201,9 +216,11 @@ export default function Navbar() {
             <Link href="/cart">
               <ShoppingCart className="cursor-pointer hidden md:block" />
             </Link>
-            {/* <p className='hidden absolute top-[-4px] right-[-6px] bg-[rgb(56,22,10)] text-white text-xs w-4 h-4 rounded-full md:flex items-center justify-center font-semibold'>
-              {2}
-            </p> */}
+            {cartItemCount > 0 && (
+              <p className="absolute top-[-4px] right-[-6px] bg-[rgb(56,22,10)] text-white text-sm w-4 h-4 rounded-full flex items-center justify-center font-semibold">
+                {cartItemCount}
+              </p>
+            )}
           </div>
           <div className="relative">
             <Link href="/wish-list">
@@ -212,9 +229,11 @@ export default function Navbar() {
                 // style={{ fill: 'red' }}
               />
             </Link>
-            {/* <p className='hidden absolute top-[-4px] right-[-6px] bg-[rgb(56,22,10)] text-white text-xs w-4 h-4 rounded-full md:flex items-center justify-center font-semibold'>
-              {9}
-            </p> */}
+            {wishlistItemCount > 0 && (
+              <p className="absolute top-[-4px] right-[-6px] bg-[rgb(56,22,10)] text-white text-sm w-4 h-4 rounded-full flex items-center justify-center font-semibold">
+                {wishlistItemCount}
+              </p>
+            )}
           </div>
           {session ? (
             <Button
