@@ -4,7 +4,6 @@ const Loading = () => {
   return (
     <section className=' py-28'>
       <div className='container'>
-        {/* <h2 className=''>Loading...</h2> */}
         <svg
           className='animate-spin h-10 w-10 text-gray-500 mx-auto'
           xmlns='http://www.w3.org/2000/svg'

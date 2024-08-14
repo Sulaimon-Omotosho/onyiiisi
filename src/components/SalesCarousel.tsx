@@ -11,7 +11,7 @@ import Link from 'next/link'
 
 export default function SalesCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(false)
   const markdowns = useMarkdowns()
   // const [prod, setProd] = useState<ProductProps[]>([])
 
