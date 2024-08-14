@@ -223,7 +223,7 @@ const CheckOutPage = () => {
         toast('Order created successfully')
         setOrderId(orderId)
         // Trigger Paystack payment
-        // initializePayment({ onSuccess, onClose })
+        initializePayment({ onSuccess, onClose })
       } else {
         const errorData = await response.json()
         toast(`Error placing order: ${errorData.error}`)
@@ -402,23 +402,6 @@ const CheckOutPage = () => {
               </div>
               <div className='relative py-[10px] flex-1'>
                 <label
-                  htmlFor='city'
-                  className='font-semibold text-sm absolute bg-white left-6 top-0 px-2 rounded-full'
-                >
-                  City
-                </label>
-                <input
-                  type='text'
-                  id='city'
-                  name='city'
-                  value={formData.city}
-                  onChange={handleFormChange}
-                  required
-                  className='border-[1px]  border-gray-300 rounded-sm p-3 w-full'
-                />
-              </div>
-              {/* <div className='relative py-[10px] flex-1'>
-                <label
                   htmlFor='postalCode'
                   className='font-semibold text-sm absolute bg-white left-6 top-0 px-2 rounded-full'
                 >
@@ -433,7 +416,24 @@ const CheckOutPage = () => {
                   required
                   className='border-[1px]  border-gray-300 rounded-sm p-3 w-full'
                 />
-              </div> */}
+              </div>
+            </div>
+            <div className='relative py-[10px]'>
+              <label
+                htmlFor='city'
+                className='font-semibold text-sm absolute bg-white left-6 top-0 px-2 rounded-full'
+              >
+                City
+              </label>
+              <input
+                type='text'
+                id='city'
+                name='city'
+                value={formData.city}
+                onChange={handleFormChange}
+                required
+                className='border-[1px]  border-gray-300 rounded-sm p-3 w-full'
+              />
             </div>
             <div className='relative py-[10px]'>
               <label
