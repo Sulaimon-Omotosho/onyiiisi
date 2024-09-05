@@ -1,6 +1,13 @@
 "use client";
 
-import { ShoppingCart, Heart, UserRound, Menu, User } from "lucide-react";
+import {
+  ShoppingCart,
+  Heart,
+  UserRound,
+  Menu,
+  User,
+  LogOut,
+} from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import FlashingText from "./FlashText";
@@ -106,9 +113,9 @@ export default function Navbar() {
           </div>
           <div className="cursor-pointer">
             {session ? (
-              <Link href="/profile">
-                <User className="w-8 h-8" />
-              </Link>
+              <button onClick={() => signOut()}>
+                <LogOut className="w-8 h-8" />
+              </button>
             ) : (
               <Link href="/login">
                 <User className="w-8 h-8" />
@@ -160,12 +167,22 @@ export default function Navbar() {
 
         {/* Right-aligned Links */}
         <div className="hidden md:flex gap-5 lg:gap-10 flex-1 uppercase pr-10 w-full justify-end">
-          <Link
-            href="/our-story"
-            className="cursor-pointer items-center flex justify-center w-[119px] h-[31px] text-lg text-white py-1 hover:text-orange-500 ease-in-out duration-200"
-          >
-            Our Story
-          </Link>
+          {/* Conditionally render Studio or Our Story based on admin status */}
+          {isAdminUser ? (
+            <Link
+              href="/studio"
+              className="cursor-pointer items-center flex justify-center w-[119px] h-[31px] text-lg text-white py-1 hover:text-orange-500 ease-in-out duration-200"
+            >
+              Studio
+            </Link>
+          ) : (
+            <Link
+              href="/about"
+              className="cursor-pointer items-center flex justify-center w-[119px] h-[31px] text-lg text-white py-1 hover:text-orange-500 ease-in-out duration-200"
+            >
+              Our Story
+            </Link>
+          )}
           <div className="relative">
             <Link href="/wish-list">
               <Heart className="cursor-pointer hidden md:block" />
@@ -187,9 +204,9 @@ export default function Navbar() {
             )}
           </div>
           {session ? (
-            <Link href="/profile">
-              <UserRound className="cursor-pointer hidden md:block" />
-            </Link>
+            <button onClick={() => signOut()}>
+              <LogOut className="cursor-pointer hidden md:block" />
+            </button>
           ) : (
             <Link href="/login">
               <UserRound className="cursor-pointer mr-5" />
