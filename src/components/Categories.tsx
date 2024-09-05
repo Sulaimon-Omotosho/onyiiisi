@@ -50,11 +50,10 @@ export default function Categories() {
         <div className="md:hidden relative flex justify-center items-center">
           <button
             onClick={handlePrev}
-            className="absolute left-2 text-black  p-2 rounded-full z-10"
+            className="absolute left-6 w-8 h-12 text-black  p-2 rounded-full z-10"
           >
             {"<"}
           </button>
-
           <div className="w-[352px] h-[267px] relative flex justify-center items-center overflow-hidden rounded-lg">
             <Link href={topCategories[currentCategoryIndex].slug}>
               <Image
@@ -84,7 +83,7 @@ export default function Categories() {
 
           <button
             onClick={handleNext}
-            className="absolute right-2 text-black  p-2 rounded-full z-10"
+            className="absolute right-6 text-black w-8 h-12  p-2 rounded-full z-10"
           >
             {">"}
           </button>
@@ -107,8 +106,6 @@ export default function Categories() {
                   />
                 </Link>
                 <div className="absolute text-center">
-                  {/* <h3 className="capitalize text-white text-2xl font-thin pb-2">  
-                  </h3> */}
                   <Link href={category.slug} className="hidden md:block">
                     <button className="text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[150px] rounded-full uppercase font-thin text-xs flex items-center justify-center gap-1 lg:gap-2">
                       {category.title}
