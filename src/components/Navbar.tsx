@@ -114,18 +114,38 @@ export default function Navbar() {
       >
         <Sidebar closeSidebar={closeSidebar} />
       </div>
-      <FlashingText
-        text={[
-          "Fast and Secure Shipping",
-          "Worldwide Delivery",
-          "Fast and Secure Shipping",
-          "Worldwide Delivery",
-          "Fast and Secure Shipping",
-        ]}
-        speed={50}
-      />
+
       <div className="md:px-[40px] lg:px-[60px] h-20 border-b-[1px] border-slate-500 flex justify-between items-center z-20 lg:relative w-full bg-[rgb(56,22,10)]">
-        {/* Left-aligned Links */}
+        {/* Mobile Layout */}
+        <div className="flex md:hidden w-full justify-between items-center px-4">
+          <div onClick={handleSidebar} className="z-10 cursor-pointer">
+            <Menu className="w-10 h-10" />
+          </div>
+          <div className="flex-grow text-center">
+            <Link href="/" className="inline-block">
+              <Image
+                src="/logo.svg"
+                alt="Onyiisi Logo"
+                width={158}
+                height={33}
+                className="mx-auto"
+              />
+            </Link>
+          </div>
+          <div className="cursor-pointer">
+            {session ? (
+              <Link href="/profile">
+                <User className="w-8 h-8" />
+              </Link>
+            ) : (
+              <Link href="/login">
+                <User className="w-8 h-8" />
+              </Link>
+            )}
+          </div>
+        </div>
+
+        {/* Desktop Layout */}
         <div className="hidden md:flex gap-5 lg:gap-10 flex-1 uppercase pl-10 w-full justify-start">
           <Link
             href="/man"
@@ -157,7 +177,7 @@ export default function Navbar() {
         </div>
 
         {/* Center Logo */}
-        <div className="flex-1 md:flex-2 w-full text-center">
+        <div className="hidden md:flex flex-1 md:flex-2 w-full text-center">
           <Link
             href="/"
             className="md:static absolute top-5 justify-center items-center w-full"
@@ -212,21 +232,24 @@ export default function Navbar() {
             </Link>
           )}
         </div>
-
-        {/* Side Bar Button */}
-        <div
-          onClick={handleSidebar}
-          className="md:hidden flex-1 z-1 absolute left-5"
-        >
-          <Menu className="w-10 h-10" />
-        </div>
       </div>
+
+      <FlashingText
+        text={[
+          "Fast and Secure Shipping",
+          "Worldwide Delivery",
+          "Fast and Secure Shipping",
+          "Worldwide Delivery",
+          "Fast and Secure Shipping",
+        ]}
+        speed={50}
+      />
 
       {/* Dropdown */}
       <div
         onMouseLeave={toggleShopDropdown}
         className={`${
-          shopDropDown ? "absolute top-24 left-0 right-0" : "hidden"
+          shopDropDown ? "absolute top-[100px] left-0 right-0" : "hidden"
         } transition-opacity ease-in-out duration-300 `}
       >
         <DropdownShop />
@@ -234,7 +257,7 @@ export default function Navbar() {
       <div
         onMouseLeave={toggleManDropdown}
         className={`${
-          manDropDown ? "absolute top-24 left-0 right-0" : "hidden"
+          manDropDown ? "absolute top-[100px] left-0 right-0" : "hidden"
         } transition-opacity ease-in-out duration-300 `}
       >
         <DropdownMan />
@@ -242,8 +265,8 @@ export default function Navbar() {
       <div
         onMouseLeave={toggleCollectionDropdown}
         className={`${
-          collectionDropDown ? "absolute top-24 left-0 right-0" : "hidden"
-        } transition-opacity ease-in-out duration-300`}
+          collectionDropDown ? "absolute top-[100px] left-0 right-0" : "hidden"
+        } transition-opacity ease-in-out duration-300 `}
       >
         <DropdownCollections />
       </div>
