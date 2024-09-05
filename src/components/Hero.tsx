@@ -1,13 +1,24 @@
 "use client";
 import Image from "next/image";
 import HeroCarousel from "./HeroCarousel";
-// import { guarantees } from '@/constants'
+import { Raleway, Noto_Sans_Georgian } from "next/font/google"; // Importing the fonts
 import { BannerProps, GuaranteesProps } from "@/lib/types";
 import { urlFor } from "@/lib/sanity-client";
 import { Filter, SearchIcon } from "lucide-react";
 import { ProductProps } from "@/lib/types";
 import { getAllProducts } from "@/lib/sanity-client";
 import React, { useState, useEffect } from "react";
+
+// Initializing the fonts
+const raleway = Raleway({
+  subsets: ["latin"],
+  weight: ["700"], // Adjust weights as needed
+});
+
+const georgian = Noto_Sans_Georgian({
+  subsets: ["latin"],
+  weight: ["400"],
+});
 
 export default function Hero({
   banners,
@@ -38,7 +49,7 @@ export default function Hero({
   };
 
   return (
-    <div className="py-0 lg:py-16 xl:py-20">
+    <div className="py-0 lg:py-12 xl:py-16">
       <div className="flex justify-center relative">
         <div className="w-[80%] md:w-[50%] relative mt-5 md:mt-10">
           <SearchIcon className="absolute left-2 top-2 text-slate-400" />
@@ -60,16 +71,21 @@ export default function Hero({
           </div>
         )}
       </div>
-      {/* Hero Header  */}
+
+      {/* Hero Header */}
       <div className="px-5 md:px-10 lg:px-16 xl:px-20 uppercase text-2xl md:text-3xl lg:text-5xl xl:text-7xl mt-5">
-        <h1 className="font-thin text-[rgb(95,40,74)]">radiating Luxury</h1>
-        <h1 className="font-extrabold">one gleam at a time.</h1>
+        <h1 className={`${raleway.className} font-thin text-[rgb(95,40,74)]`}>
+          radiating Luxury
+        </h1>
+        <h1 className={`${georgian.className} font-extrabold`}>
+          one gleam at a time.
+        </h1>
       </div>
 
       {/* Hero Image and Details */}
       <HeroCarousel banners={banners} />
 
-      {/* Guarantees  */}
+      {/* Guarantees */}
       <div className="bg-[rgb(217,199,211)] my-12 flex flex-col md:flex-row items-center content-center gap-10 lg:gap-16 px-[35px] py-6 lg:px-[50px] xl:px-[100px] 2xl:px-[150px]">
         {guarantees?.map((guarantee, idx) => (
           <div
