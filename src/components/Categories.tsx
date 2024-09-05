@@ -65,7 +65,7 @@ export default function Categories() {
               />
             </Link>
             <div className="absolute text-center">
-              <h3 className="capitalize text-white text-2xl font-thin pb-2">
+              <h3 className="capitalize text-white bg-[rgb(95,40,74)] rounded-full py-2 px-4 lg:py-3 text-2xl font-thin">
                 {topCategories[currentCategoryIndex].title}
               </h3>
               <Link
@@ -107,15 +107,11 @@ export default function Categories() {
                   />
                 </Link>
                 <div className="absolute text-center">
-                  <h3 className="capitalize text-white text-2xl font-thin pb-2">
-                    {category.title}
-                  </h3>
+                  {/* <h3 className="capitalize text-white text-2xl font-thin pb-2">  
+                  </h3> */}
                   <Link href={category.slug} className="hidden md:block">
                     <button className="text-white bg-[rgb(95,40,74)] py-2 lg:py-3 w-[150px] rounded-full uppercase font-thin text-xs flex items-center justify-center gap-1 lg:gap-2">
-                      learn more
-                      <span>
-                        <MoveDownRight className="w-4 lg:w-5 h-4 lg:h-5 pt-1" />
-                      </span>
+                      {category.title}
                     </button>
                   </Link>
                 </div>
