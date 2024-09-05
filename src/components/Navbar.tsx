@@ -12,32 +12,56 @@ import {
   User,
 } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
+import FlashingText from "./FlashText";
 import { useState, useEffect } from "react";
 import { Noto_Sans_Georgian } from "next/font/google";
 import DropdownShop from "./dropdown/DropdownShop";
+import DropdownMan from "./dropdown/DropdownMan";
+import DropdownCollections from "./dropdown/DropdownCollections";
 import Sidebar from "./Sidebar";
 import { signOut, useSession } from "next-auth/react";
 import { Button } from "./ui/button";
 import { isAdmin } from "@/lib/use-check";
 import { usePathname } from "next/navigation";
 import { getSession } from "next-auth/react";
+import { useSelector } from "react-redux";
 
 const georgia = Noto_Sans_Georgian({ subsets: ["latin"] });
 
 export default function Navbar() {
   const { data: session } = useSession();
   const [shopDropDown, setShopDropDown] = useState(false);
-  // const [salesDropDown, setSalesDropDown] = useState(false)
+  const [manDropDown, setManDropDown] = useState(false);
+  const [collectionDropDown, setCollectionDropDown] = useState(false);
   const [isAdminUser, setIsAdminUser] = useState<boolean>(false);
+
+  const cartItemCount = useSelector((state: any) =>
+    state.cart.productData.reduce(
+      (acc: any, item: any) => acc + item.productQuantity,
+      0
+    )
+  );
+
+  const wishlistItemCount = useSelector((state: any) =>
+    state.wishlist.productData.reduce(
+      (acc: any, item: any) => acc + item.productQuantity,
+      0
+    )
+  );
 
   const toggleShopDropdown = () => {
     setShopDropDown(!shopDropDown);
-    // setSalesDropDown(false)
   };
-  // const toggleSalesDropdown = () => {
-  //   setSalesDropDown(!salesDropDown)
-  //   setShopDropDown(false)
-  // }
+
+  const toggleManDropdown = () => {
+    setManDropDown(!manDropDown);
+  };
+
+  const toggleCollectionDropdown = () => {
+    setCollectionDropDown(!collectionDropDown);
+  };
+
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
@@ -64,7 +88,6 @@ export default function Navbar() {
     fetchUserInfo();
   }, []);
 
-  // Sidebar function
   const [sidebar, setSidebar] = useState(false);
 
   const handleSidebar = () => {
@@ -75,8 +98,6 @@ export default function Navbar() {
     setSidebar(false);
   };
 
-  // Pathname Active
-
   const pathname = usePathname();
   function pathMatch(route: string) {
     if (route === pathname) {
@@ -86,7 +107,6 @@ export default function Navbar() {
 
   return (
     <header className="relative bg-[rgb(56,22,10)] text-slate-300">
-      {" "}
       <div
         className={`absolute w-full md:hidden transition-all duration-500 h-[100vh] z-40 ${
           sidebar ? "top-0 left-0" : "top-0 left-[-750px] shadow-none"
@@ -94,153 +114,138 @@ export default function Navbar() {
       >
         <Sidebar closeSidebar={closeSidebar} />
       </div>
-      <div className="md:px-[40px] lg:px-[60px] h-20 border-b-[1px] border-slate-500 flex justify-between items-center z-20 lg:fixed w-full bg-[rgb(56,22,10)] relative">
-        {/* Logo  */}
-        <div className="flex-5 md:flex-1 w-full">
+      <FlashingText
+        text={[
+          "Fast and Secure Shipping",
+          "Worldwide Delivery",
+          "Fast and Secure Shipping",
+          "Worldwide Delivery",
+          "Fast and Secure Shipping",
+        ]}
+        speed={50}
+      />
+      <div className="md:px-[40px] lg:px-[60px] h-20 border-b-[1px] border-slate-500 flex justify-between items-center z-20 lg:relative w-full bg-[rgb(56,22,10)]">
+        {/* Left-aligned Links */}
+        <div className="hidden md:flex gap-5 lg:gap-10 flex-1 uppercase pl-10 w-full justify-start">
+          <Link
+            href="/man"
+            onMouseEnter={toggleManDropdown}
+            className={`cursor-pointer items-center flex justify-center hover:text-orange-500 ease-in-out duration-200 ${
+              pathMatch("/man") && "text-orange-500 relative"
+            }`}
+          >
+            Man
+          </Link>
+          <Link
+            href="/woman"
+            className={`cursor-pointer items-center flex justify-center hover:text-orange-500 ease-in-out duration-200 ${
+              pathMatch("/woman") && "text-orange-500 relative"
+            }`}
+            onMouseEnter={toggleShopDropdown}
+          >
+            Woman
+          </Link>
+          <Link
+            href="/collection"
+            className={`cursor-pointer items-center flex justify-center hover:text-orange-500 ease-in-out duration-200 ${
+              pathMatch("/collection") && "text-orange-500 relative"
+            }`}
+            onMouseEnter={toggleCollectionDropdown}
+          >
+            Collection
+          </Link>
+        </div>
+
+        {/* Center Logo */}
+        <div className="flex-1 md:flex-2 w-full text-center">
           <Link
             href="/"
-            className="md:static absolute top-5 justify-end items-center w-full "
+            className="md:static absolute top-5 justify-center items-center w-full"
           >
-            <h1
-              style={{ fontStyle: "italic" }}
-              className={`font-bold uppercase text-3xl italic text-white md:text-left text-center w-full ${georgia.className}`}
-            >
-              Onyiisi
-            </h1>
+            <Image
+              src="/logo.svg"
+              alt="Onyiisi Logo"
+              width={158}
+              height={33}
+              className="mx-auto"
+            />
           </Link>
         </div>
 
-        {/* Links  */}
-        <div className="hidden md:flex gap-5 lg:gap-10 flex-3 uppercase pl-10 w-full">
-          <div
-            onMouseEnter={toggleShopDropdown}
-            className="flex items-center justify-center"
+        {/* Right-aligned Links */}
+        <div className="hidden md:flex gap-5 lg:gap-10 flex-1 uppercase pr-10 w-full justify-end">
+          <Link
+            href="/our-story"
+            className={`cursor-pointer items-center flex justify-center w-[119px] h-[31px] text-lg text-white  py-1 hover:text-orange-500 ease-in-out duration-200 ${
+              pathMatch("/our-story") && "text-orange-500 relative"
+            }`}
           >
-            <Link
-              href="/shop"
-              // onClick={toggleShopDropdown}
-              className={`cursor-pointer items-center flex justify-center hover:text-orange-500 ease-in-out duration-200 ${
-                pathMatch("/shop") && " text-orange-500 relative"
-              }`}
-            >
-              shop
-              <Dot
-                className={` ${
-                  pathMatch("/shop") ? "h-10 w-10 absolute left-7" : "hidden"
-                }`}
-              />
+            Our Story
+          </Link>
+          <div className="relative">
+            <Link href="/wish-list">
+              <Heart className="cursor-pointer hidden md:block" />
             </Link>
+            {wishlistItemCount > 0 && (
+              <p className="absolute top-[-4px] right-[-6px] bg-[rgb(56,22,10)] text-white text-sm w-4 h-4 rounded-full flex items-center justify-center font-semibold">
+                {wishlistItemCount}
+              </p>
+            )}
           </div>
-          <Link
-            href="/about"
-            className={`cursor-pointer items-center justify-center flex hover:text-orange-500 ease-in-out duration-200 ${
-              pathMatch("/about") && " text-orange-500 relative"
-            }`}
-          >
-            About
-            <Dot
-              className={` ${
-                pathMatch("/about") ? "h-10 w-10 absolute left-10" : "hidden"
-              }`}
-            />
-          </Link>
-          <Link
-            href={"/blog"}
-            className={`cursor-pointer items-center justify-center flex hover:text-orange-500 ease-in-out duration-200 ${
-              pathMatch("/blog") && " text-orange-500 relative"
-            }`}
-          >
-            blog
-            <Dot
-              className={` ${
-                pathMatch("/blog") ? "h-10 w-10 absolute left-7" : "hidden"
-              }`}
-            />
-          </Link>
-          {session && (
-            <Link href="/profile" className="hidden lg:inline">
-              Hi, {session?.user?.name}
-            </Link>
-          )}
-          {session && (
-            <Link
-              href="/profile"
-              className="hidden md:inline lg:hidden cursor-pointer"
-            >
-              <User />
-            </Link>
-          )}
-        </div>
-
-        {/* Side Bar  */}
-        <div
-          onClick={handleSidebar}
-          className="md:hidden flex-1 z-1 absolute left-5"
-        >
-          <Menu className="w-10 h-10" />
-        </div>
-
-        {/* Navbar Icons  */}
-
-        <div className="flex-1 flex gap-5 lg:scale-100 justify-end items-center z-20">
-          {isAdminUser && (
-            <Link href={"/studio"} target="_blank" className="hidden md:inline">
-              Studio
-            </Link>
-          )}
-
-          {session && (
-            <Link href="/history" className="relative">
-              <NotebookText className="cursor-pointer hidden md:inline " />
-              {/* <p className="hidden absolute top-[-4px] right-[-6px] bg-[rgb(56,22,10)] text-white text-xs w-4 h-4 rounded-full md:flex items-center justify-center font-semibold">
-                {1}
-              </p> */}
-            </Link>
-          )}
           <div className="relative">
             <Link href="/cart">
               <ShoppingCart className="cursor-pointer hidden md:block" />
             </Link>
-            {/* <p className='hidden absolute top-[-4px] right-[-6px] bg-[rgb(56,22,10)] text-white text-xs w-4 h-4 rounded-full md:flex items-center justify-center font-semibold'>
-              {2}
-            </p> */}
-          </div>
-          <div className="relative">
-            <Link href="/wish-list">
-              <Heart
-                className="cursor-pointer hidden md:block"
-                // style={{ fill: 'red' }}
-              />
-            </Link>
-            {/* <p className='hidden absolute top-[-4px] right-[-6px] bg-[rgb(56,22,10)] text-white text-xs w-4 h-4 rounded-full md:flex items-center justify-center font-semibold'>
-              {9}
-            </p> */}
+            {cartItemCount > 0 && (
+              <p className="absolute top-[-4px] right-[-6px] bg-[rgb(56,22,10)] text-white text-sm w-4 h-4 rounded-full flex items-center justify-center font-semibold">
+                {cartItemCount}
+              </p>
+            )}
           </div>
           {session ? (
-            <Button
-              className="z-10"
-              onClick={() => signOut()}
-              variant={"ghost"}
-            >
-              <LogOut className="cursor-pointer" />
-            </Button>
+            <Link href="/profile">
+              <UserRound className="cursor-pointer hidden md:block" />
+            </Link>
           ) : (
             <Link href="/login">
               <UserRound className="cursor-pointer mr-5" />
             </Link>
           )}
         </div>
+
+        {/* Side Bar Button */}
+        <div
+          onClick={handleSidebar}
+          className="md:hidden flex-1 z-1 absolute left-5"
+        >
+          <Menu className="w-10 h-10" />
+        </div>
       </div>
+
       {/* Dropdown */}
-      {/* {shopDropDown ? <DropdownShop /> : ''}
-      {salesDropDown ? <DropdownSales /> : ''} */}
       <div
         onMouseLeave={toggleShopDropdown}
         className={`${
-          shopDropDown ? "absolute top-20 left-0 right-0" : "hidden"
+          shopDropDown ? "absolute top-24 left-0 right-0" : "hidden"
         } transition-opacity ease-in-out duration-300 `}
       >
         <DropdownShop />
+      </div>
+      <div
+        onMouseLeave={toggleManDropdown}
+        className={`${
+          manDropDown ? "absolute top-24 left-0 right-0" : "hidden"
+        } transition-opacity ease-in-out duration-300 `}
+      >
+        <DropdownMan />
+      </div>
+      <div
+        onMouseLeave={toggleCollectionDropdown}
+        className={`${
+          collectionDropDown ? "absolute top-24 left-0 right-0" : "hidden"
+        } transition-opacity ease-in-out duration-300`}
+      >
+        <DropdownCollections />
       </div>
     </header>
   );
